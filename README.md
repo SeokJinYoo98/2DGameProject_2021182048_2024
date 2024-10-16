@@ -2,7 +2,7 @@
 - 2024.10.04 ~ 2024.12.~
 
 # 1 - ZomBoogie
-- (이미지 추가)
+![Title](https://github.com/user-attachments/assets/fce170cd-ead1-45c2-a79a-91e9081a3bc0)
 
 ## 1.1 개발 환경
 - 언어: Python
