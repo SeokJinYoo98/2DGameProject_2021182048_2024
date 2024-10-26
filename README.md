@@ -1,4 +1,4 @@
-# 2DGameProgramming-Term-Project - ZomBoogie
+# 2DGameProgramming - ZomBoogie
 - 2024.10.04 ~ 2024.12.~
 - 언어: Python
 - 엔진/라이브러리: Pygame
@@ -61,7 +61,11 @@
 
 ![Zombogie](https://github.com/user-attachments/assets/76fa6f85-f4a9-443f-9771-b274ad2aa13f)
 
-- 게임 흐름도 추가
+- 게임 흐름도
+
+  
+![스크린샷 2024-10-27 003614](https://github.com/user-attachments/assets/21c7cf3c-0859-4467-a07d-73ea7802231a)
+
 
 ## [씬 구성]
 ### 로딩 씬
@@ -225,9 +229,8 @@
 
 ### 1주차: 
 1. randomTileGenerator 구현
-2. 플레이어 이동 구현
+2. 플레이어 이동, 사격 구현
 ### 2주차: 
-1. 플레이어 사격 구현
 2. 좀비 구현
 3. 충돌 처리 구현
 ### 3주차: 
