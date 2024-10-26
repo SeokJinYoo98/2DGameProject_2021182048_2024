@@ -101,8 +101,8 @@
       - 역할: 사용자와 전투할 캐릭터, 행동 트리에 따라 움직이며 플레이어를 공격.
       - 생김새: 캐주얼한 도트 그래픽의 좀비형 캐릭터.
       - class:
-         1. defaultZomibe
-         2. rangeZomibe
+         1. defaultZombie
+         2. rangeZombie
          3. tankerZombie
    4. item
       - 역할: 플레이어가 수집하여 레벨을 높히거나, Hp를 회복.
