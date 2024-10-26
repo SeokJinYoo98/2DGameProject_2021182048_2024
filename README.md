@@ -2,18 +2,19 @@
 - 2024.10.04 ~ 2024.12.~
 - 언어: Python
 - 엔진/라이브러리: Pygame
-- IDE: VsCode
+- IDE: VSCode
 - 운영체제: Windows
 - 버전 관리: Git / Source Tree
 
 # ZomBoogie
 ![Title](https://github.com/user-attachments/assets/fce170cd-ead1-45c2-a79a-91e9081a3bc0)
 ## [컨셉 소개]
+- 참고 게임: Vampire Survivors
 - 장르: 탑다운 슈팅 로그라이트
 - 목표: 끝없이 몰려오는 좀비를 피하고, 쓰러뜨리며 최대한 오래 살아남는다.
 - 성장 요소: 좀비를 처치해 자원을 얻고, 캐릭터를 점점 더 강하게 업그레이드한다.
 - 특징: 빠르고 간단한 조작으로 누구나 쉽게 즐길 수 있는 캐주얼한 게임플레이.
-- 참고 게임: Vampire Survivors
+
 
 ## [핵심 메카닉]
 ### 캐릭터 컨트롤
