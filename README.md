@@ -22,7 +22,7 @@
 4. 감염 디버프가 특정 횟수 이상이 되면 게임 오버가 된다.
 5. 모든 스테이지를 생존하면 게임을 승리한다.
 ### 게임 화면
-![Zombogie](https://github.com/user-attachments/assets/76fa6f85-f4a9-443f-9771-b274ad2aa13f)
+![메인 씬](https://github.com/user-attachments/assets/b731f682-0586-45d1-8182-2ace79fb81dd)
 ### 레벨업
 ![Zombogie레벨업](https://github.com/user-attachments/assets/b48f45b9-7b97-4bb2-9574-22da4bead123)
 
