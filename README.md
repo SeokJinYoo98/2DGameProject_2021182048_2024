@@ -25,7 +25,7 @@
 ### 게임 화면
 ![메인 씬](https://github.com/user-attachments/assets/b731f682-0586-45d1-8182-2ace79fb81dd)
 ### 레벨업
-![Zombogie레벨업](https://github.com/user-attachments/assets/b48f45b9-7b97-4bb2-9574-22da4bead123)
+![Zombogie레벨업](https://github.com/user-attachments/assets/d14f12c0-18a4-4833-a170-a6181321e693)
 
 ## [핵심 메카닉]
 ### 캐릭터 컨트롤
