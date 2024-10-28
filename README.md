@@ -1,4 +1,5 @@
 # 2DGameProgramming - ZomBoogie
+- 2021182048 게임공학과 유석진
 - 2024.10.04 ~ 2024.12.~
 - 언어: Python
 - 엔진/라이브러리: Pygame
@@ -7,7 +8,6 @@
 - 버전 관리: Git / Source Tree
 
 # ZomBoogie 
-2021182048 게임공학과 유석진
 ![Title](https://github.com/user-attachments/assets/fce170cd-ead1-45c2-a79a-91e9081a3bc0)
 ## [컨셉 소개]
 - 참고 게임: Vampire Survivors
