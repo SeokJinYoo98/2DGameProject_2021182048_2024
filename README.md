@@ -245,4 +245,4 @@
 ### 7주차
 
 ## [Youtube]
-- 1차 발표: 링크
+- 1차 발표: https://youtu.be/JN8lkWoDTZI
