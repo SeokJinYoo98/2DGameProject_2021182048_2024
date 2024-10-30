@@ -3,6 +3,8 @@ import random
 from gfw import *
 import math
 
+import gfw.world
+
 class Actor (Sprite):
     # x = 18, y = 20
     # maxX = 56, maxY = 83
@@ -12,7 +14,7 @@ class Actor (Sprite):
     
     PLAYER_FRAMES = {
         "IDLE": [
-            (0, 20, 18, 20), (18, 21, 18, 20), (36, 21, 18, 20)
+            (0, 20, 18, 20), (0, 20, 18, 20), (0, 20, 18, 20)
         ],
         "WALK": [
             (0, 42, 18, 20), (18, 42, 18, 20), (36, 42, 18, 20), 
@@ -29,6 +31,7 @@ class Actor (Sprite):
        
         super().__init__('assets/Sprites/Player/mainC.png', x, y)
        
+        self.gun = Gun()
         print(f"width={self.image.w}, height={self.image.h}")
         # 애니메이션 관련
         self.state = None
@@ -46,44 +49,18 @@ class Actor (Sprite):
         
         # 총알 관련
         self.bullet_time = 0
-        self.spark_image = gfw.image.load('assets/Sprites/PropUI/Bullet1.png')
+
         self.bullet_range = 100 # range 10 pixel
     
     # 이벤트
-    def handle_event(self, e):
-        if e.type == SDL_KEYDOWN:
-            self._do_WALK()
-            if e.key == SDLK_a:     self.dx = -1
-            elif e.key == SDLK_d:   self.dx = 1
-            elif e.key == SDLK_s:   self.dy = -1
-            elif e.key == SDLK_w:   self.dy = 1
-            
-        elif e.type == SDL_KEYUP:
-            self._do_IDLE()
-            if e.key == SDLK_a:    self.dx = 0
-            elif e.key == SDLK_d: self.dx = 0
-            elif e.key == SDLK_s:  self.dy = 0
-            elif e.key == SDLK_w:    self.dy = 0
-
-        if e.type == SDL_MOUSEMOTION:
-            if hasattr(self, 'degree'):
-                self.rotate(e.x, get_canvas_height() - e.y - 1)
-            
-        self.bullet_time += gfw.frame_time
-        if e.type == SDL_MOUSEBUTTONDOWN:
-            if e.button == SDL_BUTTON_LEFT:
-                if self.bullet_time >= Actor.BULLET_INTERVAL:
-                    print('fire!')
-                    self._fire()
-        
+    
     # 업데이트            
     def update(self):
-   
-        if self.dx < 0: self.flip = 'h'
-        else: self.flip = ''
-            
         self.x += self.dx * self.speed * gfw.frame_time
         self.y += self.dy * self.speed * gfw.frame_time
+        
+        # 총 움직임
+        self.gun.move(self.x, self.y)
         
         # 애니메이션 전환
         self.elapsed_time += gfw.frame_time
@@ -91,6 +68,7 @@ class Actor (Sprite):
             self.elapsed_time = 0 
             # 다음 프레임으로 전환
             self.frame_index = (self.frame_index + 1) % self.frame_count
+            
         
     # 드로우        
     def draw(self):
@@ -98,14 +76,19 @@ class Actor (Sprite):
         x1, y1, x2, y2 = current_frame
 
         self.image.clip_composite_draw(*current_frame,  0, self.flip, self.x, self.y,w=50, h=50)
-        #self.image.clip_draw(0, 20, 18, 20, self.x, self.y)
+        self.gun.draw(self.flip)
                   
     ## ---------------------------------------------------------------------------        
     def rotate(self, tx, ty):
-        self.degree = math.atan2(tx - self.x, ty - self.y)
+        if tx - self.x > 0:
+            self.flip = ' '
+        else:
+            self.flip = 'h'
+
+        self.gun.rotate(tx, ty)
         
     # 총알 발사
-    def _fire(self):
+    def fire(self):
         self.bullet_time = 0
         print('fire!')
         world = gfw.top().world
@@ -157,9 +140,35 @@ class Bullet(Sprite):
         
     def draw(self):
         self.image.draw(self.x, self.y)
+        self.playerGun.draw()
 
-class Level():
-    Range_Level = 0
+class Gun(Sprite):
+    def __init__(self):        
+        super().__init__('assets/Sprites/PropUI/Gun.png', 0, 0)
+        self.angle = 0
+        self.x, self.y = 0, 0
+        
+    def update(self):
+        pass
+    
+    def draw(self, flip):
+        degree = math.degrees(self.angle)
+        self.image.composite_draw(degree, flip, self.x + 1, self.y, 30, 30)
 
-class Gun():
-    pass
+    def rotate(self, mouse_x, mouse_y):
+        self.angle = math.atan2(mouse_y - self.y, mouse_x - self.x)
+    
+    def move(self, px, py):
+        self.x, self.y = px, py
+    
+class Aim(Sprite):
+    def __init__(self):
+        super().__init__('assets/Sprites/Player/Aim.png', 0, 0)
+        self.x, self.y = 0, 0
+        
+    def update(self):
+        pass
+    def draw(self):
+        self.image.draw(self.x, self.y, 50, 50)
+    def setLoaction(self, x, y):
+        self.x, self.y = x, y
