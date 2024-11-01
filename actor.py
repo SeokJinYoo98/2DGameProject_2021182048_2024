@@ -49,8 +49,8 @@ class Actor(Sprite):
         # 총알 관련
         self.bullet_time = 1
         self.bullet_Colltime = 1
-        self.bullet_range = 100 # 레벨업 요소
-        self.bullet_speed = 100 # 레벨업 요소
+        self.bullet_range = 200 # 레벨업 요소
+        self.bullet_speed = 1000 # 레벨업 요소
     # 이벤트
     
     # 업데이트            
@@ -92,9 +92,9 @@ class Actor(Sprite):
     # 총알 발사
     def fire(self):
         if self.bullet_time < self.bullet_Colltime: return
-        print('fire!')
+        #print('fire!')
         world = gfw.top().world
-        bulletInfo = self.gun.x, self.gun.y, self.gun.angle, self.bullet_range, self.bullet_speed
+        bulletInfo = self.gun.x, self.gun.y, self.gun.angle, self.bullet_range, self.bullet_speed, self.flip
         world.append(Bullet(*bulletInfo), world.layer.bullet)
         self.bullet_time = 0
         
@@ -109,7 +109,7 @@ class Actor(Sprite):
         else:
             self._do_IDLE()
         
-        print(f"{self.state=}")
+        #print(f"{self.state=}")
         
     def _isDead(self):
         if self.hp <= 0:
@@ -118,10 +118,10 @@ class Actor(Sprite):
     
     def _isBack(self):
         if self.flip == ' ':
-            if self.dx < 0 or self.dy < 0:
+            if self.dx < 0 or self.dy > 0:
                 return True
         else:
-            if self.dx > 0 or self.dy > 0:
+            if self.dx > 0 or self.dy < 0:
                 return True
         return False
     
@@ -166,19 +166,17 @@ class Actor(Sprite):
         self.frame_time = 1 / 3
     
 class Bullet(Sprite):
-
-    def __init__(self, x, y, angle, range, speed):
-        super().__init__('assets/Sprites/PropUI/Bullet1.png', x, y)
-        self._speed = 400 # pixels per second
+    def __init__(self, x, y, angle, range, speed, flip):
+        self._speed = speed # pixels per second
         self._dist_travelled = 0
         self._range = range
         self._speed = speed
         self._angle = angle
-        radian = math.radians(angle)
         self._dirX, self._dirY = math.cos(angle), math.sin(angle) 
+        self._flip = flip
+        super().__init__('assets/Sprites/PropUI/Bullet2.png', x + self._dirX * 30, y + self._dirY * 30)
         
     def update(self):
-        
         self.y += self._dirY * gfw.frame_time * self._speed
         self.x += self._dirX * gfw.frame_time * self._speed
         
@@ -188,31 +186,29 @@ class Bullet(Sprite):
         
         # 사거리만큼 이동했다면 지운다.
         if self._dist_travelled >= self._range:
-            world = gfw.top().world
-            world.remove(self, world.layer.bullet)
+           self._erase()
             
     def draw(self):
-        bulletInfo = self._angle, self.x, self.y, 
-        self.image.rotate_draw(*bulletInfo)
+        bulletInfo = self._angle, self._flip, self.x, self.y, self.width * 2, self.height * 2
+        self.image.composite_draw(*bulletInfo)
     
     def _erase(self):
-            pass
+            world = gfw.top().world
+            world.remove(self, world.layer.bullet)
             
 class Gun(Sprite):
     def __init__(self):        
         super().__init__('assets/Sprites/PropUI/Gun.png', 0, 0)
         self.angle = 0
-        self._size_x = 18 * 2
-        self._size_y = 7 * 2
-        self._offset_x = 1
-        self._offset_y = -5
+        self._offset_x = 5
+        self._offset_y = -6
         self.flip = ' '
         
     def update(self):
         pass
     
     def draw(self, flip):
-        info = self.angle, self.flip, self.x, self.y, self._size_x, self._size_y
+        info = self.angle, self.flip, self.x, self.y, self.width * 2, self.height * 2
         self.image.composite_draw(*info)
 
     def rotate(self, mouse_x, mouse_y, flip):
@@ -225,10 +221,10 @@ class Gun(Sprite):
     def _Flip(self, flip):
         if flip == 'h':
             f = 'v'
-            self._offset_x = -1
+            self._offset_x = -5
         else:
             f = ' '
-            self._offset_x = 1
+            self._offset_x = 5
             
         self.flip = f
                 

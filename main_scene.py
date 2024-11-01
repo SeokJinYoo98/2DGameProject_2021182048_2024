@@ -4,10 +4,10 @@ import gfw.gfw
 from actor import Actor
 from PlayerController import PlayerController_main
 
-world = gfw.World(['player', 'bullet', 'controller'])
+world = gfw.World(['bg', 'player', 'bullet', 'controller'])
 
-canvas_width = 800
-canvas_height = 600
+canvas_width = 1280
+canvas_height = 720
 
 def enter():
     global player
