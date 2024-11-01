@@ -2,7 +2,7 @@ from pico2d import *
 import gfw.gfw
 
 from actor import Actor
-from PlayerController import PlayerController
+from PlayerController import PlayerController_main
 
 world = gfw.World(['player', 'bullet', 'controller'])
 
@@ -14,7 +14,7 @@ def enter():
     player = Actor()
     world.append(player, world.layer.player)
     global playerController
-    playerController = PlayerController(player) 
+    playerController = PlayerController_main(player) 
     world.append(playerController, world.layer.controller)
     
 def exit():

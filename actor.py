@@ -20,6 +20,10 @@ class Actor (Sprite):
             (0, 42, 18, 20), (18, 42, 18, 20), (36, 42, 18, 20), 
             (0, 62, 18, 20), (18, 62, 18, 20), (36, 62, 18, 20),
         ],
+        "BACK": [
+            (36, 62, 18, 20), (18, 62, 18, 20), (0, 62, 18, 20), 
+            (36, 42, 18, 20), (18, 42, 18, 20), (0, 42, 18, 20), 
+        ],
         "DEAD": [
             (19, 0, 18, 20), (37, 0, 18, 20),
         ],
@@ -38,6 +42,7 @@ class Actor (Sprite):
         self.frame_index = 0
         self.frame_time = 0
         self.elapsed_time = 0
+        self.hp = 3
         
         self._do_IDLE()
  
@@ -95,6 +100,38 @@ class Actor (Sprite):
         world.append(Bullet(self.x, self.y, self.bullet_range), world.layer.bullet)
         
     # 상태 변경
+    
+    def checkState(self):
+        if self._isDead():
+            self._do_DEAD()
+            
+        elif self._isMove():
+            if self._isBack(): self._do_BackWALK()
+            else: self._do_WALK()
+        else:
+            self._do_IDLE()
+        
+        print(f"{self.state=}")
+        
+    def _isDead(self):
+        if self.hp <= 0:
+            return True
+        return False
+    
+    def _isBack(self):
+        if self.flip == ' ':
+            if self.dx < 0 or self.dy < 0:
+                return True
+        else:
+            if self.dx > 0 or self.dy > 0:
+                return True
+        return False
+    
+    def _isMove(self):
+        if (abs(self.dx) + abs(self.dy)) > 0:
+            return True
+        return False
+               
     def _update_frame_count(self):
         self.frame_count = len(Actor.PLAYER_FRAMES[self.state])
         
@@ -107,17 +144,29 @@ class Actor (Sprite):
     
     # 상태별 행동
     def _do_IDLE(self):
+        if self.state == 'IDLE':
+            return
         self._change_state('IDLE')
         self.frame_time = 1 / 5
             
     def _do_WALK(self):
+        if self.state == 'WALK':
+            return
         self._change_state("WALK")
         self.frame_time = 1 / 12
-    
+        
+    def _do_BackWALK(self):
+        if self.state == 'BACK':
+            return
+        self._change_state("BACK")
+        self.frame_time = 1 / 12
+        
     def _do_DEAD(self):
+        if self.state == 'DEAD':
+            return
         self._change_state("DEAD")
         self.frame_time = 1 / 3
-
+    
 class Bullet(Sprite):
     range = 10
     
@@ -140,8 +189,7 @@ class Bullet(Sprite):
         
     def draw(self):
         self.image.draw(self.x, self.y)
-        self.playerGun.draw()
-
+        
 class Gun(Sprite):
     def __init__(self):        
         super().__init__('assets/Sprites/PropUI/Gun.png', 0, 0)
