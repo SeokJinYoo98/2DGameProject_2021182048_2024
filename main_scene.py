@@ -14,10 +14,10 @@ def enter():
     player = Actor()
     world.append(player, world.layer.player)
     global playerController
-    playerController = PlayerController_main(player) 
+    playerController = PlayerController_main(player)
     world.append(playerController, world.layer.controller)
     
-def exit():
+def exit(): 
     world.clear()
     print('[main.exit()]')
 
