@@ -90,7 +90,7 @@ class Actor (Sprite):
         else:
             self.flip = 'h'
 
-        self.gun.rotate(tx, ty)
+        self.gun.rotate(tx, ty, self.flip)
         
     # 총알 발사
     def fire(self):
@@ -194,29 +194,44 @@ class Gun(Sprite):
     def __init__(self):        
         super().__init__('assets/Sprites/PropUI/Gun.png', 0, 0)
         self.angle = 0
-        self.x, self.y = 0, 0
+        self._size_x = 18 * 2
+        self._size_y = 7 * 2
+        self._offset_x = 1
+        self._offset_y = -5
+        self.flip = ' '
         
     def update(self):
         pass
     
     def draw(self, flip):
-        degree = math.degrees(self.angle)
-        self.image.composite_draw(degree, flip, self.x + 1, self.y, 30, 30)
+        info = self.angle, self.flip, self.x, self.y, self._size_x, self._size_y
+        self.image.composite_draw(*info)
 
-    def rotate(self, mouse_x, mouse_y):
+    def rotate(self, mouse_x, mouse_y, flip):
         self.angle = math.atan2(mouse_y - self.y, mouse_x - self.x)
-    
+        self._Flip(flip)
+        
     def move(self, px, py):
-        self.x, self.y = px, py
+        self.x, self.y = px + self._offset_x, py + self._offset_y
     
+    def _Flip(self, flip):
+        if flip == 'h':
+            f = 'v'
+            self._offset_x = -1
+        else:
+            f = ' '
+            self._offset_x = 1
+            
+        self.flip = f
+                
 class Aim(Sprite):
     def __init__(self):
         super().__init__('assets/Sprites/Player/Aim.png', 0, 0)
         self.x, self.y = 0, 0
-        
     def update(self):
         pass
     def draw(self):
         self.image.draw(self.x, self.y, 50, 50)
     def setLoaction(self, x, y):
         self.x, self.y = x, y
+    

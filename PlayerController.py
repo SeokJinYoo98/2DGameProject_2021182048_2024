@@ -32,7 +32,6 @@ class PlayerController_main(PlayerController):
         if e.type == SDL_MOUSEBUTTONDOWN:
             self.player.fire()
         
-        
         elif e.type == SDL_KEYDOWN:
             if e.key == SDLK_a:
                 self.player.dx -= 1
