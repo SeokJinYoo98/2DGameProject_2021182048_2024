@@ -1,18 +1,18 @@
 from pico2d import * 
-from actor import Actor
-from actor import Aim
-import gfw.gfw
-import gfw.world
+import gfw
 class PlayerController:
-    def __init__(self): pass
+    def __init__(self, showCursor=True): 
+        if showCursor is False:
+            SDL_ShowCursor(SDL_DISABLE)
     def update(self): pass
     def draw(self): pass
     def handle_event(self, e): pass
     
 class PlayerController_main(PlayerController):
-    def __init__(self, player):
+    def __init__(self, player, showCursor=True):
+        super().__init__(showCursor)
         self.player = player
-        SDL_ShowCursor(SDL_DISABLE)
+        from player import Aim
         self.aim = Aim()
         
     def update(self):
@@ -32,6 +32,7 @@ class PlayerController_main(PlayerController):
         if e.type == SDL_MOUSEBUTTONDOWN:
             self.player.fire()
         
+        # 이동 설정
         elif e.type == SDL_KEYDOWN:
             if e.key == SDLK_a:
                 self.player.dx -= 1
@@ -41,7 +42,6 @@ class PlayerController_main(PlayerController):
                 self.player.dy += 1
             elif e.key == SDLK_s:
                 self.player.dy -= 1
-                
             self.player.checkState()
             
         elif e.type == SDL_KEYUP:

@@ -1,11 +1,10 @@
 from pico2d import *
-import random
-from gfw import *
+import gfw
 import math
+from player.Gun import Gun
+from player.Bullet import Bullet
 
-import gfw.world
-
-class Actor(Sprite):    
+class Actor(gfw.Sprite):    
     PLAYER_FRAMES = {
         "IDLE": [
             (0, 20, 18, 20), (0, 20, 18, 20), (0, 20, 18, 20)
@@ -23,11 +22,11 @@ class Actor(Sprite):
         ],
     }
    
-    def __init__(self):
+    def __init__(self, path):
         x = get_canvas_width() // 2
         y = get_canvas_height() // 2
        
-        super().__init__('assets/Sprites/Player/mainC.png', x, y)
+        super().__init__(path, x, y)
        
         self.gun = Gun()
         print(f"width={self.image.w}, height={self.image.h}")
@@ -109,8 +108,6 @@ class Actor(Sprite):
         else:
             self._do_IDLE()
         
-        #print(f"{self.state=}")
-        
     def _isDead(self):
         if self.hp <= 0:
             return True
@@ -165,77 +162,5 @@ class Actor(Sprite):
         self._change_state("DEAD")
         self.frame_time = 1 / 3
     
-class Bullet(Sprite):
-    def __init__(self, x, y, angle, range, speed, flip):
-        self._speed = speed # pixels per second
-        self._dist_travelled = 0
-        self._range = range
-        self._speed = speed
-        self._angle = angle
-        self._dirX, self._dirY = math.cos(angle), math.sin(angle) 
-        self._flip = flip
-        super().__init__('assets/Sprites/PropUI/Bullet2.png', x + self._dirX * 30, y + self._dirY * 30)
-        
-    def update(self):
-        self.y += self._dirY * gfw.frame_time * self._speed
-        self.x += self._dirX * gfw.frame_time * self._speed
-        
-        move_dist = self._speed * gfw.frame_time
-        
-        self._dist_travelled += move_dist
-        
-        # 사거리만큼 이동했다면 지운다.
-        if self._dist_travelled >= self._range:
-           self._erase()
-            
-    def draw(self):
-        bulletInfo = self._angle, self._flip, self.x, self.y, self.width * 2, self.height * 2
-        self.image.composite_draw(*bulletInfo)
-    
-    def _erase(self):
-            world = gfw.top().world
-            world.remove(self, world.layer.bullet)
-            
-class Gun(Sprite):
-    def __init__(self):        
-        super().__init__('assets/Sprites/PropUI/Gun.png', 0, 0)
-        self.angle = 0
-        self._offset_x = 5
-        self._offset_y = -6
-        self.flip = ' '
-        
-    def update(self):
-        pass
-    
-    def draw(self, flip):
-        info = self.angle, self.flip, self.x, self.y, self.width * 2, self.height * 2
-        self.image.composite_draw(*info)
 
-    def rotate(self, mouse_x, mouse_y, flip):
-        self.angle = math.atan2(mouse_y - self.y, mouse_x - self.x)
-        self._Flip(flip)
-        
-    def move(self, px, py):
-        self.x, self.y = px + self._offset_x, py + self._offset_y
-    
-    def _Flip(self, flip):
-        if flip == 'h':
-            f = 'v'
-            self._offset_x = -5
-        else:
-            f = ' '
-            self._offset_x = 5
-            
-        self.flip = f
-                
-class Aim(Sprite):
-    def __init__(self):
-        super().__init__('assets/Sprites/Player/Aim.png', 0, 0)
-        self.x, self.y = 0, 0
-    def update(self):
-        pass
-    def draw(self):
-        self.image.draw(self.x, self.y, 50, 50)
-    def setLoaction(self, x, y):
-        self.x, self.y = x, y
     
