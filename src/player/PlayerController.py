@@ -1,5 +1,8 @@
 from pico2d import * 
 import gfw
+from player import Actor
+from player import Aim
+ 
 class PlayerController:
     def __init__(self, showCursor=True): 
         if showCursor is False:
@@ -9,14 +12,18 @@ class PlayerController:
     def handle_event(self, e): pass
     
 class PlayerController_main(PlayerController):
-    def __init__(self, player, showCursor=True):
+    def __init__(self, bg, showCursor=True):
         super().__init__(showCursor)
-        self.player = player
-        from player import Aim
+        self.player = Actor('player/mainC.png')
         self.aim = Aim()
+        self.bg = bg
+        world = gfw.top().world
+        world.append(self.player, world.layer.player)
+        world.append(self.aim, world.layer.UI)
         
     def update(self):
         self.player.rotate(self.aim.x, self.aim.y)
+        self.player.checkState()
         
     def draw(self):
         self.aim.draw()
@@ -35,25 +42,23 @@ class PlayerController_main(PlayerController):
         # 이동 설정
         elif e.type == SDL_KEYDOWN:
             if e.key == SDLK_a:
-                self.player.dx -= 1
+                self.player.adjust_delta(-1, 0)
             elif e.key == SDLK_d:
-                self.player.dx += 1
+                self.player.adjust_delta(1, 0)
             elif e.key == SDLK_w:
-                self.player.dy += 1
+                self.player.adjust_delta(0, 1)
             elif e.key == SDLK_s:
-                self.player.dy -= 1
-            self.player.checkState()
+                self.player.adjust_delta(0, -1)
             
         elif e.type == SDL_KEYUP:
             if e.key == SDLK_a:
-                self.player.dx += 1
+                self.player.adjust_delta(1, 0)
             elif e.key == SDLK_d:
-                self.player.dx -= 1
+                self.player.adjust_delta(-1, 0)
             elif e.key == SDLK_w:
-                self.player.dy -= 1
+                self.player.adjust_delta(0, -1)
             elif e.key == SDLK_s:
-                self.player.dy += 1
-            self.player.checkState()
-                
+                self.player.adjust_delta(0, 1)
+
         
                 

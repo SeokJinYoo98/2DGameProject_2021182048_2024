@@ -2,21 +2,20 @@ from pico2d import *
 from gfw import *
 from player import *
 
-world = World(['bg', 'player', 'bullet', 'controller'])
+
+world = World(['bg', 'player', 'bullet', 'controller', 'UI'])
 
 canvas_width = 1600
 canvas_height = 800
 
 def enter():
-    global playerController, player, bg
+    global playerController, bg
     
-    #bg = RandomTiles('assets/Sprites/Tile/Tiles.png', 100)
-    player = Actor('player/mainC.png')
-    playerController = PlayerController_main(player, False)
+    playerController = PlayerController_main(bg, False)
     
-    #world.append(bg, world.layer.bg)
-    world.append(player, world.layer.player)
     world.append(playerController, world.layer.controller)
+    
+
     
 def exit(): 
     world.clear()

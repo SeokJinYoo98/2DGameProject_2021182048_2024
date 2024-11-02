@@ -4,7 +4,7 @@ import math
 from player.Gun import Gun
 from player.Bullet import Bullet
 
-class Actor(gfw.Sprite):    
+class Actor(gfw.Sprite):   
     PLAYER_FRAMES = {
         "IDLE": [
             (0, 20, 18, 20), (0, 20, 18, 20), (0, 20, 18, 20)
@@ -25,40 +25,42 @@ class Actor(gfw.Sprite):
     def __init__(self, path):
         x = get_canvas_width() // 2
         y = get_canvas_height() // 2
-       
         super().__init__(path, x, y)
-       
-        self.gun = Gun()
-        print(f"width={self.image.w}, height={self.image.h}")
+        
         # 애니메이션 관련
         self.state = None
         self.frame_index = 0
         self.frame_time = 0
         self.elapsed_time = 0
-        self.hp = 3
+        self.hp = 3 # 레벨업 요소
         
         self._do_IDLE()
  
         # 이동 관련
         self.dx, self.dy = 0, 0
-        self.speed = 100
+        self.speed = 100 # 레벨업 요소
         self.degree = 0
         self.flip = 'h'
         
+        # 총 관련
+        self.gun = Gun()
+        
         # 총알 관련
-        self.bullet_time = 1
-        self.bullet_Colltime = 1
+        self.bullet_time = 1  
+        self.bullet_Colltime = 1 # 레벨업 요소
         self.bullet_range = 200 # 레벨업 요소
         self.bullet_speed = 1000 # 레벨업 요소
-    # 이벤트
-    
+        self.bullet_ColCnt = 1 # 레벨업 요소
+        self.bullet_RowCnt = 1 # 레벨업 요소
+
     # 업데이트            
     def update(self):
         self.x += self.dx * self.speed * gfw.frame_time
         self.y += self.dy * self.speed * gfw.frame_time
         
         # 사격 쿨타임 증가
-        self.bullet_time += gfw.frame_time
+        if self.bullet_time <= self.bullet_Colltime:
+            self.bullet_time += gfw.frame_time
         
         # 총 움직임
         self.gun.move(self.x, self.y)
@@ -70,7 +72,6 @@ class Actor(gfw.Sprite):
             # 다음 프레임으로 전환
             self.frame_index = (self.frame_index + 1) % self.frame_count
             
-        
     # 드로우        
     def draw(self):
         current_frame = Actor.PLAYER_FRAMES[self.state][self.frame_index]
@@ -78,8 +79,12 @@ class Actor(gfw.Sprite):
 
         self.image.clip_composite_draw(*current_frame,  0, self.flip, self.x, self.y,w=50, h=50)
         self.gun.draw(self.flip)
-                  
-    ## ---------------------------------------------------------------------------        
+             
+    ## ---------------------------------------------------------------------------     
+    def adjust_delta(self, x, y):
+        self.dx += x
+        self.dy += y
+           
     def rotate(self, tx, ty):
         if tx - self.x > 0:
             self.flip = ' '

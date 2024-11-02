@@ -8,7 +8,3 @@ ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 SPRITES_DIR = os.path.join(ASSETS_DIR, 'sprites')
 SOUNDS_DIR = os.path.join(ASSETS_DIR, 'sound')
 FONT_DIR = os.path.join(ASSETS_DIR, 'font')
-
-print("BASE_DIR:", BASE_DIR)
-print("ASSETS_DIR:", ASSETS_DIR)
-print("SPRITES_DIR:", SPRITES_DIR)
