@@ -1,22 +1,22 @@
 from pico2d import * 
 from gfw import *
 from player import *
-
+from utility import RandomTileBackground
 
 world = World(['bg', 'player', 'bullet', 'controller', 'UI'])
 
-canvas_width = 1600
-canvas_height = 800
+canvas_width = 1280
+canvas_height = 1280
 
 def enter():
     global playerController, bg
     
+    bg = RandomTileBackground('tile/Tiles.png', margin=300)
     playerController = PlayerController_main(bg, False)
     
+    world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
-    
 
-    
 def exit(): 
     world.clear()
     print('[main.exit()]')

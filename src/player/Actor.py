@@ -53,6 +53,7 @@ class Actor(gfw.Sprite):
         self.bullet_ColCnt = 1 # 레벨업 요소
         self.bullet_RowCnt = 1 # 레벨업 요소
 
+        self.bg = None
     # 업데이트            
     def update(self):
         self.x += self.dx * self.speed * gfw.frame_time
@@ -62,9 +63,6 @@ class Actor(gfw.Sprite):
         if self.bullet_time <= self.bullet_Colltime:
             self.bullet_time += gfw.frame_time
         
-        # 총 움직임
-        self.gun.move(self.x, self.y)
-        
         # 애니메이션 전환
         self.elapsed_time += gfw.frame_time
         if self.elapsed_time >= self.frame_time:
@@ -72,13 +70,16 @@ class Actor(gfw.Sprite):
             # 다음 프레임으로 전환
             self.frame_index = (self.frame_index + 1) % self.frame_count
             
+        #self.bg.show(self.x, self.y)
+            
     # 드로우        
     def draw(self):
         current_frame = Actor.PLAYER_FRAMES[self.state][self.frame_index]
         x1, y1, x2, y2 = current_frame
 
-        self.image.clip_composite_draw(*current_frame,  0, self.flip, self.x, self.y,w=50, h=50)
-        self.gun.draw(self.flip)
+        #screen_pos = self.bg.to_screen(self.x, self.y)
+        self.image.clip_composite_draw(*current_frame,  0, self.flip, self.x, self.y, w=50, h=50)
+        self.gun.draw(self.flip, self.x, self.y)
              
     ## ---------------------------------------------------------------------------     
     def adjust_delta(self, x, y):

@@ -12,16 +12,14 @@ class Gun(gfw.Sprite):
     def update(self):
         pass
     
-    def draw(self, flip):
+    def draw(self, flip, x, y):
+        self.x, self.y = x + self._offset_x, y + self._offset_y
         info = self.angle, self.flip, self.x, self.y, self.width * 2, self.height * 2
         self.image.composite_draw(*info)
 
     def rotate(self, mouse_x, mouse_y, flip):
         self.angle = math.atan2(mouse_y - self.y, mouse_x - self.x)
         self._Flip(flip)
-        
-    def move(self, px, py):
-        self.x, self.y = px + self._offset_x, py + self._offset_y
     
     def _Flip(self, flip):
         if flip == 'h':

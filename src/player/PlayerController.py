@@ -15,8 +15,9 @@ class PlayerController_main(PlayerController):
     def __init__(self, bg, showCursor=True):
         super().__init__(showCursor)
         self.player = Actor('player/mainC.png')
+        self.player.bg = bg
         self.aim = Aim()
-        self.bg = bg
+        
         world = gfw.top().world
         world.append(self.player, world.layer.player)
         world.append(self.aim, world.layer.UI)
@@ -24,7 +25,7 @@ class PlayerController_main(PlayerController):
     def update(self):
         self.player.rotate(self.aim.x, self.aim.y)
         self.player.checkState()
-        
+
     def draw(self):
         self.aim.draw()
     
