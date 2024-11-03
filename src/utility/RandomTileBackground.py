@@ -8,7 +8,7 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
         self._scale = scale
         self._size = tileSize * scale
         self._visible_tiles = {}  # 화면에 보이는 타일을 저장하는 딕셔너리
-        
+        self.dx, self.dy = 0, 0
         # 타일 정보 설정
         self._tileInfo = {
             1: {'coords': [0, 0, 18, 18], 'walkable': True},
@@ -21,22 +21,40 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
 
         # 초기 보이는 타일들 생성
         self._Generate_Visible_Tiles()
-    
+    def show(self, x, y):
+        prevX, prevY = self.x, self.y
+        cw, ch = get_canvas_width(), get_canvas_height()
+        if self.margin > 0:
+            if x < self.x + self.margin:
+                self.x = x - self.margin
+            elif x > self.x + cw - self.margin:
+                self.x = x - cw + self.margin
+            if y < self.y + self.margin:
+                self.y = y - self.margin
+            elif y > self.y + ch - self.margin:
+                self.y = y - ch + self.margin
+                
+            self.dx += self.x - prevX
+            self.dy += self.y - prevY
+            return
+        self.x = x - cw // 2
+        self.y = y - ch // 2
+        
     def draw(self):
         for key, (coords, x, y) in self._visible_tiles.items():
             # 타일 위치 계산
             adjusted_x = x - self.x + get_canvas_width() // 2
             adjusted_y = y - self.y + get_canvas_height() // 2
             
-            if -self._size > adjusted_x or -self._size > adjusted_y: continue
-            if get_canvas_width() < adjusted_x or get_canvas_height() < adjusted_y: continue
+            if -self._size > adjusted_x: continue
+            if -self._size > adjusted_y: continue
+            if get_canvas_width() < adjusted_x: continue
+            if get_canvas_height() < adjusted_y: continue
             
             self._Draw_Tile(coords, adjusted_x, adjusted_y)
 
     def update(self):
-        dx = math.floor(self.x)
-        dy = math.floor(self.y)
-        print(f"{dx=},{dy=}")
+        self._Check_Update_BG()
     
     def _Get_Random_Tile(self):
         key = r.randint(1, 15)
@@ -49,10 +67,9 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
     
         self.xCount = math.ceil((get_canvas_height() * 2) / self._size)
         self.yCount = math.ceil((get_canvas_width() * 2) / self._size)
-        totalCount = self.xCount * self.yCount
-        
-        startX = self.x - math.ceil((get_canvas_height() * 2) / 2)
-        startY = self.y - math.ceil((get_canvas_width() * 2) / 2)
+        print(f"{self.xCount=}, {self.yCount}")
+        startX = self.x - get_canvas_height()
+        startY = self.y - get_canvas_width()
         
         newTile = { }
         key = 0
@@ -63,25 +80,50 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
                 posY = startY + y * self._size
                 newTile[key] = (tile['coords'], posX, posY)
                 key += 1
-                
+    
         self._visible_tiles = newTile
         
     def _Draw_Tile(self, coords, x, y):
         drawInfo = *coords, x, y, self._size, self._size
         self.image.clip_draw_to_origin(*drawInfo)
-        #self.image.clip_draw(*drawInfo)
         
-    def _Check_Update_BG(self, x, y):
-        #print(f"{x=}, {y=}")
-        pass
-    def _Shift_X(self, min_max):
-        pass
-            
-    def _Change_Y(self, min_max):
-        pass
-    
-    def _findMax_X(self, key):
-        return (key + 1) % self.xCount
-    def _findMin_X(self, key):
-        return key % self.xCount
+    def _Check_Update_BG(self):
+        dx = math.floor(self.dx)
+        print(f"{dx=}")
+        if dx < -108:
+            self.dx = 0
+            self._ShiftRight_X()
+        elif dx > 108:
+            self.dx = 0
+            self._ShiftLeft_X()
+        
+    def _ShiftLeft_X(self):
+        newTile = { }
+        for key, (coords, x, y) in self._visible_tiles.items():
+            # 새타일을 만든다.
+            if (key + 1) % self.yCount == 0:
+                tile = self._Get_Random_Tile()
+                posX = self._visible_tiles[key][1] + self._size
+                posY = self._visible_tiles[key][2]
+                newTile[key] = (tile['coords'], posX, posY)
+            else:
+                # Shift
+                newTile[key] = self._visible_tiles[key + 1]
+        self._visible_tiles.clear()
+        self._visible_tiles = newTile
+
+    def _ShiftRight_X(self):
+        newTile = { }
+        for key, (coords, x, y) in self._visible_tiles.items():
+            # 타일 생성
+            if key % self.yCount == 0:
+                tile = self._Get_Random_Tile()
+                posX = self._visible_tiles[key][1] - self._size
+                posY = self._visible_tiles[key][2]
+                newTile[key] = (tile['coords'], posX, posY)
+            else:
+                # Shift
+                newTile[key] = self._visible_tiles[key - 1]
+        self._visible_tiles.clear()
+        self._visible_tiles = newTile
     
