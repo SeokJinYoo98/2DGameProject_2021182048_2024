@@ -122,10 +122,10 @@ class Actor(gfw.Sprite):
     
     def _isBack(self):
         if self.flip == ' ':
-            if self.dx < 0 or self.dy > 0:
+            if self.dx < 0:
                 return True
         else:
-            if self.dx > 0 or self.dy < 0:
+            if self.dx > 0:
                 return True
         return False
     
