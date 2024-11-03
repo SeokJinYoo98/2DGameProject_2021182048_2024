@@ -11,7 +11,7 @@ canvas_height = 1280
 def enter():
     global playerController, bg
     
-    bg = RandomTileBackground('tile/Tiles.png', margin=300)
+    bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=300)
     playerController = PlayerController_main(bg, False)
     
     world.append(bg, world.layer.bg)

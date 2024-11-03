@@ -70,16 +70,16 @@ class Actor(gfw.Sprite):
             # 다음 프레임으로 전환
             self.frame_index = (self.frame_index + 1) % self.frame_count
             
-        #self.bg.show(self.x, self.y)
-            
+        self.bg.show(self.x, self.y)
+    
     # 드로우        
     def draw(self):
         current_frame = Actor.PLAYER_FRAMES[self.state][self.frame_index]
         x1, y1, x2, y2 = current_frame
 
-        #screen_pos = self.bg.to_screen(self.x, self.y)
-        self.image.clip_composite_draw(*current_frame,  0, self.flip, self.x, self.y, w=50, h=50)
-        self.gun.draw(self.flip, self.x, self.y)
+        screen_pos = self.bg.to_screen(self.x, self.y)
+        self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
+        self.gun.draw(self.flip, *screen_pos)
              
     ## ---------------------------------------------------------------------------     
     def adjust_delta(self, x, y):
@@ -87,7 +87,8 @@ class Actor(gfw.Sprite):
         self.dy += y
            
     def rotate(self, tx, ty):
-        if tx - self.x > 0:
+        sX, sY = self.bg.from_screen(tx, ty)
+        if sX - self.x > 0:
             self.flip = ' '
         else:
             self.flip = 'h'
