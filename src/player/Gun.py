@@ -11,8 +11,9 @@ class Gun(gfw.Sprite):
         self.collType = False
     def update(self):
         pass
-    
-    def draw(self, flip, x, y):
+    def draw(self):
+        pass
+    def draw_(self, flip, x, y):
         self.x, self.y = x + self._offset_x, y + self._offset_y
         info = self.angle, self.flip, self.x, self.y, self.width * 2, self.height * 2
         self.image.composite_draw(*info)

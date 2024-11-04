@@ -20,6 +20,7 @@ def enter():
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
 
+    world.bg = bg
 def exit(): 
     world.clear()
     print('[main.exit()]')

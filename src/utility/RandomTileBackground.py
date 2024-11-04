@@ -8,7 +8,8 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
         self.collType = False
         self._scale = scale
         self._size = tileSize * scale
-        self._visible_tiles = {}  # 화면에 보이는 타일을 저장하는 딕셔너리
+        # 화면에 보이는 타일을 저장하는 딕셔너리
+        self._visible_tiles = {}
         self.dx, self.dy = 0, 0
         # 타일 정보 설정
         self._tileInfo = {
@@ -65,14 +66,14 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
     
     def _Generate_Visible_Tiles(self):
         self._visible_tiles.clear()
-    
-        self.xCount = math.ceil((get_canvas_height() * 2) / self._size)
-        self.yCount = math.ceil((get_canvas_width() * 2) / self._size)
+  
+        self.xCount = math.ceil((get_canvas_width() * 2) / self._size)
+        self.yCount = math.ceil((get_canvas_height() * 2) / self._size)
 
-        startX = self.x - get_canvas_height()
-        startY = self.y - get_canvas_width()
+        startX = self.x - get_canvas_width()
+        startY = self.y - get_canvas_height()
         
-        newTile = { }
+        newTile = {}
         key = 0
         for y in range(self.yCount):
             for x in range(self.xCount):
@@ -80,9 +81,8 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
                 posX = startX + x * self._size
                 posY = startY + y * self._size
                 newTile[key] = (tile['coords'], posX, posY)
-                #print(f"{key=}, {posX=}, {posY=}")
                 key += 1
-    
+
         self._visible_tiles = newTile
         
     def _Draw_Tile(self, coords, x, y):
@@ -92,18 +92,18 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
     def _Check_Update_BG(self):
         dx = math.floor(self.dx)
         dy = math.floor(self.dy)
-        #print(f"{dx=}, {dy=}")
+        
         if dx < -self._size:
-            self.dx = 0
+            self.dx += self._size
             self._ShiftRight()
         elif dx > self._size:
-            self.dx = 0
+            self.dx -= self._size
             self._ShiftLeft()
         if dy < -self._size:
-            self.dy = 0
+            self.dy += self._size
             self._ShiftDown()  
         elif dy > self._size:
-            self.dy = 0
+            self.dy -= self._size
             self._ShiftUp()
         
     def _ShiftLeft(self):

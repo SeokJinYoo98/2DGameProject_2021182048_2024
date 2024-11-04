@@ -57,9 +57,6 @@ class Actor(gfw.Sprite):
         # 백그라운드 
         self.bg = None
         
-        # 콜리전
-        self.collType = False
-        
     # 업데이트            
     def update(self):
         self.x += self.dx * self.speed * gfw.frame_time
@@ -76,7 +73,7 @@ class Actor(gfw.Sprite):
         x1, y1, x2, y2 = current_frame
         screen_pos = self.bg.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
-        self.gun.draw(self.flip, *screen_pos)
+        self.gun.draw_(self.flip, *screen_pos)
              
     ## ---------------------------------------------------------------------------
     def coolTime(self):
@@ -107,12 +104,11 @@ class Actor(gfw.Sprite):
         
     # 총알 발사
     def fire(self):
-
         if self.bullet_Time < self.bullet_Cooltime: return
         #print('fire!')
         world = gfw.top().world
         
-        bulletInfo = self.gun.x, self.gun.y, self.gun.angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale, self
+        bulletInfo = self.x, self.y, self.gun.angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale, self
         world.append(Bullet(*bulletInfo), world.layer.bullet)
         self.bullet_Time = 0
         
@@ -183,11 +179,11 @@ class Actor(gfw.Sprite):
     
     # 충돌
     def get_bb(self):
-        screen_pos = self.bg.to_screen(self.x, self.y)
-        l = screen_pos[0] - self.width // 3
-        b = screen_pos[1] - self.height // 3
-        r = screen_pos[0] + self.width // 3
-        t = screen_pos[1] + self.height // 3
+        # 월드 좌표 기준으로 충돌 박스를 설정합니다
+        l = self.x - self.width // 3
+        b = self.y - self.height // 3
+        r = self.x + self.width // 3
+        t = self.y + self.height // 3
         return l, b, r, t
         
     

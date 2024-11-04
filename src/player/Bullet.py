@@ -27,7 +27,7 @@ class Bullet(gfw.Sprite):
            self._erase()
             
     def draw(self):
-        pos = self.x + self.actor.dx, self.y + self.actor.dy
+        pos = gfw.top().bg.to_screen(self.x, self.y)
         bulletInfo = self._angle, self._flip, *pos, self.width * self._scale, self.height * self._scale
         self.image.composite_draw(*bulletInfo)
     
