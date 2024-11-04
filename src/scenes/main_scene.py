@@ -5,6 +5,9 @@ from utility import RandomTileBackground
 
 world = World(['bg', 'player', 'bullet', 'controller', 'UI'])
 
+shows_bounding_box = True
+shows_object_count = True
+
 canvas_width = 1280
 canvas_height = 1280
 

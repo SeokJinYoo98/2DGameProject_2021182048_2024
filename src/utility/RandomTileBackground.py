@@ -5,6 +5,7 @@ import random as r
 class RandomTileBackground(gobj.InfiniteScrollBackground):
     def __init__(self, path, tileSize=18, scale=2, margin=0):
         super().__init__(path, margin)
+        self.collType = False
         self._scale = scale
         self._size = tileSize * scale
         self._visible_tiles = {}  # 화면에 보이는 타일을 저장하는 딕셔너리

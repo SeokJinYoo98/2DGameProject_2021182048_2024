@@ -4,6 +4,7 @@ class Aim(gfw.Sprite):
     def __init__(self):
         super().__init__('ui/Aim.png', 0, 0)
         self.x, self.y = 0, 0
+        self.collType = False
     def update(self):
         pass
     def draw(self):

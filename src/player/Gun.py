@@ -8,7 +8,7 @@ class Gun(gfw.Sprite):
         self._offset_x = 5
         self._offset_y = -6
         self.flip = ' '
-        
+        self.collType = False
     def update(self):
         pass
     
@@ -30,3 +30,4 @@ class Gun(gfw.Sprite):
             self._offset_x = 5
             
         self.flip = f
+    

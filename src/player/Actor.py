@@ -21,8 +21,8 @@ class Actor(gfw.Sprite):
             (19, 0, 18, 20), (37, 0, 18, 20),
         ],
     }
-   
     def __init__(self, path):
+        
         x = get_canvas_width() // 2
         y = get_canvas_height() // 2
         super().__init__(path, x, y)
@@ -46,42 +46,52 @@ class Actor(gfw.Sprite):
         self.gun = Gun()
         
         # 총알 관련
-        self.bullet_time = 1  
-        self.bullet_Colltime = 1 # 레벨업 요소
-        self.bullet_range = 200 # 레벨업 요소
-        self.bullet_speed = 1000 # 레벨업 요소
+        self.bullet_Time = 1
+        self.bullet_Scale = 2 # 레벨업 요소  
+        self.bullet_Cooltime = 1 # 레벨업 요소
+        self.bullet_Range = 200 # 레벨업 요소
+        self.bullet_Speed = 100 # 레벨업 요소
         self.bullet_ColCnt = 1 # 레벨업 요소
         self.bullet_RowCnt = 1 # 레벨업 요소
 
+        # 백그라운드 
         self.bg = None
+        
+        # 콜리전
+        self.collType = False
+        
     # 업데이트            
     def update(self):
         self.x += self.dx * self.speed * gfw.frame_time
         self.y += self.dy * self.speed * gfw.frame_time
         
-        # 사격 쿨타임 증가
-        if self.bullet_time <= self.bullet_Colltime:
-            self.bullet_time += gfw.frame_time
-        
-        # 애니메이션 전환
-        self.elapsed_time += gfw.frame_time
-        if self.elapsed_time >= self.frame_time:
-            self.elapsed_time = 0 
-            # 다음 프레임으로 전환
-            self.frame_index = (self.frame_index + 1) % self.frame_count
-            
+        self.coolTime()
+        self.anim()
+       
         self.bg.show(self.x, self.y)
     
     # 드로우        
     def draw(self):
         current_frame = Actor.PLAYER_FRAMES[self.state][self.frame_index]
         x1, y1, x2, y2 = current_frame
-
         screen_pos = self.bg.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
         self.gun.draw(self.flip, *screen_pos)
              
-    ## ---------------------------------------------------------------------------     
+    ## ---------------------------------------------------------------------------
+    def coolTime(self):
+          # 사격 쿨타임 증가
+        if self.bullet_Time <= self.bullet_Cooltime:
+            self.bullet_Time += gfw.frame_time
+            
+    def anim(self):
+         # 애니메이션 전환
+        self.elapsed_time += gfw.frame_time
+        if self.elapsed_time >= self.frame_time:
+            self.elapsed_time = 0 
+            # 다음 프레임으로 전환
+            self.frame_index = (self.frame_index + 1) % self.frame_count
+            
     def adjust_delta(self, x, y):
         self.dx += x
         self.dy += y
@@ -97,12 +107,14 @@ class Actor(gfw.Sprite):
         
     # 총알 발사
     def fire(self):
-        if self.bullet_time < self.bullet_Colltime: return
+
+        if self.bullet_Time < self.bullet_Cooltime: return
         #print('fire!')
         world = gfw.top().world
-        bulletInfo = self.gun.x, self.gun.y, self.gun.angle, self.bullet_range, self.bullet_speed, self.flip
+        
+        bulletInfo = self.gun.x, self.gun.y, self.gun.angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale, self
         world.append(Bullet(*bulletInfo), world.layer.bullet)
-        self.bullet_time = 0
+        self.bullet_Time = 0
         
     # 상태 변경
     def checkState(self):
@@ -169,5 +181,13 @@ class Actor(gfw.Sprite):
         self._change_state("DEAD")
         self.frame_time = 1 / 3
     
-
+    # 충돌
+    def get_bb(self):
+        screen_pos = self.bg.to_screen(self.x, self.y)
+        l = screen_pos[0] - self.width // 3
+        b = screen_pos[1] - self.height // 3
+        r = screen_pos[0] + self.width // 3
+        t = screen_pos[1] + self.height // 3
+        return l, b, r, t
+        
     

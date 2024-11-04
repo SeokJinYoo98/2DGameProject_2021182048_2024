@@ -6,6 +6,7 @@ class Gauge:
     def __init__(self, fg_fname, bg_fname):
         self.fg = gfw.image.load(fg_fname)
         self.bg = gfw.image.load(bg_fname)
+        
     def draw(self, x, y, width, rate):
         l = x - width // 2
         b = y - self.bg.h // 2
@@ -19,6 +20,7 @@ class Gauge:
 class Sprite:
     def __init__(self, filename, x, y):
         self.filename = filename
+        self.collType = True
         if filename is None:
           self.image = None
           self.width, self.height = 0, 0
@@ -31,6 +33,8 @@ class Sprite:
     def update(self):
         pass
     def get_bb(self):
+        if not self.collType:
+            return None
         l = self.x - self.width // 2
         b = self.y - self.height // 2
         r = self.x + self.width // 2
@@ -98,7 +102,7 @@ class ScoreSprite(Sprite):
             x -= self.digit_width
             score //= 10
     def update(self):
-        diff = self.score - self.display;
+        diff = self.score - self.display
         if diff == 0: return
         if -10 < diff and diff < 0:
             self.display -= 1
@@ -180,6 +184,8 @@ class ScrollBackground(Sprite):
         return x + self.x, y + self.y
 
     def get_bb(self):
+        if not self.collType:
+            return None
         return 0, 0, self.width, self.height
 
 class InfiniteScrollBackground(ScrollBackground):

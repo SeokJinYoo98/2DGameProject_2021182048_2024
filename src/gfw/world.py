@@ -35,7 +35,7 @@ class World:
             go.draw()
         if gfw.shows_bounding_box:
             for go in self.all_objects():
-                if not hasattr(go, 'get_bb'): continue
+                if not hasattr(go, 'get_bb') or go.get_bb() is None: continue
                 l,b,r,t = go.get_bb()
                 if hasattr(self, 'bg'):
                   l,b = self.bg.to_screen(l,b)
