@@ -1,40 +1,38 @@
 import gfw
 import random
 from pico2d import *
-class Zombie(gfw.Sprite):
+class ZombieT(gfw.Sprite):
     Target = None
     BG = None
-    Hp = 1
-    Speed = 100
+    Hp = 3
+    Speed = 200
     FRAMES = {
         'IDLE': [ 
-            (0, 0, 19, 19) 
+            (19, 0, 19, 19) 
         ],
         'WALK': [ 
-            (0, 19, 19, 19), (19, 19, 19, 19), (38, 19, 19, 19) 
+            (0, 38, 19, 19), (19, 38, 19, 19), (38, 38, 19, 19), 
+            (0, 19, 19, 19), (19, 19, 19, 19), (38, 19, 19, 19)  
         ],
         'HIT': [
-            (0, 0, 19, 19)
+            (0, 0, 19, 19),
         ],
         'DEAD': [
-            (38, 0, 19, 19)
+            (19, 0, 19, 19)
         ]
     }
     FRAME_INFO = {
         # Frame Index Count, fps
-        'IDLE': (1, 1 / 12),
-        'WALK': (3, 1 / 5),
-        'HIT': (1, 1/ 2),
+        'IDLE': (1, 1 / 2),
+        'WALK': (6, 1 / 12),
+        'HIT': (1, 1 / 2),
         'DEAD': (1, 1 / 2)
     }
-    ZOMBIE_TYPE = [
-        1, 2, 3, 4
-    ]
+
     def __init__(self, x, y):
-        if Zombie.BG is None:
-            Zombie.BG = gfw.top().bg
-        zomT = random.choice(Zombie.ZOMBIE_TYPE)
-        super().__init__(f'zombie/zombie{zomT}.png', x, y)
+        if ZombieT.BG is None:
+            ZombieT.BG = gfw.top().bg
+        super().__init__(f'zombie/zombieT.png', x, y)
 
         # 애니메이션 관련
         self.state = None
@@ -42,15 +40,15 @@ class Zombie(gfw.Sprite):
         self.frame_time = 0
         self.elapsed_time = 0
 
-        self._do_DEAD()
+        self._do_WALK()
     
     def update(self):
         self.anim()
             
     def draw(self):
-        current_frame = Zombie.FRAMES[self.state][self.frame_index]
+        current_frame = ZombieT.FRAMES[self.state][self.frame_index]
         x1, y1, x2, y2 = current_frame
-        screen_pos = Zombie.BG.to_screen(self.x, self.y)
+        screen_pos = ZombieT.BG.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, ' ', *screen_pos, w=50, h=50)     
                
     def anim(self):
@@ -62,8 +60,8 @@ class Zombie(gfw.Sprite):
             self.frame_index = (self.frame_index + 1) % self.frame_count
             
     def _change_Anim_Info(self):
-        self.frame_count = Zombie.FRAME_INFO[self.state][0]
-        self.frame_time = Zombie.FRAME_INFO[self.state][1]
+        self.frame_count = ZombieT.FRAME_INFO[self.state][0]
+        self.frame_time = ZombieT.FRAME_INFO[self.state][1]
         
     def _do_IDLE(self):
         if self.state != 'IDLE':
