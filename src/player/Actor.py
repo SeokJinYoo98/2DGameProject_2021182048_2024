@@ -7,7 +7,7 @@ from player.Bullet import Bullet
 class Actor(gfw.Sprite):   
     PLAYER_FRAMES = {
         "IDLE": [
-            (0, 20, 18, 20), (0, 20, 18, 20), (0, 20, 18, 20)
+            (0, 0, 18, 20), (0, 0, 18, 20), (0, 0, 18, 20)
         ],
         "WALK": [
             (0, 42, 18, 20), (18, 42, 18, 20), (36, 42, 18, 20), 
@@ -32,6 +32,7 @@ class Actor(gfw.Sprite):
         self.frame_index = 0
         self.frame_time = 0
         self.elapsed_time = 0
+        
         self.hp = 3 # 레벨업 요소
         
         self._do_IDLE()
@@ -50,7 +51,7 @@ class Actor(gfw.Sprite):
         self.bullet_Scale = 2 # 레벨업 요소  
         self.bullet_Cooltime = 1 # 레벨업 요소
         self.bullet_Range = 200 # 레벨업 요소
-        self.bullet_Speed = 100 # 레벨업 요소
+        self.bullet_Speed = 500 # 레벨업 요소
         self.bullet_ColCnt = 1 # 레벨업 요소
         self.bullet_RowCnt = 1 # 레벨업 요소
 
@@ -108,7 +109,7 @@ class Actor(gfw.Sprite):
         #print('fire!')
         world = gfw.top().world
         
-        bulletInfo = self.x, self.y, self.gun.angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale, self
+        bulletInfo = self.x, self.y, self.gun.angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale
         world.append(Bullet(*bulletInfo), world.layer.bullet)
         self.bullet_Time = 0
         

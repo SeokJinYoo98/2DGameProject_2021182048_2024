@@ -17,7 +17,7 @@ class PlayerController_main(PlayerController):
         self.player = Actor('player/mainC.png')
         self.player.bg = bg
         self.aim = Aim()
-        
+        self.world = gfw.top().world
         world = gfw.top().world
         world.append(self.player, world.layer.player)
         world.append(self.aim, world.layer.UI)
@@ -32,13 +32,13 @@ class PlayerController_main(PlayerController):
     def handle_event(self, e):
         # 에임 설정
         if e.type == SDL_MOUSEMOTION:
-            world = gfw.top()
-            mouse_x,  mouse_y = e.x, world.canvas_height - e.y
+            mouse_x,  mouse_y = e.x, get_canvas_height() - e.y
             self.aim.setLoaction(mouse_x, mouse_y)
         
         # 사격 수행
         if e.type == SDL_MOUSEBUTTONDOWN:
-            self.player.fire()
+            if e.button == 1:
+                self.player.fire()
         
         # 이동 설정
         elif e.type == SDL_KEYDOWN:

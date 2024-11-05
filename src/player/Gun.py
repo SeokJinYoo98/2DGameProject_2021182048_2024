@@ -31,4 +31,7 @@ class Gun(gfw.Sprite):
             self._offset_x = 5
             
         self.flip = f
-    
+
+class GunEffect(gfw.SheetSprite):
+    def __init__(self, angle, flip, scale):
+        super().__init__('effect/GunEffect.png', 0, 0)

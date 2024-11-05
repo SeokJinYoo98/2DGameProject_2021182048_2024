@@ -2,8 +2,9 @@ from pico2d import *
 from gfw import *
 from player import *
 from utility import RandomTileBackground
+from zombies import Zombie
 
-world = World(['bg', 'player', 'bullet', 'controller', 'UI'])
+world = World(['bg', 'zombies', 'player', 'bullet', 'controller', 'UI'])
 
 shows_bounding_box = True
 shows_object_count = True
@@ -34,7 +35,10 @@ def resume():
 def handle_event(e):
     if e.type == SDL_KEYDOWN and e.key == SDLK_1:
         print(world.objects)
-        
+    if e.type == SDL_MOUSEBUTTONDOWN:
+        if e.button == 3:
+            mX, mY = e.x, get_canvas_height() - e.y
+            world.append(Zombie(mX, mY), world.layer.zombies)
     playerController.handle_event(e)
 
 if __name__ == '__main__':
