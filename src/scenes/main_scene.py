@@ -2,7 +2,7 @@ from pico2d import *
 from gfw import *
 from player import *
 from utility import RandomTileBackground
-from zombies import ZombieR
+from zombies import ZombieT
 
 world = World(['bg', 'zombies', 'player', 'bullet', 'controller', 'UI'])
 
@@ -38,7 +38,7 @@ def handle_event(e):
     if e.type == SDL_MOUSEBUTTONDOWN:
         if e.button == 3:
             mX, mY = e.x, get_canvas_height() - e.y
-            world.append(ZombieR(mX, mY), world.layer.zombies)
+            world.append(ZombieT(mX, mY), world.layer.zombies)
     playerController.handle_event(e)
 
 if __name__ == '__main__':
