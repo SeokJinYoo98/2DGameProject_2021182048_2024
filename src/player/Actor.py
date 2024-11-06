@@ -36,7 +36,10 @@ class Actor(gfw.Sprite):
         self.hp = 3 # 레벨업 요소
         
         self._do_IDLE()
- 
+
+        # 아이템 획득
+        self.pickUp_radius = 100
+        
         # 이동 관련
         self.dx, self.dy = 0, 0
         self.speed = 100 # 레벨업 요소
@@ -75,6 +78,7 @@ class Actor(gfw.Sprite):
         screen_pos = self.bg.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
         self.gun.draw_(self.flip, *screen_pos)
+        gfw.draw_circle(*screen_pos, self.pickUp_radius, (0, 0, 255))
              
     ## ---------------------------------------------------------------------------
     def coolTime(self):

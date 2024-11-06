@@ -61,5 +61,6 @@ class PlayerController_main(PlayerController):
             elif e.key == SDLK_s:
                 self.player.adjust_delta(0, 1)
 
-        
+    def get_player(self):
+        return self.player
                 

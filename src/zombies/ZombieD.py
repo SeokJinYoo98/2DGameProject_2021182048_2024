@@ -1,4 +1,4 @@
-from core import Zombie
+from zombies import Zombie
 import random
 class ZombieD(Zombie):
     Hp = 1

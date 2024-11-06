@@ -1,8 +1,7 @@
-from pico2d import * 
 from gfw import *
-from player import *
+from player import PlayerController_main
 from utility import RandomTileBackground
-from zombies import ZombieT
+from core import ZombieZen
 
 world = World(['bg', 'zombies', 'player', 'bullet', 'controller', 'UI'])
 
@@ -13,15 +12,18 @@ canvas_width = 1280
 canvas_height = 1280
 
 def enter():
-    global playerController, bg
+    global playerController, zombieZen, bg
     
     bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=500)
     playerController = PlayerController_main(bg, False)
+    zombieZen = ZombieZen(playerController.player) 
     
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
-
+    world.append(zombieZen, world.layer.controller)
+    
     world.bg = bg
+    
 def exit(): 
     world.clear()
     print('[main.exit()]')
@@ -37,8 +39,7 @@ def handle_event(e):
         print(world.objects)
     if e.type == SDL_MOUSEBUTTONDOWN:
         if e.button == 3:
-            mX, mY = e.x, get_canvas_height() - e.y
-            world.append(ZombieT(mX, mY), world.layer.zombies)
+            zombieZen.zenZombies()
     playerController.handle_event(e)
 
 if __name__ == '__main__':

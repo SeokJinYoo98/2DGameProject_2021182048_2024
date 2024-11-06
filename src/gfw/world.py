@@ -14,7 +14,7 @@ class World:
             for name in layer_names:
                 self.layer.__dict__[name] = index
                 index += 1
-
+        self.gameTime = 0
         self.objects = [[] for i in range(layer_count)]
     def append(self, go, layer_index=None):
         if layer_index is None:
@@ -30,6 +30,7 @@ class World:
     def update(self):
         for go in self.all_objects_reversed():
             go.update()
+        self.gameTime += gfw.frame_time
     def draw(self):
         for go in self.all_objects():
             go.draw()

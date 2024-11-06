@@ -1,4 +1,4 @@
-from core import Zombie
+from zombies import Zombie
 class ZombieT(Zombie):
     Target = None
     BG = None

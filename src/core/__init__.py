@@ -1,3 +1,3 @@
 # core __init__
 
-from .Zombie import Zombie
+from .ZombieZen import ZombieZen
