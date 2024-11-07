@@ -83,30 +83,89 @@
 - 전환 규칙: 플레이어의 승리 또는 패배에 따라 엔딩 씬으로 전환.
 - GameObject:
    1. bg
-      - 역할: 플레이어의 이동에 따라 랜덤하게 타일을 생성.
-      - 생김새: 초록색 잔디밭.
-   2. player
+      - class: RandomTileBackground
+      - RandomTileBackground Is a: InfiniteScrollBackground class
+      - 역할: 플레이어의 이동에 따라 랜덤하게 타일을 생성 및 스크롤
+      - 생김새: 초록색 잔디밭
+      - 함수 단위 설명:
+         1. __init__(self, FilePath, size, scale, margin):
+            - tileInfo 설정
+            - super().__init__호출
+            - Generate_Visible_Tiles() 호출
+         2. draw(self): 
+            - 딕셔너리에 저장된 타일의 위치를 계산한다.
+            - 조건에 맞지 않으면 타일을 패스한다.
+            - Draw_Tile()을 호출한다.
+         3. update(): 
+            - Check_Update_BG 호출
+         ---
+         4. Draw_Tile(self, coords, x, y):
+            - draw()함수에서 타일의 정보를 받는다.
+            - 받은 타일의 정보를 그린다.
+         4. Get_Random_Tile(self): 
+            - 저장된 타일에서 랜덤한 값을 뽑아내 리턴한다.
+         5. Generate_Visible_Tiles(self): 
+            - 화면 크기의 2배만큼 랜덤한 타일을 생성한다.
+            - 생성된 타일을 visible_tiles 딕셔너리에 저장한다.
+         6. Check_Update_BG(self):
+            - 화면의 스크롤된 양을 계산한다.
+            - 만약 타일의 크기 만큼 스크롤 되었다면
+               - 이동량을 0으로 초기화한다.
+               - 방향에 맞는 shift()함수를 호출한다.
+         7. ShiftLeft(self) .. ShiftDown(self)
+            - 방향에 맞게 딕셔너리의 정보를 당기거나 민다.
+            - 스크롤 방향에 맞게 새로운 타일 생성해 저장한다.
+         8. show(self, x, y):
+            - 플레이어의 위치 및 margin값에 맞게 백그라운드를 스크롤한다.
+            - 백그라운드의 이동량을 저장한다.
+   2. player 
+      - class: Actor
+         - Actor Is a: Sprite class
+         - Actor Has a:
+            1. Status
+               - 특징: 플레이어의 레벨 정보 및 능력치 저장
+               - 생김새: 없음
+            2. Gun
+               - 특징: Actor의 회전 및 좌표를 상속
+               - 생김새: 샷건
       - 역할: 사용자가 조작하는 캐릭터, 이동 공격 아이템 수집 수행.
-      - 생김새: 캐주얼한 도트 그래픽의 인간형 캐릭터.
-      - class:
-         1. Bullet
-         2. Status
-         3. Gun
+      - 생김새: 인간형 생존자 
+      - 함수 단위 설명:
+
    3. zombie
-      - 역할: 사용자와 전투할 캐릭터, 행동 트리에 따라 움직이며 플레이어를 공격.
-      - 생김새: 캐주얼한 도트 그래픽의 좀비형 캐릭터.
-      - class:
-         1. defaultZombie
-         2. rangeZombie
-         3. tankerZombie
+      - class: Zombie
+      - Zombie Is a: Sprite class
+      - Zombie Inheritance: 
+            1. ZombieR class: 
+               특징: 원거리 공격을 하는 좀비 클래스
+               생김새: 악마화된 비석
+               Special_Ability: Ranged Attack
+               문제점: 사실 좀비가 아니지만, 좀비를 상속 받음.
+                  - 상위 클래스 이름을 Enermy로 수정할 예정.
+            2. ZombieT class:
+               특징: 다른 좀비보다 Hp, Speed가 높은 좀비 클래스
+               생김새: 인간형 좀비
+               Special_Ability: Dash
+            3. ZombieD class:
+               특징: 가장 기본적인 좀비
+               생김새: 인간형 좀비
+               Special_Ability: None
+      - 역할: 사용자와 전투할 캐릭터, 상태에 따라 움직이며 플레이어를 공격.
+      - 생김새: None
+
    4. item
-      - 역할: 플레이어가 수집하여 레벨을 높히거나, Hp를 회복.
-      - 생김새:
-          - 백신: 빨간색 통조림 모양에 가운데 하트가 그려진 이미지
-          - 경험치 코인: 황금색 코인 이미지
-      - class:
+      - class: Item
+      - Item Is a: Sprite class
+      - Item Inheritance:
          1. Coin
+            - 역할: Player의 경험치 증가
+            - 생김새: 황금색 코인
          2. Vaccine
+            - 역할: Player의 Hp 회복
+            - 생김새: 붉은색 통조림 모양
+      - 역할: Zombie class가 죽으면 생성, Player의 게임 진행을 도움
+      - 생김새: None
+
    5. ui
       - 역할: 게임 진행 정보를 화면에 표시.
       - 생김새: 적절한 이미지와 텍스트로 표시.
@@ -189,17 +248,13 @@
 - 각 씬별 필요한 오브젝트들을 업데이트, 드로우, 이벤트처리.
 ### image 
 - 게임에서 사용하는 이미지를 딕셔너리에 캐시 및 관리.
-### sheetSprite
-- 오브젝트의 스프라이트 시트를 관리 및 애니메이션 재생.
 ### scoreSprite
 - 기타 정보를 화면에 시각적으로 렌더링.
 ### guage
 - 로딩 정보나 상태를 시각적으로 표시하는 게이지를 렌더링.
 ### infiniteScrollBackground
 - 무한이 이어지는 배경을 구현
-### behaviorTree
-- 적 AI의 행동 패턴을 설계하고 관리.
-### randomTileGenerator
+### RandomTileBackground
 - 랜덤한 타일을 생성하여 동적으로 변하는 맵을 구성.
 
 ## [일정]
@@ -209,7 +264,7 @@
 - 맵 및 UI 구상
 
 ### 1주차: 
-1. randomTileGenerator 구현
+1. RandomTileBackground 구현
 2. 캐릭터 컨트롤러 구현
 ### 2주차: 
 2. 좀비 및 아이템 구현
@@ -241,15 +296,22 @@
 ### 1주차
 1. 캐릭터 애니메이션 추가
 2. 플레이어 컨트롤러 추가: 이동 및 회전
-3. Gun class, Aim class 추가: 
+3. Gun class, Aim class, Bullet class 추가: 
 - Aim - 마우스 포인터 위치 조준점 위치
 - Gun: 불릿이 생성되는 위치 마우스 포인터를 바라본다.
+- Bullet: 좌클릭시 Aim의 방향으로 발사된다.
 4. RandomTileBackground 추가
-- 무제한으로 스크롤 되며, 랜덤한 타일이 추가되는 bg 클래스
+- 무제한으로 스크롤 되며, 랜덤한 타일이 추가되는 클래스
 
 ### 2주차
 1. 기본적인 좀비 class 및 하위 zombie 클래스 생성
+2. CollisionManager 생성 및 콜리전 발생시 이벤트 처리
+3. ZombieZen(Controller)를 통한 좀비 State 관리
+4. 생각보다 좀비의 행동이 한정되어, 행동 트리는 사용하지 않는 방향으로 수정
 
+문제점:
+1. 함수명에 _를 붙이면 private처럼 접근하지 한다고 착각
+   - _가 붙은 함수명을 변경해야함.
 ### 3주차
 ### 4주차
 ### 5주차
