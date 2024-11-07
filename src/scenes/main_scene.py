@@ -1,7 +1,5 @@
 from gfw import *
-from player import PlayerController_main
-from utility import RandomTileBackground
-from core import ZombieZen, CollisionManager
+from core import *
 
 world = World(['bg', 'zombie', 'player', 'bullet', 'controller', 'UI'])
 
