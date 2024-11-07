@@ -12,10 +12,9 @@ class PlayerController:
     def handle_event(self, e): pass
     
 class PlayerController_main(PlayerController):
-    def __init__(self, bg, showCursor=True):
+    def __init__(self, bg, player, showCursor=True):
         super().__init__(showCursor)
-        self.player = Actor('player/mainC.png')
-        self.player.bg = bg
+        self.player = Actor('player/mainC.png', bg)
         self.aim = Aim()
         self.world = gfw.top().world
         world = gfw.top().world
@@ -61,6 +60,5 @@ class PlayerController_main(PlayerController):
             elif e.key == SDLK_s:
                 self.player.adjust_delta(0, 1)
 
-    def get_player(self):
-        return self.player
-                
+    def Hit(self):
+        self.player.collide()

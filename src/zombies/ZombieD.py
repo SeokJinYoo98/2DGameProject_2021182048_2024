@@ -20,7 +20,7 @@ class ZombieD(Zombie):
     FRAME_INFO = {
         # Frame Index Count, fps
         'IDLE': (1, 1 / 12),
-        'WALK': (3, 1 / 5),
+        'WALK': (3, 1 / 6),
         'HIT': (1, 1/ 2),
         'DEAD': (1, 1 / 2)
     }

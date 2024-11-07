@@ -10,10 +10,13 @@ class Bullet(gfw.Sprite):
         self._scale = scale
         self._dirX, self._dirY = math.cos(angle), math.sin(angle) 
         self._flip = flip
+        self._penetration = 1
         super().__init__('prop/Bullet2.png', x + self._dirX * 30, y + self._dirY * 30)
 
         
     def update(self):
+        if self.check_is_death(): self._erase()
+            
         self.y += self._dirY * gfw.frame_time * self._speed
         self.x += self._dirX * gfw.frame_time * self._speed
 
@@ -33,4 +36,18 @@ class Bullet(gfw.Sprite):
     def _erase(self):
             world = gfw.top().world
             world.remove(self, world.layer.bullet)
-
+            
+    def collide(self):
+        self._penetration -= 1
+        
+    def get_bb(self):
+        l = self.x - self.width // 3
+        b = self.y - self.height // 2
+        r = self.x + self.width // 3
+        t = self.y + self.height // 2
+        return l, b, r, t
+            
+    def check_is_death(self):
+        if 0 < self._penetration:
+            return False
+        return True

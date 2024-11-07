@@ -1,9 +1,9 @@
 from gfw import *
 from player import PlayerController_main
 from utility import RandomTileBackground
-from core import ZombieZen
+from core import ZombieZen, CollisionManager
 
-world = World(['bg', 'zombies', 'player', 'bullet', 'controller', 'UI'])
+world = World(['bg', 'zombie', 'player', 'bullet', 'controller', 'UI'])
 
 shows_bounding_box = True
 shows_object_count = True
@@ -12,18 +12,20 @@ canvas_width = 1280
 canvas_height = 1280
 
 def enter():
-    global playerController, zombieZen, bg
+    global playerController, collision, zombieZen, bg
     
     bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=500)
     playerController = PlayerController_main(bg, False)
     zombieZen = ZombieZen(playerController.player) 
+    collision = CollisionManager(playerController.player)
     
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
     world.append(zombieZen, world.layer.controller)
+    world.append(collision, world.layer.controller)
     
     world.bg = bg
-    
+    world.player = playerController.player
 def exit(): 
     world.clear()
     print('[main.exit()]')

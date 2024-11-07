@@ -6,8 +6,7 @@ class Zombie(gfw.Sprite):
     BG = None
     def __init__(self, fileName, x, y, TYPE):
         if Zombie.Target is None:
-            Zombie.Target = gfw.top().playerController.get_player()
-            
+            Zombie.Target = gfw.top().playerController.player
         if Zombie.BG is None:
             Zombie.BG = gfw.top().bg
         # if Zombie.Target is None:
@@ -23,30 +22,34 @@ class Zombie(gfw.Sprite):
         self.flip = ' '
         self.TYPE = TYPE
         
+        self.hp = self.TYPE.Hp
+        
+        self.animTime = 0
+        
         self._do_WALK()
     
     def update(self):
-        self.toTarget()
-        self.anim()
-            
+        pass
+
     def draw(self):
+        self.anim()
+        self.frame_index %= self.frame_count
         self.current_frame = self.TYPE.FRAMES[self.state][self.frame_index]
         x1, y1, x2, y2 = self.current_frame
         self.screen_pos = Zombie.BG.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*self.current_frame,  0, self.flip, *self.screen_pos, w=50, h=50)     
                
     def anim(self):
-        # 애니메이션 전환
         self.elapsed_time += gfw.frame_time
         if self.elapsed_time >= self.frame_time:
             self.elapsed_time = 0 
             # 다음 프레임으로 전환
-            self.frame_index = (self.frame_index + 1) % self.frame_count
-            
+            self.frame_index += 1
+                    
     def toTarget(self):
         if Zombie.Target is None: return
-        tx, ty = Zombie.Target.x, Zombie.Target.y
-        zx, zy = self.x, self.y
+        tx, ty = int(Zombie.Target.x), int(Zombie.Target.y)
+        zx, zy = int(self.x), int(self.y)
         
         dx = tx - zx
         dy = ty - zy
@@ -56,46 +59,48 @@ class Zombie(gfw.Sprite):
         else:
             self.flip = ' '
             
-        distance_squared = dx ** 2 + dy ** 2
+        normal = (dx ** 2 + dy ** 2) ** 0.5
+        if normal != 0:
+            dx /= normal
+            dy /= normal
+             
+        self.x += dx * gfw.frame_time * self.TYPE.Speed
+        self.y += dy * gfw.frame_time * self.TYPE.Speed
         
-        if distance_squared <= 0.01:
-            return
-        
-        inv_distance = 1 / (distance_squared ** 0.5)
-        dir_x = dx * inv_distance
-        dir_y = dy * inv_distance
-        
-        speed = self.TYPE.Speed
-        
-        self.x += dir_x
-        self.y += dir_y
-                
-    def _change_Anim_Info(self):
+    def _change_Anim_Info(self, state):
+        self.state = state
         self.frame_count = self.TYPE.FRAME_INFO[self.state][0]
         self.frame_time = self.TYPE.FRAME_INFO[self.state][1]
+        self.animTime = 0   
         
     def _do_IDLE(self):
         if self.state != 'IDLE':
-            self.state = "IDLE"
-            self._change_Anim_Info()
+            self.collType = True
+            self._change_Anim_Info("IDLE")
     def _do_WALK(self):
         if self.state != 'WALK':
-            self.state = 'WALK'
-            self._change_Anim_Info()
+            self.collType = True
+            self._change_Anim_Info('WALK')
     def _do_HIT(self):
         if self.state != 'HIT':
-            self.state = 'HIT'
-            self._change_Anim_Info()
+            self.collType = False
+            self._change_Anim_Info('HIT')
     def _do_DEAD(self):
         if self.state != 'DEAD':
-            self.state = 'DEAD'
-            self._change_Anim_Info()
-            
+            self.collType = False
+            self._change_Anim_Info('DEAD')
+
+    def collide(self):
+        self._do_HIT()
+        self.hp -= 1
+    
     def get_bb(self):
-        # 월드 좌표 기준으로 충돌 박스를 설정합니다
         l = self.x - self.width // 3
         b = self.y - self.height // 2
         r = self.x + self.width // 3
         t = self.y + self.height // 2
         return l, b, r, t
-        
+
+    def _erase(self):
+        world = gfw.top().world
+        world.remove(self, world.layer.zombie)

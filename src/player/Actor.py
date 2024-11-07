@@ -3,7 +3,6 @@ import gfw
 import math
 from player.Gun import Gun
 from player.Bullet import Bullet
-
 class Actor(gfw.Sprite):   
     PLAYER_FRAMES = {
         "IDLE": [
@@ -21,7 +20,7 @@ class Actor(gfw.Sprite):
             (19, 0, 18, 20), (37, 0, 18, 20),
         ],
     }
-    def __init__(self, path):
+    def __init__(self, path, bg):
         
         x = get_canvas_width() // 2
         y = get_canvas_height() // 2
@@ -42,7 +41,7 @@ class Actor(gfw.Sprite):
         
         # 이동 관련
         self.dx, self.dy = 0, 0
-        self.speed = 100 # 레벨업 요소
+        self.speed = 150 # 레벨업 요소
         self.degree = 0
         self.flip = 'h'
         
@@ -59,7 +58,7 @@ class Actor(gfw.Sprite):
         self.bullet_RowCnt = 1 # 레벨업 요소
 
         # 백그라운드 
-        self.bg = None
+        self.bg = bg
         
     # 업데이트            
     def update(self):
@@ -184,11 +183,11 @@ class Actor(gfw.Sprite):
     
     # 충돌
     def get_bb(self):
-        # 월드 좌표 기준으로 충돌 박스를 설정합니다
         l = self.x - self.width // 3
         b = self.y - self.height // 3
         r = self.x + self.width // 3
         t = self.y + self.height // 3
         return l, b, r, t
         
-    
+    def collide(self):
+        self.hp -= 1
