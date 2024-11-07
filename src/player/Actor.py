@@ -77,7 +77,7 @@ class Actor(gfw.Sprite):
         screen_pos = self.bg.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
         self.gun.draw_(self.flip, *screen_pos)
-        gfw.draw_circle(*screen_pos, self.pickUp_radius)
+        gfw.draw_circle(*screen_pos, self.pickUp_radius, 0, 0, 255)
              
     ## ---------------------------------------------------------------------------
     def coolTime(self):

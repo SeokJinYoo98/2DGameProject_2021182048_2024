@@ -228,8 +228,8 @@ class InfiniteScrollBackground(ScrollBackground):
         # quadrant 1
         self.image.clip_draw_to_origin(0, 0, cw - q3w, ch - q3h, q3w, q3h)
         
-def draw_circle(x, y, r):
-    SDL_SetRenderDrawColor(pico2d.renderer, 0, 0, 255, 255)
+def draw_circle(x, y, r, red, g ,b):
+    SDL_SetRenderDrawColor(pico2d.renderer, red, g, b, 255)
     num_segments = 32
     theta = 2 * math.pi / num_segments
 

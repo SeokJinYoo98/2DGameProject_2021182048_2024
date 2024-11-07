@@ -3,7 +3,9 @@ class ZombieR(Zombie):
     Target = None
     BG = None
     Hp = 1
-    Speed = 90
+    Speed = 80
+    ATTACK_COLLTIME = 1
+    ATTACK_RANGE = 400
     FRAMES = {
         'IDLE': [ 
             (0, 19, 19, 19)
@@ -25,7 +27,7 @@ class ZombieR(Zombie):
         'HIT': (1, 1 / 2),
         'DEAD': (1, 1 / 2)
     }
-
+    
     def __init__(self, x, y):
         fileName = 'zombie/zombieR.png'
         super().__init__(fileName, x, y, ZombieR)

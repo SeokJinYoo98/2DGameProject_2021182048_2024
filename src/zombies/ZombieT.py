@@ -3,7 +3,9 @@ class ZombieT(Zombie):
     Target = None
     BG = None
     Hp = 3
-    Speed = 200
+    Speed = 110
+    ATTACK_RANGE = 200
+    DASH_Speed = 2
     FRAMES = {
         'IDLE': [ 
             (19, 0, 19, 19)
@@ -26,7 +28,7 @@ class ZombieT(Zombie):
         'HIT': (1, 1 / 2),
         'DEAD': (1, 1 / 2)
     }
-
+    
     def __init__(self, x, y):
         fileName = 'zombie/zombieT.png'
         super().__init__(fileName, x, y, ZombieT)
