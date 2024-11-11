@@ -98,7 +98,6 @@
             - Draw_Tile()을 호출한다.
          3. update(): 
             - Check_Update_BG 호출
-         ---
          4. Draw_Tile(self, coords, x, y):
             - draw()함수에서 타일의 정보를 받는다.
             - 받은 타일의 정보를 그린다.
