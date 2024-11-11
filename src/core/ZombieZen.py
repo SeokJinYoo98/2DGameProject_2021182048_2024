@@ -1,7 +1,7 @@
 import gfw
-import random as random
+import random
+from core import ItemZen
 from zombies import *
-
 class ZombieZen:
     LEVEL_INCREASE = 30
     ZOMBIE_TYPE = 'D', 'R', 'T'
@@ -30,7 +30,9 @@ class ZombieZen:
             if z.state == "DEAD":
                 z.animTime += gfw.frame_time
                 if z.animTime >= ZombieZen.DEAD_TIME:
+                    ItemZen.CreateItem(z.x, z.y)
                     z._erase()
+                    
                     
             elif z.state == "HIT":
                 z.animTime += gfw.frame_time

@@ -1,7 +1,7 @@
 from gfw import *
 from core import *
 
-world = World(['bg', 'zombie', 'player', 'bullet', 'controller', 'UI'])
+world = World(['bg', 'zombie', 'player', 'bullet', 'item', 'controller', 'UI'])
 
 shows_bounding_box = True
 shows_object_count = True
