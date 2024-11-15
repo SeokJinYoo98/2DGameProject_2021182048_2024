@@ -37,7 +37,7 @@ class Actor(gfw.Sprite):
         self._do_IDLE()
 
         # 아이템 획득
-        self.pickUp_radius = 100
+        self.special_Range = 100
         
         # 이동 관련
         self.dx, self.dy = 0, 0
@@ -64,13 +64,9 @@ class Actor(gfw.Sprite):
         
     # 업데이트            
     def update(self):
-        self.x += self.dx * self.speed * gfw.frame_time
-        self.y += self.dy * self.speed * gfw.frame_time
-        
+        self.move()
         self.coolTime()
         self.anim()
-       
-        self.bg.show(self.x, self.y)
     
     # 드로우        
     def draw(self):
@@ -79,9 +75,14 @@ class Actor(gfw.Sprite):
         screen_pos = self.bg.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
         self.gun.draw_(self.flip, *screen_pos)
-        gfw.draw_circle(*screen_pos, self.pickUp_radius, 0, 0, 255)
+        gfw.draw_circle(*screen_pos, self.special_Range, 0, 0, 255)
              
     ## ---------------------------------------------------------------------------
+    def move(self):
+        self.x += self.dx * self.speed * gfw.frame_time
+        self.y += self.dy * self.speed * gfw.frame_time
+        self.bg.show(self.x, self.y)
+        
     def coolTime(self):
           # 사격 쿨타임 증가
         if self.bullet_Time <= self.bullet_Cooltime:
@@ -190,16 +191,6 @@ class Actor(gfw.Sprite):
         r = self.x + self.width // 3
         t = self.y + self.height // 3
         return l, b, r, t
-    
-    def get_Center(self):
-        l = self.x - self.width // 3
-        b = self.y - self.height // 3
-        r = self.x + self.width // 3
-        t = self.y + self.height // 3  
-        
-        x_center = (l + r) // 2 
-        y_center = (b + t) // 2
-        return (x_center, y_center)
     
     def collide(self):
         self.hp -= 1

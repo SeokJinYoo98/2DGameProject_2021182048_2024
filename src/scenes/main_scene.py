@@ -13,9 +13,9 @@ def enter():
     global playerController, zombieZen
     bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=500)
     playerController = PlayerController_main(bg, False)
-    zombieZen = ZombieZen() 
+    zombieZen = ZombieManager() 
     collision = CollisionManager()
-    
+
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
     world.append(zombieZen, world.layer.controller)

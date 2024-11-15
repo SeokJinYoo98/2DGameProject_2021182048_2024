@@ -28,7 +28,7 @@ class PlayerController_main(PlayerController):
         self.player.checkState()
 
     def draw(self):
-        self.aim.draw()
+        pass
     
     def handle_event(self, e):
         # 에임 설정
@@ -38,7 +38,7 @@ class PlayerController_main(PlayerController):
         
         # 사격 수행
         if e.type == SDL_MOUSEBUTTONDOWN:
-            if e.button == 1:
+            if e.button == SDL_BUTTON_LEFT:
                 self.player.fire()
         
         # 이동 설정

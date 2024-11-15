@@ -38,7 +38,7 @@ class Item(gfw.Sprite):
         pos = gfw.top().world.bg.to_screen(self.x, self.y)
         self.image.draw(*pos, 20, 20)
     
-    def special_function(self):
+    def special_Function(self, target):
         pass
 
 class Coin(Item):

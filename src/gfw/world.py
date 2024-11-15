@@ -89,14 +89,12 @@ def collides_box(a, b): # a or b is a Sprite
     return True
 
 def collides_circle(a, b):
-    la, ba, ra, ta = a.get_bb()
-    lb, bb, rb, tb = b.get_bb()
+    if a.special_Range is None: return
+    aX, aY = a.x, a.y
+    bX, bY = b.x, b.y
 
-    centerA = (la + ra) // 2, (ba + ta) // 2
-    centerB = (lb + rb) // 2, (bb + tb) // 2
+    dist = (bX - aX) ** 2 + (bY - aY) ** 2
     
-    dist = (centerA[0] - centerB[0]) ** 2 + (centerA[1] - centerB[1]) ** 2
-    
-    return dist <= a.pickUp_radius ** 2
+    return dist <= a.special_Range ** 2
    
     

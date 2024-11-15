@@ -40,18 +40,6 @@ class Sprite:
         r = self.x + self.width // 2
         t = self.y + self.height // 2
         return l, b, r, t
-    def get_center(self):
-        if not self.collType:
-            return None
-        l = self.x - self.width // 2
-        b = self.y - self.height // 2
-        r = self.x + self.width // 2
-        t = self.y + self.height // 2
-        
-        x_center = (l[0] + b[0] + r[0] + t[0]) // 4
-        y_center = (l[1] + b[1] + r[1] + t[1]) // 4
-
-        return (x_center, y_center)
 
     def __getstate__(self):
         dict = self.__dict__.copy()

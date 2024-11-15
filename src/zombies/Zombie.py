@@ -13,6 +13,8 @@ class Zombie(gfw.Sprite):
         #     Zombie.Target = gfw.top().layer.player
         super().__init__(fileName, x, y)
 
+        self.special_Range = None
+        
         # 애니메이션 관련
         self.state = None
         self.frame_index = 0
@@ -26,6 +28,8 @@ class Zombie(gfw.Sprite):
         
         self.animTime = 0
         
+        self.mag = 1
+        
         self._do_WALK()
           
     def update(self):
@@ -38,8 +42,8 @@ class Zombie(gfw.Sprite):
         x1, y1, x2, y2 = self.current_frame
         screen_pos = Zombie.BG.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*self.current_frame,  0, self.flip, *screen_pos, w=50, h=50)
-        if self.TYPE.ATTACK_RANGE is not None:
-            gfw.draw_circle(*screen_pos, self.TYPE.ATTACK_RANGE, 0, 255, 0) 
+        if self.special_Range is not None:
+            gfw.draw_circle(*screen_pos, self.special_Range, 0, 255, 0) 
                
     def anim(self):
         self.elapsed_time += gfw.frame_time
@@ -66,8 +70,8 @@ class Zombie(gfw.Sprite):
             dx /= normal
             dy /= normal
              
-        self.x += dx * gfw.frame_time * self.TYPE.Speed
-        self.y += dy * gfw.frame_time * self.TYPE.Speed
+        self.x += dx * gfw.frame_time * self.TYPE.Speed * self.mag
+        self.y += dy * gfw.frame_time * self.TYPE.Speed * self.mag
         
     def _change_Anim_Info(self, state):
         self.state = state
@@ -91,7 +95,11 @@ class Zombie(gfw.Sprite):
         if self.state != 'DEAD':
             self.collType = False
             self._change_Anim_Info('DEAD')
-
+    def _do_ATTACK(self):
+           if self.state != 'ATTACK':
+            self.collType = True
+            self._change_Anim_Info('ATTACK') 
+            
     def collide(self):
         self._do_HIT()
         self.hp -= 1
@@ -106,3 +114,6 @@ class Zombie(gfw.Sprite):
     def _erase(self):
         world = gfw.top().world
         world.remove(self, world.layer.zombie)
+        
+    def special_Function(self):
+        pass
