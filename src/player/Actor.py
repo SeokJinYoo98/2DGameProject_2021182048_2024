@@ -59,6 +59,8 @@ class Actor(gfw.Sprite):
 
         # 백그라운드 
         self.bg = bg
+    def __del__(self):
+        del self.gun
         
     # 업데이트            
     def update(self):
@@ -188,6 +190,20 @@ class Actor(gfw.Sprite):
         r = self.x + self.width // 3
         t = self.y + self.height // 3
         return l, b, r, t
+    
+    def get_Center(self):
+        l = self.x - self.width // 3
+        b = self.y - self.height // 3
+        r = self.x + self.width // 3
+        t = self.y + self.height // 3  
         
+        x_center = (l[0] + b[0] + r[0] + t[0]) // 4
+        y_center = (l[1] + b[1] + r[1] + t[1]) // 4
+        
+        return (x_center, y_center)
+    
     def collide(self):
         self.hp -= 1
+        
+    def item(self, i):
+        sp = i.special_Function()

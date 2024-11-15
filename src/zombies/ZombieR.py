@@ -31,4 +31,3 @@ class ZombieR(Zombie):
     def __init__(self, x, y):
         fileName = 'zombie/zombieR.png'
         super().__init__(fileName, x, y, ZombieR)
-    

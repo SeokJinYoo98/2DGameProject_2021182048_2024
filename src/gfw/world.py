@@ -87,3 +87,10 @@ def collides_box(a, b): # a or b is a Sprite
     if ta < bb: return False
 
     return True
+
+def collides_circle(a, b):
+    center = a.get_Center()
+    radius = a.pickUp_radius
+    lb, bb, rb, tb = b.get_bb()
+   
+    

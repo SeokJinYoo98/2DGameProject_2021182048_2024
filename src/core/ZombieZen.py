@@ -8,7 +8,7 @@ class ZombieZen:
     DEAD_TIME = 0.5
     HIT_TIME = 0.2
     
-    def __init__(self, player):
+    def __init__(self):
         # self.gameTime = 0
         # self.level = 1
         # self.totalZombies = self.level * ZombieZen.LEVEL_INCREASE
@@ -16,9 +16,8 @@ class ZombieZen:
         # self.rangeZombies = 0
         # self.tankZombies = 0
         # self.time += gfw.time()
-        self.player = player
         self.world = gfw.top().world
-
+        
     def setZombiesCount(self):
         total = self.totalZombies
         self.tankZombies = self.level * 2
@@ -52,8 +51,8 @@ class ZombieZen:
     def zenZombies(self):
         type = random.choice(ZombieZen.ZOMBIE_TYPE)
         
-        x = self.player.x + random.choice([-500, 500])
-        y = self.player.y + random.choice([-500, 500])
+        x = self.world.player.x + random.choice([-500, 500])
+        y = self.world.player.y + random.choice([-500, 500])
 
         zombie = None
         

@@ -10,12 +10,11 @@ canvas_width = 1280
 canvas_height = 1280
 
 def enter():
-    global playerController, collision, zombieZen, bg
-    
+    global playerController, zombieZen
     bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=500)
     playerController = PlayerController_main(bg, False)
-    zombieZen = ZombieZen(playerController.player) 
-    collision = CollisionManager(playerController.player)
+    zombieZen = ZombieZen() 
+    collision = CollisionManager()
     
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
@@ -25,6 +24,7 @@ def enter():
     world.bg = bg
     world.player = playerController.player
 def exit(): 
+    gfw.quit()
     world.clear()
     print('[main.exit()]')
 

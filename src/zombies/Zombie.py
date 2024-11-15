@@ -27,7 +27,7 @@ class Zombie(gfw.Sprite):
         self.animTime = 0
         
         self._do_WALK()
-    
+          
     def update(self):
         pass
 
