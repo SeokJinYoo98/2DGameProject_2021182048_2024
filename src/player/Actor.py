@@ -197,9 +197,8 @@ class Actor(gfw.Sprite):
         r = self.x + self.width // 3
         t = self.y + self.height // 3  
         
-        x_center = (l[0] + b[0] + r[0] + t[0]) // 4
-        y_center = (l[1] + b[1] + r[1] + t[1]) // 4
-        
+        x_center = (l + r) // 2 
+        y_center = (b + t) // 2
         return (x_center, y_center)
     
     def collide(self):

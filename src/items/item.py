@@ -1,19 +1,14 @@
 import gfw
 
 class Item(gfw.Sprite):
-    Speed = 1
+    Speed = 200
     def __init__(self, fileName, x, y, Type):
         super().__init__(fileName, x, y)
         self.target = None
         self.Type = Type
-    def __del__(self):
-        self.target = None
-        self.Type = None
     def update(self):
         if self.target is None: return
-        
-        tx = self.target.x
-        ty = self.target.y
+        self.toTarget()
         
     def toTarget(self):
         tx, ty = int(self.target.x), int(self.target.y)
@@ -40,8 +35,8 @@ class Item(gfw.Sprite):
            self.target = None
         
     def draw(self):
-        pos = gfw.top().bg.to_screen(self.x, self.y)
-        self.image.draw(*pos, 10, 10)
+        pos = gfw.top().world.bg.to_screen(self.x, self.y)
+        self.image.draw(*pos, 20, 20)
     
     def special_function(self):
         pass

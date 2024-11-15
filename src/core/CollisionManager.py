@@ -8,7 +8,7 @@ class CollisionManager:
     
     def update(self):
         self.check_Zombie()
-
+        self.check_Item()
 
     def check_Zombie(self):
         zombies = self.world.objects_at(self.world.layer.zombie)
@@ -31,5 +31,8 @@ class CollisionManager:
         items = self.world.objects_at(self.world.layer.item)
         if (0 < self.world.count_at(self.world.layer.item)):
             for item in items:
-                gfw.collides_circle(self.world.player, item)
+                if gfw.collides_circle(self.world.player, item):
+                    item.setTarget(self.world.player)
+                else:
+                    item.deleteTarget()
                 

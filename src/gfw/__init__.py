@@ -3,4 +3,4 @@
 from .gfw import *
 from .gobj import *
 from .image import *
-from .world import World, collides_box
+from .world import World, collides_box, collides_circle

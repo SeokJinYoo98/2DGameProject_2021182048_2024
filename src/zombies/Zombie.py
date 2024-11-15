@@ -6,9 +6,9 @@ class Zombie(gfw.Sprite):
     BG = None
     def __init__(self, fileName, x, y, TYPE):
         if Zombie.Target is None:
-            Zombie.Target = gfw.top().playerController.player
+            Zombie.Target = gfw.top().world.player
         if Zombie.BG is None:
-            Zombie.BG = gfw.top().bg
+            Zombie.BG = gfw.top().world.bg
         # if Zombie.Target is None:
         #     Zombie.Target = gfw.top().layer.player
         super().__init__(fileName, x, y)
