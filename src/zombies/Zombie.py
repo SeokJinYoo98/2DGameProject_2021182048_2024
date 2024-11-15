@@ -49,7 +49,6 @@ class Zombie(gfw.Sprite):
         self.elapsed_time += gfw.frame_time
         if self.elapsed_time >= self.frame_time:
             self.elapsed_time = 0 
-            # 다음 프레임으로 전환
             self.frame_index += 1
                     
     def toTarget(self):

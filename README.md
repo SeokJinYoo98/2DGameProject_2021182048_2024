@@ -311,14 +311,16 @@
 문제점:
 1. 함수명에 _를 붙이면 private처럼 접근하지 한다고 착각
    - _가 붙은 함수명을 __으로 변경해야함.
-2. Item Class의 구체적인 구현 누락.
+2. Item Class의 구체적인 구현 누락. -> 해결
    - 생각보다 바쁜 일정으로 Item Class의 구현 누락.
    - 빠른 시일내에 구현 해야함.
+
 ### 3주차
 1. Item class 구현
 2. Item의 magnetic 효과 구현
 3. Zombie들의 Special Function 구현
-4. 
+4. Coin, Vaccine의 Special Function 구현
+
 
 ### 4주차
 ### 5주차

@@ -43,32 +43,26 @@ class ZombieR(Zombie):
         if Zombie.Target is None: return
         px, py = Zombie.Target.x, Zombie.Target.y
         
-        dist = ((px - self.x) ** 2 + (py - self.y) ** 2) ** 0.5
-        
-        if dist <= self.special_Range - 100:
-            self.__move_Back(px, py)
-        
-        self.__Attack(px, py)
-
-    
-    def __move_Back(self, px, py):
-        dx = self.x - px
-        dy = self.y - py
-        
-        mag = (dx ** 2 + dy ** 2) ** 0.5
-        if mag != 0:
-            self.x += (dx / mag) * gfw.frame_time * ZombieR.Speed
-            self.y += (dx / mag) * gfw.frame_time * ZombieR.Speed
-        
-    def __Attack(self, px, py):
-        if self.Attack_Time <= ZombieR.ATTACK_COLLTIME:
-            self.Attack_Time += gfw.frame_time
-            return
         
         angle = math.atan2(py - self.y, px - self.x)
         dir_x = math.cos(angle)
         dir_y = math.sin(angle)
-        b = zBullet(self.x + dir_x, self.y + dir_y, dir_x, dir_y)
+        dist = ((px - self.x) ** 2 + (py - self.y) ** 2) ** 0.5
+        if dist <= self.special_Range - 100:
+            self.__move_Back(dir_x, dir_y)
+        
+        self.__Attack(px, py, dir_x, dir_y)
+
+    
+    def __move_Back(self, dir_x, dir_y):
+        self.x -= dir_x * gfw.frame_time * ZombieR.Speed
+        self.y -= dir_y * gfw.frame_time * ZombieR.Speed
+        
+    def __Attack(self, px, py, dir_x, dir_y):
+        if self.Attack_Time <= ZombieR.ATTACK_COLLTIME:
+            self.Attack_Time += gfw.frame_time
+            return
+        b = zBullet(self.x + dir_x * 10, self.y + dir_y * 10, dir_x, dir_y)
         world = gfw.top().world
         world.append(b, world.layer.zbullet)
         self.Attack_Time = 0

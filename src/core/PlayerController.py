@@ -4,16 +4,13 @@ from player import Actor
 from player import Aim
  
 class PlayerController:
-    def __init__(self, showCursor=True): 
-        if showCursor is False:
-            SDL_ShowCursor(SDL_DISABLE)
+    def __init__(self): pass
     def update(self): pass
     def draw(self): pass
     def handle_event(self, e): pass
     
 class PlayerController_main(PlayerController):
-    def __init__(self, bg, player, showCursor=True):
-        super().__init__(showCursor)
+    def __init__(self, bg):
         self.player = Actor('player/mainC.png', bg)
         self.aim = Aim()
         self.world = gfw.top().world

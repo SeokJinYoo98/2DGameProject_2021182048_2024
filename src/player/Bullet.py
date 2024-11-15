@@ -23,8 +23,7 @@ class Bullet(gfw.Sprite):
         move_dist = self._speed * gfw.frame_time
         
         self._dist_travelled += move_dist
-        
-        # 사거리만큼 이동했다면 지운다.
+     
         if self._dist_travelled >= self._range:
            self._erase()
             

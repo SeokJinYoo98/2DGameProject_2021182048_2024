@@ -10,9 +10,11 @@ canvas_width = 1280
 canvas_height = 1280
 
 def enter():
+     
+    SDL_ShowCursor(SDL_DISABLE)
     global playerController, zombieManager
     bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=500)
-    playerController = PlayerController_main(bg, False)
+    playerController = PlayerController_main(bg)
     zombieManager = ZombieManager() 
     collision = CollisionManager()
 
