@@ -42,8 +42,7 @@ class ZombieR(Zombie):
     def special_Function(self):
         if Zombie.Target is None: return
         px, py = Zombie.Target.x, Zombie.Target.y
-        
-        
+    
         angle = math.atan2(py - self.y, px - self.x)
         dir_x = math.cos(angle)
         dir_y = math.sin(angle)

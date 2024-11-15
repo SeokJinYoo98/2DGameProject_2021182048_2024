@@ -30,6 +30,9 @@ class ZombieManager:
             self.__Attack(zombie)
             
     def __Death(self, zombie):
+        if zombie.special_Range != None:
+            zombie.spcial_Range = None
+            
         zombie.animTime += gfw.frame_time
         if zombie.animTime >= ZombieManager.DEAD_TIME:
             ItemManager.CreateItem(zombie.x, zombie.y)

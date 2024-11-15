@@ -26,8 +26,8 @@ def enter():
     world.bg = bg
     world.player = playerController.player
 def exit(): 
-    gfw.quit()
     world.clear()
+    gfw.quit()
     print('[main.exit()]')
 
 def pause():

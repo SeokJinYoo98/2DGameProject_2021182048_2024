@@ -79,15 +79,15 @@ class Zombie(gfw.Sprite):
         self.animTime = 0   
         
     def _do_IDLE(self):
-        if self.state != 'IDLE':
+        if self.state != 'IDLE' and self.state != 'DEAD':
             self.collType = True
             self._change_Anim_Info("IDLE")
     def _do_WALK(self):
-        if self.state != 'WALK':
+        if self.state != 'WALK' and self.state != 'DEAD':
             self.collType = True
             self._change_Anim_Info('WALK')
     def _do_HIT(self):
-        if self.state != 'HIT':
+        if self.state != 'HIT' and self.state != 'DEAD':
             self.collType = False
             self._change_Anim_Info('HIT')
     def _do_DEAD(self):
@@ -95,7 +95,7 @@ class Zombie(gfw.Sprite):
             self.collType = False
             self._change_Anim_Info('DEAD')
     def _do_ATTACK(self):
-           if self.state != 'ATTACK':
+           if self.state != 'ATTACK' and self.state != 'DEAD':
             self.collType = True
             self._change_Anim_Info('ATTACK') 
             
