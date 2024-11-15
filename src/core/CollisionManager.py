@@ -16,15 +16,17 @@ class CollisionManager:
         
     def __check_Zombie(self, player):
         zombies = self.world.objects_at(self.world.layer.zombie)
-        for z in zombies:
-            if not z.collType: continue
-            self.__zombie_player(z, player)
-            self.__zombie_bullet(z)
+        for zombie in zombies:
+            if not zombie.collType: continue
+            self.__zombie_player(zombie, player)
+            self.__zombie_bullet(zombie)
             
     def __zombie_player(self, zombie, player):
         self.__is_Collide(zombie, player)
         if gfw.collides_circle(zombie, player):
             zombie._do_ATTACK()
+        else:
+            zombie._do_WALK()
         
     def __zombie_bullet(self, zombie):
         self.__is_Hit_Bullet(zombie)  
@@ -33,7 +35,7 @@ class CollisionManager:
         items = self.world.objects_at(self.world.layer.item)
         for item in items:
             self.__player_item(player, item)    
-        # 좀비 불릿 체크
+       
     def __player_item(self, player, item):
         if gfw.collides_circle(player, item):
             item.setTarget(player)
@@ -48,10 +50,6 @@ class CollisionManager:
             if gfw.collides_box(target, bullet):
                 target.collide() 
                 bullet.collide()
-                   
-    def __is_InRange(self, source, target):
-        if gfw.collides_circle(source, target):
-            source.special_Function()
             
     def __is_Collide(self, source, target):
         if (gfw.collides_box(source, target)):

@@ -1,4 +1,5 @@
 from zombies import Zombie
+import gfw
 class ZombieR(Zombie):
     Target = None
     BG = None
@@ -19,7 +20,7 @@ class ZombieR(Zombie):
             (0, 0, 19, 19)
         ],
         'ATTACK': [
-            (0, 19, 19, 19)
+            (0, 19, 19, 19), (19, 19, 19, 19)
         ]
     }
     FRAME_INFO = {
@@ -28,7 +29,7 @@ class ZombieR(Zombie):
         'WALK': (2, 1 / 4),
         'HIT': (1, 1 / 2),
         'DEAD': (1, 1 / 2),
-        'ATTACK': (1, 1 / 2)
+        'ATTACK': (2, 1 / 4)
     }
     
     def __init__(self, x, y):
@@ -38,8 +39,23 @@ class ZombieR(Zombie):
         
     def special_Function(self):
         if Zombie.Target is None: return
+        px, py = Zombie.Target.x, Zombie.Target.y
         
-        # 거리 유지
+        dist = ((px - self.x) ** 2 + (py - self.y) ** 2) ** 0.5
         
-        # 공격
-        pass
+        if dist <= self.special_Range - 50:
+            # 거리 유지
+            self.move_Back(px, py)
+        else:
+            # 공격
+            pass   
+    
+    def move_Back(self, px, py):
+        dx = self.x - px
+        dy = self.y - py
+        
+        mag = (dx ** 2 + dy ** 2) ** 0.5
+        if mag != 0:
+            self.x += (dx / mag) * gfw.frame_time * ZombieR.Speed
+            self.y += (dx / mag) * gfw.frame_time * ZombieR.Speed
+        
