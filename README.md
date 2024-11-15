@@ -305,17 +305,20 @@
 ### 2주차
 1. 기본적인 좀비 class 및 하위 zombie 클래스 생성
 2. CollisionManager 생성 및 콜리전 발생시 이벤트 처리
-3. ZombieZen(Controller)를 통한 좀비 State 관리
+3. ZombieManager를 통한 좀비 State 관리
 4. 생각보다 좀비의 행동이 한정되어, 행동 트리는 사용하지 않는 방향으로 수정
 
 문제점:
 1. 함수명에 _를 붙이면 private처럼 접근하지 한다고 착각
-   - _가 붙은 함수명을 변경해야함.
+   - _가 붙은 함수명을 __으로 변경해야함.
 2. Item Class의 구체적인 구현 누락.
    - 생각보다 바쁜 일정으로 Item Class의 구현 누락.
    - 빠른 시일내에 구현 해야함.
 ### 3주차
 1. Item class 구현
+2. Item의 magnetic 효과 구현
+3. Zombie들의 Special Function 구현
+4. 
 
 ### 4주차
 ### 5주차

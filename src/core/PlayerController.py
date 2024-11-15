@@ -7,8 +7,6 @@ class PlayerController:
     def __init__(self, showCursor=True): 
         if showCursor is False:
             SDL_ShowCursor(SDL_DISABLE)
-  
-
     def update(self): pass
     def draw(self): pass
     def handle_event(self, e): pass
@@ -26,9 +24,6 @@ class PlayerController_main(PlayerController):
     def update(self):
         self.player.rotate(self.aim.x, self.aim.y)
         self.player.checkState()
-
-    def draw(self):
-        pass
     
     def handle_event(self, e):
         # 에임 설정

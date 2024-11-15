@@ -25,40 +25,37 @@ class Actor(gfw.Sprite):
         x = get_canvas_width() // 2
         y = get_canvas_height() // 2
         super().__init__(path, x, y)
-        
+        self.bg = bg
         # 애니메이션 관련
         self.state = None
         self.frame_index = 0
         self.frame_time = 0
         self.elapsed_time = 0
-        
-        self.hp = 3 # 레벨업 요소
-        
-        self._do_IDLE()
-
         # 아이템 획득
         self.special_Range = 100
-        
         # 이동 관련
         self.dx, self.dy = 0, 0
-        self.speed = 150 # 레벨업 요소
         self.degree = 0
         self.flip = 'h'
         
         # 총 관련
         self.gun = Gun()
-        
         # 총알 관련
         self.bullet_Time = 1
+        # 레벨 관련
+        self.Xp = 0 # 레벨
+        self.speed = 150 # 레벨업 요소
+        self.maxHp = 3
+        self.hp = 3 # 레벨업 요소
         self.bullet_Scale = 2 # 레벨업 요소  
         self.bullet_Cooltime = 1 # 레벨업 요소
         self.bullet_Range = 200 # 레벨업 요소
         self.bullet_Speed = 500 # 레벨업 요소
         self.bullet_ColCnt = 1 # 레벨업 요소
         self.bullet_RowCnt = 1 # 레벨업 요소
-
-        # 백그라운드 
-        self.bg = bg
+        
+        self._do_IDLE()
+        
     def __del__(self):
         del self.gun
         
@@ -74,6 +71,7 @@ class Actor(gfw.Sprite):
         x1, y1, x2, y2 = current_frame
         screen_pos = self.bg.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
+
         self.gun.draw_(self.flip, *screen_pos)
         gfw.draw_circle(*screen_pos, self.special_Range, 0, 0, 255)
              
@@ -123,7 +121,6 @@ class Actor(gfw.Sprite):
     def checkState(self):
         if self._isDead():
             self._do_DEAD()
-            
         elif self._isMove():
             if self._isBack(): self._do_BackWALK()
             else: self._do_WALK()
@@ -194,6 +191,3 @@ class Actor(gfw.Sprite):
     
     def collide(self):
         self.hp -= 1
-        
-    def item(self, i):
-        sp = i.special_Function()

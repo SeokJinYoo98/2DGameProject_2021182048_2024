@@ -38,6 +38,10 @@ class Item(gfw.Sprite):
         pos = gfw.top().world.bg.to_screen(self.x, self.y)
         self.image.draw(*pos, 20, 20)
     
+    def erase(self):
+        world = gfw.top().world
+        world.remove(self, world.layer.item)
+    
     def special_Function(self, target):
         pass
 
@@ -45,8 +49,17 @@ class Coin(Item):
     def __init__(self, x, y):
         COIN_PATH = 'prop/Coin.png'
         super().__init__(COIN_PATH, x, y, Coin)
-
+    def special_Function(self, target):
+        target.Xp += 1
+        print(f'{target.Xp=}')
+        self.erase()
+        
 class Vaccine(Item):
     def __init__(self, x, y):
         VACCINE_PATH = 'prop/Vaccine.png'
         super().__init__(VACCINE_PATH, x, y, Vaccine)
+    def special_Function(self, target):
+        if target.hp < target.maxHp:
+            target.hp += 1
+            print(f'{target.hp=}')
+        self.erase()    

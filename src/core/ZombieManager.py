@@ -1,6 +1,6 @@
 import gfw
 import random
-from src.core import ItemManager
+from core import ItemManager
 from zombies import *
 class ZombieManager:
     LEVEL_INCREASE = 30
@@ -60,11 +60,11 @@ class ZombieManager:
         zombie = None
         
         if type == 'D':
-            zombie = ZombieR(x, y)
+            zombie = ZombieD(x, y)
         elif type == 'R':
             zombie = ZombieR(x, y)
         elif type == 'T':
-            zombie = ZombieR(x, y)
+            zombie = ZombieT(x, y)
         
         self.world.append(zombie, self.world.layer.zombie)
 

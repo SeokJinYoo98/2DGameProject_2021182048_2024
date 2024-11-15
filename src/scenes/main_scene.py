@@ -10,15 +10,15 @@ canvas_width = 1280
 canvas_height = 1280
 
 def enter():
-    global playerController, zombieZen
+    global playerController, zombieManager
     bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=500)
     playerController = PlayerController_main(bg, False)
-    zombieZen = ZombieManager() 
+    zombieManager = ZombieManager() 
     collision = CollisionManager()
 
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
-    world.append(zombieZen, world.layer.controller)
+    world.append(zombieManager, world.layer.controller)
     world.append(collision, world.layer.controller)
     
     world.bg = bg
@@ -39,7 +39,7 @@ def handle_event(e):
         print(world.objects)
     if e.type == SDL_MOUSEBUTTONDOWN:
         if e.button == 3:
-            zombieZen.zenZombies()
+            zombieManager.zenZombies()
     playerController.handle_event(e)
 
 if __name__ == '__main__':
