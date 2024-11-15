@@ -60,11 +60,11 @@ class ZombieManager:
         zombie = None
         
         if type == 'D':
-            zombie = ZombieD(x, y)
+            zombie = ZombieR(x, y)
         elif type == 'R':
             zombie = ZombieR(x, y)
         elif type == 'T':
-            zombie = ZombieT(x, y)
+            zombie = ZombieR(x, y)
         
         self.world.append(zombie, self.world.layer.zombie)
 

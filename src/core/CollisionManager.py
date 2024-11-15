@@ -34,7 +34,8 @@ class CollisionManager:
     def __check_Player(self, player):
         items = self.world.objects_at(self.world.layer.item)
         for item in items:
-            self.__player_item(player, item)    
+            self.__player_item(player, item)
+        self.__player_bullet(player)
        
     def __player_item(self, player, item):
         if gfw.collides_circle(player, item):
@@ -42,10 +43,17 @@ class CollisionManager:
         else:
             item.deleteTarget()
         if gfw.collides_box(player, item):
-            item.special_Function(player)            
-
+            item.special_Function(player)
+                    
+    def __player_bullet(self, player):
+        self.__is_Hit_Bullet(player)
+        
     def __is_Hit_Bullet(self, target):
-        bullets = self.world.objects_at(self.world.layer.bullet)
+        layer = self.world.layer.bullet
+        if target == self.world.player:
+            layer = self.world.layer.zbullet
+            
+        bullets = self.world.objects_at(layer)
         for bullet in bullets:
             if gfw.collides_box(target, bullet):
                 target.collide() 

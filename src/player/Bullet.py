@@ -51,3 +51,4 @@ class Bullet(gfw.Sprite):
         if 0 < self._penetration:
             return False
         return True
+
