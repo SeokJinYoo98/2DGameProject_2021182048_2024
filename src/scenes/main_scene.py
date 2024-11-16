@@ -44,8 +44,11 @@ def handle_event(e):
             zombieManager.zenZombies()
     playerController.handle_event(e)
 
+def Change_LevelUp_Scene():
+    pass
+
 if __name__ == '__main__':
     gfw.start_main_module()
 
 
-        
+       

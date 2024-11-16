@@ -98,7 +98,7 @@ def top():
 def _load_system_font():
     import gfw
     gfw._system_font = None
-    paths = [ 'lucon.ttf', 'res/lucon.ttf', 'C:/Windows/Fonts/lucon.ttf' ]
+    paths = [ 'neodgm.ttf', 'assets/fonts/neodgm.ttf', 'C:/Windows/Fonts/neodgm.ttf' ]
     for path in paths:
         try:
             font = load_font(path, 20)
