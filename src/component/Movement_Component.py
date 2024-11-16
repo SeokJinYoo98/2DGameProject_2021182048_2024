@@ -1,6 +1,6 @@
-import Component
+from component import Component
 
-class MovementComponent(Component):
+class Movement_Component(Component):
     def __init__(self, speed=100, mag=1):
         self.__speed = speed
         self.__mag = mag
@@ -23,3 +23,8 @@ class MovementComponent(Component):
         m = self.__speed * self.__mag * frame_time
         move_x, move_y = dx * m, dy * m
         return move_x, move_y
+    def flip(self):
+        return self.__flip
+    def flip(self, value):
+        if self.__flip != value:
+            self.__flip = value

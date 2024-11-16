@@ -1,28 +1,33 @@
-import Component
-class TransformComponent(Component):
-    def __init__(self, x=0, y=0, rotation=0, scaleX=0, scaleY=0):
+from component import Component
+class Transform_Component(Component):
+    def __init__(self, rotation=0, scaleX=0, scaleY=0):
         super().__init__()
-        self.__position = [x, y]
         self.__rotation = rotation
         self.__scale = [scaleX, scaleY]
         
-    def position(self):
-        return self.__position
-    def position(self, value):
-        self.__position = value
-    def rotation(self):
-        return self.__rotation
-    def rotation(self, value):
-        self.__rotation = value
-    def scale(self):
-        return self.__scale
-    def scale(self, value):
+    
+    def set_position(self, x, y):
+        if self.entity:
+            self.entity.x = x
+            self.entity.y = y
+    def set_scale(self, value):
         self.__scale = value
+    def set_rotation(self, value):
+        self.__rotation = value
+        
+    def get_position(self):
+        if self.entity: return [self.entity.x, self.entity.y]
+        return [0, 0]    
+    def get_scale(self):
+        return self.__scale
+    def get_rotation(self):
+        return self.__rotation
+    
     def add_translate(self, dx, dy):
-        self.__position[0] += dx
-        self.__position[1] += dy
+        self.entity.x += dx
+        self.entity.y += dy
     def add_rotate(self, delta):
         self.__rotation += delta
     def add_scale(self, sx, sy):
-        self.__scale += sx
-        self.__scale += sy
+        self.__scale[0] += sx
+        self.__scale[1] += sy
