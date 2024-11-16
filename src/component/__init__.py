@@ -1,3 +1,4 @@
-# utility/__init__.py
+from .Component import*
 
-from ..core.RandomTileBackground import RandomTileBackground
+from .Movement_Component import MovementComponent
+from .Transform_Component import TransformComponent
