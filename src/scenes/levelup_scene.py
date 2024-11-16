@@ -27,6 +27,7 @@ def enter():
     world.player = playerController.player
 def exit(): 
     world.clear()
+    gfw.quit()
     print('[main.exit()]')
 
 def pause():
@@ -45,6 +46,3 @@ def handle_event(e):
 
 if __name__ == '__main__':
     gfw.start_main_module()
-
-
-        

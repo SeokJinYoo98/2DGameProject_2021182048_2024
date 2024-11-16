@@ -1,5 +1,5 @@
 from pico2d import *
-from gfw.config import Font_DIR
+from gfw.config import FONT_DIR
 _fonts = {}
 
 def load(file, size=20):
@@ -9,7 +9,7 @@ def load(file, size=20):
         return _fonts[key]
 
     # print("Loading font:", file, size)
-    file_path = os.path.join(Font_DIR, file)
+    file_path = os.path.join(FONT_DIR, file)
     font = load_font(file_path, size)
     _fonts[key] = font
     return font
