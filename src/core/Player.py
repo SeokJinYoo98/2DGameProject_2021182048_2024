@@ -1,6 +1,6 @@
 import gfw
 from core import Entity
-from component import Transform_Component, Movement_Component, HealthComponent
+from component import Transform_Component, Movement_Component, Health_Component
 
 class Player(Entity):
     def __init__(self):
@@ -8,10 +8,10 @@ class Player(Entity):
         super().__init__(*Info)
         self.add_components(Transform_Component, Transform_Component(2, 2))
         self.add_components(Movement_Component, Movement_Component(100, 1))
-        self.add_components(HealthComponent, HealthComponent(3))
-        
+        self.add_components(Health_Component, Health_Component(3))
+        self
     def update(self):
-        h = self.get_component(HealthComponent)
+        h = self.get_component(Health_Component)
         print(h.get_hp())
         pass
        

@@ -6,25 +6,42 @@ class Movement_Component(Component):
         self.__mag = mag
         self.__direction = [0, 0]
         self.__flip = ' '
+
+    @property
     def speed(self):
         return self.__speed
+
+    @speed.setter
     def speed(self, value):
         self.__speed = value
+
+    @property
     def mag(self):
         return self.__mag
+
+    @mag.setter
     def mag(self, value):
         self.__mag = value
+
+    @property
     def direction(self):
         return self.__direction
+
+    @direction.setter
     def direction(self, value):
         self.__direction = value
+
+    @property
+    def flip(self):
+        return self.__flip
+
+    @flip.setter
+    def flip(self, value):
+        if self.__flip != value:
+            self.__flip = value
+
     def move(self, frame_time):
         dx, dy = self.__direction
         m = self.__speed * self.__mag * frame_time
         move_x, move_y = dx * m, dy * m
         return move_x, move_y
-    def flip(self):
-        return self.__flip
-    def flip(self, value):
-        if self.__flip != value:
-            self.__flip = value

@@ -79,7 +79,8 @@ def push(scene):
     scene.enter()
 
 def pop():
-    _stack.pop().exit()
+    if _stack:
+        _stack.pop().exit()
     if not _stack:
         quit()
         return

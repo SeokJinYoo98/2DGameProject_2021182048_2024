@@ -20,12 +20,11 @@ class Animation_Component(Component):
                 self.__frame_index = 0
                 
     def get_frame(self, state):
-        """Returns the current frame for a given state."""
         if state not in self.__frames:
             return None
         return self.__frames[state][self.__frame_index]
     
-    def change_anim_Info(self, state):
+    def change_anim(self, state):
         if state not in self.__frames_info: return None
         self.__frame_count = self.__frames_info[state][0]
         self.__frame_time = self.__frames_info[state][1]

@@ -5,7 +5,6 @@ class Transform_Component(Component):
         self.__rotation = rotation
         self.__scale = [scaleX, scaleY]
         
-    
     def set_position(self, x, y):
         if self.entity:
             self.entity.x = x
