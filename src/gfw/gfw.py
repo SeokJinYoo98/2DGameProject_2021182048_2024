@@ -41,13 +41,14 @@ def start(scene):
 
         # event 를 처리한다
         for e in get_events():
-            handled = _stack[-1].handle_event(e)
-            if not handled:
-                if e.type == SDL_QUIT:
-                    quit()
-                elif e.type == SDL_KEYDOWN:
-                    if e.key == SDLK_ESCAPE:
-                        pop()
+            if _stack:
+                handled = _stack[-1].handle_event(e)
+                if not handled:
+                    if e.type == SDL_QUIT:
+                        quit()
+                    elif e.type == SDL_KEYDOWN:
+                        if e.key == SDLK_ESCAPE:
+                            pop()
 
     while _stack:
         _stack.pop().exit()

@@ -1,27 +1,28 @@
 from component import Component
 class Transform_Component(Component):
-    def __init__(self, rotation=0, scaleX=0, scaleY=0):
+    def __init__(self, rotation=0, scaleX=1, scaleY=1):
         super().__init__()
         self.__rotation = rotation
         self.__scale = [scaleX, scaleY]
-        
-    def set_position(self, x, y):
-        if self.entity:
-            self.entity.x = x
-            self.entity.y = y
-    def set_scale(self, value):
-        self.__scale = value
-    def set_rotation(self, value):
-        self.__rotation = value
-        
-    def get_position(self):
-        if self.entity: return [self.entity.x, self.entity.y]
-        return [0, 0]    
-    def get_scale(self):
-        return self.__scale
-    def get_rotation(self):
+    @property
+    def rotation(self):
         return self.__rotation
-    
+    @rotation.setter
+    def rotation(self, delta):
+        self.__rotation = delta
+    @property
+    def scale(self):
+        return self.__scale
+    @scale.setter
+    def scale(self, x, y):
+        self.__scale.x, self.__scale.y = x, y
+    @property
+    def position(self):
+        return self.entity.x, self.entity.y
+    @position.setter
+    def position(self, x, y):
+        self.entity.x, self.entity.y = x, y
+        
     def add_translate(self, dx, dy):
         self.entity.x += dx
         self.entity.y += dy

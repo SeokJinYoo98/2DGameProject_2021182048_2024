@@ -1,17 +1,19 @@
-from component import Component
+from component import Component, Animation_Component, Health_Component, Movement_Component
 
 class State_Component(Component):
-    def __init__(self, anim_comp=None):
+    def __init__(self):
+        super().__init__()
         self.__state = 'IDLE'
-        self.__anim = anim_comp
+        
     @property
     def state(self):
         return self.__state
-
+    def update(self):
+        pass
+    
     @state.setter
     def state(self, new_state):
         if self.__state != 'DEAD':
             self.__state = new_state
-            if self.__anim:
-                self.__anim.change_anim(self.__state)
-                
+
+        

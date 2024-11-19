@@ -10,9 +10,10 @@ class Component:
     def entity(self, entity):
         self.__entity = entity
 
-    def update(self):
+    def update(self, frametime):
         pass
 
     def draw(self):
         pass
-    
+    def set_Comp(self):
+        pass

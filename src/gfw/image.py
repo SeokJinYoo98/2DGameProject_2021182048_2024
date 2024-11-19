@@ -1,3 +1,4 @@
+import os
 from pico2d import *
 from gfw.config import SPRITES_DIR
 

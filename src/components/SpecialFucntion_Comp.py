@@ -1,14 +1,14 @@
-import Component
-import gfw
+from component import Component
+
 class SpecialFunction(Component):
     def __init__(self, special_range=100, collTime=1):
         self.specialF_range = special_range
         self.specialF_colltime, self.specialF_elapsed = collTime
         self.status = None
         
-    def update(self):
+    def update(self, frametime):
         if self.__check_colltime():
-            self.specialF_elapsed -= gfw.frame_time
+            self.specialF_elapsed -= frametime
         else:
             self.special_function()
             self.specialF_elapsed = self.specialF_colltime
