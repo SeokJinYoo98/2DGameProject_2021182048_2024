@@ -2,20 +2,25 @@ import gfw
 from pico2d import *
 
 class Card(gfw.Sprite):
+    Frames = {
+        "Non": (0, 0, 48, 62),
+        "Click": (49, 0, 48, 62)
+    }
     def __init__(self, path, x, y):
         super().__init__(path, x,  y)
         self.player = gfw.top().world.player
         self.is_mouse_on = False
         self.height *= 10
-        self.width *= 8
+        self.width *= 4
     def draw(self):
-        self.image.draw(self.x, self.y, self.width, self.height)
+        frame = Card.Frames["Non"]
+        if not self.is_mouse_on: frame = Card.Frames["Click"]
+        self.image.clip_draw(*frame, self.x, self.y, self.width, self.height)
     def _erase(self):
         world = gfw.top().world
         world.remove(self, world.layer.cards)    
     def levelUp(self):
-        print("레벨업")
-
+        pass
     def is_mouse_in_card(self, mx, my):
         l, b, r, t = self.get_bb()
         if l < mx and mx < r:
@@ -28,7 +33,7 @@ class Card(gfw.Sprite):
 
 class HpCard(Card):
     def __init__(self, x, y):
-        path = 'cards/SkillCardBase1.png'
+        path = 'cards/SkillCardBase.png'
         super().__init__(path, x, y)
         pass
     def update(self):
