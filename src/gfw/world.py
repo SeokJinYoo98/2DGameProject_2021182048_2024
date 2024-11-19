@@ -16,6 +16,7 @@ class World:
                 index += 1
         self.gameTime = 0
         self.objects = [[] for i in range(layer_count)]
+        self.pause = False
     def append(self, go, layer_index=None):
         if layer_index is None:
             layer_index = go.layer_index
@@ -28,6 +29,7 @@ class World:
         layer_count = len(self.objects)
         self.objects = [[] for i in range(layer_count)]
     def update(self):
+        if self.pause: return
         for go in self.all_objects_reversed():
             go.update()
         self.gameTime += gfw.frame_time
@@ -97,4 +99,5 @@ def collides_circle(a, b):
     
     return dist <= a.special_Range ** 2
    
-    
+def clear_cards(self):
+    pass

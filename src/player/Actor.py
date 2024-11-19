@@ -191,3 +191,5 @@ class Actor(gfw.Sprite):
     
     def collide(self):
         self.hp -= 1
+
+    

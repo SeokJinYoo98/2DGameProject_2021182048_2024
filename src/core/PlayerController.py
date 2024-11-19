@@ -28,6 +28,9 @@ class PlayerController_main(PlayerController):
             mouse_x,  mouse_y = e.x, get_canvas_height() - e.y
             self.aim.setLoaction(mouse_x, mouse_y)
         
+        if e.type == SDLK_l:
+            self.Xp += 1
+        
         # 사격 수행
         if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
@@ -43,7 +46,9 @@ class PlayerController_main(PlayerController):
                 self.player.adjust_delta(0, 1)
             elif e.key == SDLK_s:
                 self.player.adjust_delta(0, -1)
-            
+            elif e.key == SDLK_l:
+                self.player.Xp +=1
+                
         elif e.type == SDL_KEYUP:
             if e.key == SDLK_a:
                 self.player.adjust_delta(1, 0)
@@ -53,6 +58,6 @@ class PlayerController_main(PlayerController):
                 self.player.adjust_delta(0, -1)
             elif e.key == SDLK_s:
                 self.player.adjust_delta(0, 1)
-
+    
     def Hit(self):
         self.player.collide()

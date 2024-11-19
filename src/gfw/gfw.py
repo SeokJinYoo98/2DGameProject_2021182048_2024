@@ -96,6 +96,8 @@ def quit():
 
 def top():
     return _stack[-1]
+def prev():
+    return _stack[0]
 
 def _load_system_font():
     import gfw
