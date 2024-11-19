@@ -93,7 +93,9 @@ class Actor(gfw.Sprite):
             self.elapsed_time = 0 
             # 다음 프레임으로 전환
             self.frame_index = (self.frame_index + 1) % self.frame_count
-            
+    def reset_dir(self):
+        self.dx = 0
+        self.dy = 0
     def adjust_delta(self, x, y):
         self.dx += x
         self.dy += y

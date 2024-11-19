@@ -58,6 +58,7 @@ class PlayerController_main(PlayerController):
                 self.player.adjust_delta(0, -1)
             elif e.key == SDLK_s:
                 self.player.adjust_delta(0, 1)
-    
+    def reset(self):
+        self.player.reset_dir()
     def Hit(self):
         self.player.collide()

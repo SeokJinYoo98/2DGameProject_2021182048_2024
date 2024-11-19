@@ -32,10 +32,12 @@ def exit():
 
 def pause():
     SDL_ShowCursor(SDL_ENABLE)
+    playerController.reset()
     world.pause = True
     print('[main.pause()]')
 
 def resume():
+    playerController.reset()
     SDL_ShowCursor(SDL_DISABLE)
     world.pause = False
     print('[main.resume()]')
