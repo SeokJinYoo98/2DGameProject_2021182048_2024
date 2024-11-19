@@ -1,2 +1,0 @@
-class States(Component):
-    pass
