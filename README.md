@@ -164,7 +164,7 @@
       - Special_Function(): Player의 Hp를 1회복
       - ![Vaccine](https://github.com/user-attachments/assets/7e2a9efb-ae82-441e-90c3-9eb54f9959a8)
 - 역할: 플레이어에게 이로운 효과 제공
-- 핵심 메서드드:
+- 핵심 메서드:
    1. set_target(): Target을 설정
    2. to_Target(): Target에게 이동 
    3. special_function(): 특별한 기능 발동(Player.Xp+, Player.Hp+)
