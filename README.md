@@ -60,7 +60,8 @@
    - 로딩, 메뉴, 종료 씬 구현
    
 ## [Commit Insights]
-
+![Commit](https://github.com/user-attachments/assets/73ea86ab-6c93-46b3-b25d-d9ff3d87f399)
+![CommitGraph](https://github.com/user-attachments/assets/a856b9d3-db1a-42c7-a7b3-89dce3f95e96)
 
 ## [수정]
 1. 좀비 행동 관리 방식 변경
