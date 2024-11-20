@@ -86,7 +86,7 @@
 
 ## [문제점 및 어려운점]
 1. 게임의 코드가 오직 Zomboogie를 위한 코드로 제작되고 있음.
-2. 프레임워크의 이해도가 부족
+2. 레벨업 씬을 분리하지 못한 점
    - LevelScene으로 전환되는 경우 MainScene의 배경이 없어지는 문제 발생
    - LevelScene에서도 MainScene의 화면 정보를 담고싶지만, 해결 방향을 찾지 못했음.
    - MainScene에서 Pause, Resume 메서드를 수정해 LevelUp을 관리하게 되었음.
