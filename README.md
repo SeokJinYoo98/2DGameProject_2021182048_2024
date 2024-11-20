@@ -93,7 +93,7 @@
 
 ## [메인 씬 - 게임 오브젝트]
 ### bg
-- gif
+![bg](https://github.com/user-attachments/assets/0ba7b9e9-5e56-4bc8-9464-dec7f6dc2d1e)
 - Class: RandomTileBackground
 - Is a: InfiniteScrollBackground class
 - 역할: 랜덤 타일 생성 및 무한 스크롤 배경
@@ -103,7 +103,7 @@
    3. Check_Update_BG(): 스크롤 양 계산, 필요 시 Shift()호출
    4. Shift(): 타일의 이동 및 새로운 타일 생성
 ### Player 
-- gif
+![Player](https://github.com/user-attachments/assets/46b7b2e0-555e-4904-9677-f9beb20fcb81)
 - Class: Actor
 - Is a: Sprite class
 - Has a:
@@ -128,17 +128,19 @@
 - Is a: Sprite class
 - Inheritance:
    1. ZombieD
-      - gif
       - Hp: 1, Speed: 100
       - Special_Function: None
+      - ![ZombieD](https://github.com/user-attachments/assets/cb0fd9c0-e683-4e14-8fad-e2e7d2a47021)
    2. ZombieR
       - gif
       - Hp: 1, Speed: 80
       - Special_Function: 일정 거리 유지 및 원거리 공격
+      - ![ZombieR](https://github.com/user-attachments/assets/29c40d2b-46bc-4387-aaf7-ee518b2e9d02)
    3. ZombieT
       - gif
       - Hp: 3, Speed: 110
       - Special_Function: 달리기
+      - ![ZombieT](https://github.com/user-attachments/assets/05d8c70b-b145-42c8-9350-a68a6299bae8)
 - 역할: 플레이어와 전투
 - 핵심 메서드:
    1. to_Target(): 플레이어에게 접근
@@ -155,11 +157,11 @@
 - Is a: Sprite class
 - Inheritance:
    1. Coin
-      - gif
       - Special_Function(): Player의 Xp를 1증가
+      - ![Coin](https://github.com/user-attachments/assets/4a62f2e2-7701-4ffd-af8d-2ce7e2dc20dc)
    2. Vaccine
-      - gif
       - Special_Function(): Player의 Hp를 1회복
+      - ![Vaccine](https://github.com/user-attachments/assets/7e2a9efb-ae82-441e-90c3-9eb54f9959a8)
 - 역할: 플레이어에게 이로운 효과 제공
 - 핵심:
    1. set_target(): Target을 설정
@@ -179,6 +181,7 @@
 - 상호작용:
    1. CollisionManager
 ### Cards
+![BulletLevelUp](https://github.com/user-attachments/assets/48ac14c0-d603-4aa0-83e7-1a853973043c)
 - class: Card
 - Is a: Sprite Class
 - Inheritance: 
