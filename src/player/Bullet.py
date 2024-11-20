@@ -1,7 +1,7 @@
 import math
 import gfw
 class Bullet(gfw.Sprite):
-    def __init__(self, x, y, angle, range, speed, flip, scale):
+    def __init__(self, x, y, angle, range, speed, flip, scale, pene):
         self._speed = speed # pixels per second
         self._dist_travelled = 0
         self._range = range
@@ -10,7 +10,7 @@ class Bullet(gfw.Sprite):
         self._scale = scale
         self._dirX, self._dirY = math.cos(angle), math.sin(angle) 
         self._flip = flip
-        self._penetration = 1
+        self._penetration = pene
         super().__init__('prop/Bullet2.png', x + self._dirX * 30, y + self._dirY * 30)
 
         

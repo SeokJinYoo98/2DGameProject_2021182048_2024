@@ -37,7 +37,7 @@ class PlayerController_main(PlayerController):
                 self.player.fire()
         
         # 이동 설정
-        elif e.type == SDL_KEYDOWN:
+        if e.type == SDL_KEYDOWN:
             if e.key == SDLK_a:
                 self.player.adjust_delta(-1, 0)
             elif e.key == SDLK_d:
@@ -49,7 +49,7 @@ class PlayerController_main(PlayerController):
             elif e.key == SDLK_l:
                 self.player.Xp +=1
                 
-        elif e.type == SDL_KEYUP:
+        if e.type == SDL_KEYUP:
             if e.key == SDLK_a:
                 self.player.adjust_delta(1, 0)
             elif e.key == SDLK_d:
@@ -58,7 +58,5 @@ class PlayerController_main(PlayerController):
                 self.player.adjust_delta(0, -1)
             elif e.key == SDLK_s:
                 self.player.adjust_delta(0, 1)
-    def reset(self):
-        self.player.reset_dir()
     def Hit(self):
         self.player.collide()

@@ -31,15 +31,13 @@ def exit():
     print('[main.exit()]')
 
 def pause():
-    SDL_ShowCursor(SDL_ENABLE)
-    playerController.reset()
     world.pause = True
+    SDL_ShowCursor(SDL_ENABLE)
     print('[main.pause()]')
 
 def resume():
-    playerController.reset()
-    SDL_ShowCursor(SDL_DISABLE)
     world.pause = False
+    SDL_ShowCursor(SDL_DISABLE)
     print('[main.resume()]')
 
 def handle_event(e):

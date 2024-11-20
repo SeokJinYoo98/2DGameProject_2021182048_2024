@@ -48,12 +48,12 @@ class Actor(gfw.Sprite):
         self.maxHp = 3
         self.hp = 3 # 레벨업 요소
         self.bullet_Scale = 2 # 레벨업 요소  
-        self.bullet_Cooltime = 1 # 레벨업 요소
+        self.bullet_Cooltime = 1.056 # 레벨업 요소
         self.bullet_Range = 200 # 레벨업 요소
         self.bullet_Speed = 500 # 레벨업 요소
         self.bullet_ColCnt = 1 # 레벨업 요소
         self.bullet_RowCnt = 1 # 레벨업 요소
-        
+        self.bullet_Penetration = 1 # 관통
         self._do_IDLE()
         
     def __del__(self):
@@ -93,9 +93,6 @@ class Actor(gfw.Sprite):
             self.elapsed_time = 0 
             # 다음 프레임으로 전환
             self.frame_index = (self.frame_index + 1) % self.frame_count
-    def reset_dir(self):
-        self.dx = 0
-        self.dy = 0
     def adjust_delta(self, x, y):
         self.dx += x
         self.dy += y
@@ -106,17 +103,26 @@ class Actor(gfw.Sprite):
             self.flip = ' '
         else:
             self.flip = 'h'
-
         self.gun.rotate(tx, ty, self.flip)
         
     # 총알 발사
     def fire(self):
+        offsetX = 15
+        offsetY = 15
         if self.bullet_Time < self.bullet_Cooltime: return
         #print('fire!')
         world = gfw.top().world
+        for i in range(self.bullet_ColCnt):
+            x = self.x + offsetX * math.cos(self.gun.angle) * i
+            y = self.y + offsetY * math.sin(self.gun.angle) * i
         
-        bulletInfo = self.x, self.y, self.gun.angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale
-        world.append(Bullet(*bulletInfo), world.layer.bullet)
+            bulletHalf = self.bullet_RowCnt / 2
+            for j in range(self.bullet_RowCnt):
+                if j <= bulletHalf: angle = self.gun.angle - 0.1 * j
+                else: angle = self.gun.angle + 0.1 * (bulletHalf - j)
+                bulletInfo = x, y, angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale, self.bullet_Penetration
+                world.append(Bullet(*bulletInfo), world.layer.bullet)
+        
         self.bullet_Time = 0
         
     # 상태 변경

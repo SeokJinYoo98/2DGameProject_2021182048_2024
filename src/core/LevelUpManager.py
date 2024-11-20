@@ -1,76 +1,19 @@
 import gfw
+import random
 from pico2d import *
-
-class Card(gfw.Sprite):
-    Frames = {
-        "Non": (0, 0, 48, 62),
-        "Click": (49, 0, 48, 62)
-    }
-    Font = None
-    def __init__(self, path, x, y):
-        super().__init__(path, x,  y)
-        if Card.Font is None:
-            Card.Font = gfw.font.load('neodgm.TTF', 32)
-            
-        self.player = gfw.top().world.player
-        self.is_mouse_on = False
-        self.height *= 9
-        self.width *= 4
-        self.text = None
-        self.font_offsetX = 20
-        self.font_offsetY = -60
-    def update(self):
-        pass      
-    def draw(self):
-        frame = Card.Frames["Click"]
-        if not self.is_mouse_on: frame = Card.Frames['Non']
-        self.image.clip_draw(*frame, self.x, self.y, self.width, self.height)
-        gfw.draw_centered_text(Card.Font, self.text, self.x + self.font_offsetX, self.y + self.font_offsetY)
-    def _erase(self):
-        world = gfw.top().world
-        world.remove(self, world.layer.cards)
-    def levelUp(self):
-        pass
-    def is_mouse_in_card(self, mx, my):
-        l, b, r, t = self.get_bb()
-        if l < mx and mx < r:
-            if b <= my and my <= t:
-                self.is_mouse_on = True
-                return
-                
-        self.is_mouse_on = False
-
-class HpCard(Card):
-    def __init__(self, x, y):
-        path = 'cards/SkillCardHp.png'
-        super().__init__(path, x, y)
-        self.text = "Hp 회복"
-    def levelUp(self):
-        self.player.hp = self.player.maxHp
-        print(f"레벨업{self.player.hp=}")
-class MaxHp(Card):
-    def __init__(self, x, y):
-        path = 'cards/SkillCardMaxHp.png'
-        super().__init__(path, x, y)
-        self.text = "Max Hp 증가"
-    def levelUp(self):
-        self.player.maxHp += 1
-        print(f"Max레벨업{self.player.maxHp=}")
-
-        
-        
+from cards import *
+      
 class LevelUpManager:
     def __init__(self):
+        self.CARDS = ("H", "MH", "S", "AS", "R", "B1", "B2", "G")
         self.cards = []
         self.__player = gfw.top().world.player
         self.isLevelUp = False
-
     def handle_event(self, event):
         if not self.isLevelUp: return
+        self.__player_input(event)
         self.__is_mouse_on(event)
         self.__is_clicked(event)
-
-        
     def draw(self):
         pass
     def update(self):
@@ -78,18 +21,15 @@ class LevelUpManager:
             pass
         else:
             self.__check_level()
-    
     def __check_level(self):
         if self.__isLevelUp():
             self.pause()
             self.__player.Xp -=1
             self.__creates_cards()
-    
     def __isLevelUp(self):
         if self.__player.Xp >= 1:
             print("LevelUp")
         return self.__player.Xp >= 1
-    
     def __creates_cards(self):
         offset = gfw.get_canvas_width() // 3
         x = gfw.get_canvas_width() // 2 - offset
@@ -97,12 +37,32 @@ class LevelUpManager:
         for i in range(3):
             self.__creates_card(x, y)
             x += offset
-            
     def __creates_card(self, x, y):
+        newCard = self.__choice_card(x, y)
+        while any(card.name == newCard.name for card in self.cards):
+            newCard = self.__choice_card(x, y)
+        self.cards.append(newCard)
         world = gfw.top().world
-        card = MaxHp(x, y)
-        self.cards.append(card)
-        world.append(card, world.layer.cards)
+        world.append(newCard, world.layer.cards)
+
+    def __choice_card(self, x, y):
+        newCard = random.choice(self.CARDS)
+        if newCard == 'H':
+            return HpCard(x, y)
+        elif newCard == 'MH':
+            return MaxHpCard(x, y)
+        elif newCard == 'S':
+            return SpeedCard(x, y)
+        elif newCard == 'AS':
+            return AttackSpeedCard(x, y)
+        elif newCard == 'B1':
+            return Bullet1Card(x, y)
+        elif newCard == 'B2':
+            return Bullet2Card(x, y)
+        elif newCard == 'R':
+            return RangeCard(x, y)
+        elif newCard == 'G':
+            return GunCard(x, y)
     def __is_mouse_on(self, event):
         if event.type == SDL_MOUSEMOTION:
             mouse_x,  mouse_y = event.x, get_canvas_height() - event.y
@@ -112,14 +72,13 @@ class LevelUpManager:
         if event.type == SDL_MOUSEBUTTONDOWN:
             if event.button == SDL_BUTTON_LEFT:
                 if self.__clicked_check():
-                    self.__clear_cards()
-                   
+                    self.__clear_cards()  
     def __clear_cards(self):
         for card in self.cards:
             card._erase()
         self.cards.clear()
         self.resume()  
-              
+
     def __clicked_check(self):
         for card in self.cards:
             if card.is_mouse_on:
@@ -132,3 +91,26 @@ class LevelUpManager:
     def resume(self):
         self.isLevelUp = False
         gfw.top().resume()
+
+    def __player_input(self, event):
+        if event.type == SDL_KEYDOWN:
+            if event.key == SDLK_a:
+                self.__player.adjust_delta(-1, 0)
+            elif event.key == SDLK_d:
+                self.__player.adjust_delta(1, 0)
+            elif event.key == SDLK_w:
+                self.__player.adjust_delta(0, 1)
+            elif event.key == SDLK_s:
+                self.__player.adjust_delta(0, -1)
+            elif event.key == SDLK_l:
+                self.__player.Xp +=1
+                
+        if event.type == SDL_KEYUP:
+            if event.key == SDLK_a:
+                self.__player.adjust_delta(1, 0)
+            elif event.key == SDLK_d:
+                self.__player.adjust_delta(-1, 0)
+            elif event.key == SDLK_w:
+                self.__player.adjust_delta(0, -1)
+            elif event.key == SDLK_s:
+                self.__player.adjust_delta(0, 1)
