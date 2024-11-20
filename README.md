@@ -9,6 +9,7 @@
 
 # ZomBoogie 
 ![Title](https://github.com/user-attachments/assets/fce170cd-ead1-45c2-a79a-91e9081a3bc0)
+
 ## [컨셉 소개]
 - 참고 게임: Vampire Survivors
 - 장르: 탑다운 슈팅 로그라이트
@@ -17,34 +18,185 @@
 - 특징: 빠르고 간단한 조작으로 누구나 쉽게 즐길 수 있는 캐주얼한 게임플레이.
 
 ## [핵심 메카닉]
-### 캐릭터 컨트롤
+### 캐릭터 컨트롤 - 100%
 - wasd: 8방향 이동 지원.
 - 좌클릭: 마우스 위치로 사격.
-### 좀비
+- 회전: 마우스 방향으로 회전.
+### 좀비 - 100%
 - 기본 타입: 플레이어에 다가가며 공격을 한다.
 - 원거리 타입: 기본적으로 플레이어와 거리를 유지하며, 원거리 공격을 한다.
 - 탱커 타입: 총알을 세 번 맞으면 죽는다.
-### 아이템
+### 아이템 - 100%
 - 경험치: 좀비를 처치하면 경험치 구슬 드랍.
 - 백신: 좀비를 처치하면 낮은 확률로 백신 드랍.
-### 게임 기능
+### 게임 기능 - 90%
 - 감염 디버프:
     - Hp의 개념.
     - 플레이어는 피격 시 감염 디버프 추가.
     - 감염 디버프 중첩 횟수가 특정 횟수 이상이면 게임 오버.
 - 백신: 백신을 통해 감염 디버프를 0으로 초기화.
 - 일정 게임 레벨(20)을 버티면 게임 클리어
-### 레벨업 시스템
+### 레벨업 시스템 - 100%
 - 능력치 선택: 레벨업 시 랜덤한 3개의 능력치 중 1개를 선택하여 강화.
-1. 면역력 증가. (현재 적용중인 감염 디버프를 초기화 시킨다)
-2. 이동 속도 증가.
-3. 사격 속도 증가.
-4. 탄환 관통 횟수 증가.
-5. 멀티샷. (가로)
-6. 멀티샷. (세로)
-7. 사거리 증가.
-8. 감염 디버프 최대 횟수 증가.
+   1. 신의 축복   - Hp 회복
+   2. 신의 은총   - 최대 Hp 증가
+   3. 스팀팩      - 공격속도 증가
+   4. 아드레날린  - 이동속도 증가.
+   5. 무기 개조   - 멀티샷(세로)
+   6. 총열 개조   - 멀티샷(가로)
+   7. 탄환 개조   - 탄환의 관통 횟수 증가.
+   8. 조준경 개조 - 사거리 증가.
+### 랜덤 타일 생성 시스템 - 100%
+- infiniteScrollBackground를 상속 받은 RandomTileBackground 구현.
+### UI 시스템 - 25%
+   1. Aim 클래스 구현
+   2. Hp UI 구현
+   3. Xp UI 구현
+   4. Time UI 구현
+- Aim 클래스를 제외한 모든 UI 미구현
+### ToDo:
+   - 사운드 및 이펙트 추가
+   - 메인 게임 UI 및 종료 로직 구현
+   - 로딩, 메뉴, 종료 씬 구현
    
+## [Commit Insights]
+
+
+## [수정]
+1. 좀비 행동 관리 방식 변경
+   - 변경 전: 좀비는 행동 트리를 가지고 각자 행동을 결정
+   - 변경 후: ZombieManager에서 모든 좀비의 상태를 update()메서드를 통해 행동을 결정
+   - 변경 이유: 
+      - 좀비의 행동이 복잡하지 않음.
+      - 중앙에서 좀비들을 관리하는 방식이 더 효율적이라 판단.
+2. 좀비들의 공격 컨셉 추가
+   - 원거리형 좀비: 플레이어와 일정 거리를 유지하는 기능 추가.
+   - 탱커형 좀비: 달리기 기능 추가.
+3. 레벨업 씬 제거
+   - 변경 전: 레벨업 씬이 Push되었을때 배경이 사라지는 문제 발생.
+   - 변경 후: 메인 씬에서 레벨을 관리하는 방향으로 수정.
+      - Pause, Resume 메서드의 기능 확대.
+   - 변경 이유:
+      - 배경을 사라지지 않게 씬을 푸쉬하는 해결방법 찾지 못함.
+4. 밸런스 관련 문제 보류
+   - StageLevel: 좀비 생성 관련 레벨을 밸런스적인 문제로 적용을 보류.
+5. 각종 스킬 이름 변경
+   - 변경사항: 게임 컨셉에 맞게 능력치 이름 변경, 수치 구체화
+
+## [문제점 및 어려운점]
+1. 게임의 코드가 오직 Zomboogie를 위한 코드로 제작되고 있음.
+2. 프레임워크의 이해도가 부족
+   - LevelScene으로 전환되는 경우 MainScene의 배경이 없어지는 문제 발생
+   - LevelScene에서도 MainScene의 화면 정보를 담고싶지만, 해결 방향을 찾지 못했음.
+   - MainScene에서 Pause, Resume 메서드를 수정해 LevelUp을 관리하게 되었음.
+3. 플레이어와 좀비의 상태 관리가 일관되지 않음.
+
+## [메인 씬 - 게임 오브젝트]
+### bg
+- gif
+- Class: RandomTileBackground
+- Is a: InfiniteScrollBackground class
+- 역할: 랜덤 타일 생성 및 무한 스크롤 배경
+- 핵심 메서드:
+   1. Get_Random_Tile(): 랜덤한 타일 생성 및 리턴
+   2. Generate_Visible_Tiles(): 랜덤한 타일을 조합해 배경 구현
+   3. Check_Update_BG(): 스크롤 양 계산, 필요 시 Shift()호출
+   4. Shift(): 타일의 이동 및 새로운 타일 생성
+### Player 
+- gif
+- Class: Actor
+- Is a: Sprite class
+- Has a:
+   1. Gun Class
+      - 특징: Actor의 회전 및 좌표를 상속
+      - 생김새: 샷건
+- 역할: 플레이어 캐릭터 조작 및 아이템 수집, 공격 수행
+- 핵심 메서드:
+   1. coolTime(): 공격 쿨타임 계산
+   2. anim(): 애니메이션 프레임 전환
+   3. rotate(): Aim을 향해 회전 Filp
+   4. fire(): 레벨에 맞는 개수의 Bullet을 생성
+   5. check_state(): 상태에 따라 애니메이션 변경
+- 상호작용: 
+   - PlayerController
+   - LevelUpManager
+   - CollisionManager
+   - RandomTileBG
+- 진행도: 100%
+### Zombie
+- Class: Zombie
+- Is a: Sprite class
+- Inheritance:
+   1. ZombieD
+      - gif
+      - Hp: 1, Speed: 100
+      - Special_Function: None
+   2. ZombieR
+      - gif
+      - Hp: 1, Speed: 80
+      - Special_Function: 일정 거리 유지 및 원거리 공격
+   3. ZombieT
+      - gif
+      - Hp: 3, Speed: 110
+      - Special_Function: 달리기
+- 역할: 플레이어와 전투
+- 핵심 메서드:
+   1. to_Target(): 플레이어에게 접근
+   2. anim(): 애니메이션 계산
+   3. change_anim_info(): 상태 변경 시 프레임 갱신
+   4. special_function(): 각 좀비의 특별 기능
+- 상호작용:
+   - ZombieManager
+   - ItemManager
+   - CollisionManager
+- 진행도: 100%
+### Item
+- Class: Item
+- Is a: Sprite class
+- Inheritance:
+   1. Coin
+      - gif
+      - Special_Function(): Player의 Xp를 1증가
+   2. Vaccine
+      - gif
+      - Special_Function(): Player의 Hp를 1회복
+- 역할: 플레이어에게 이로운 효과 제공
+- 핵심:
+   1. set_target(): Target을 설정
+   2. to_Target(): Target에게 이동 
+   3. special_function(): 특별한 기능 발동(Player.Xp+, Player.Hp+)
+- 상호작용:
+   - CollisionManager
+### Bullet & ZBullet
+- class Bullet
+- Is a: Sprite Class
+   - gif
+   - gif
+- 역할: Player, ZombieR의 공격 수행
+- 핵심:
+   - __init__(): 총알의 방향, 관통, 속도 등 초기 정보 설정
+   - update(): 정해진 방향으로 이동하는 역할
+- 상호작용:
+   1. CollisionManager
+### Cards
+- class: Card
+- Is a: Sprite Class
+- Inheritance: 
+   - 레벨업을 위한 8가지 카드 class
+- 역할: Player의 능력치 증가
+- 핵심:
+   - is_mouse_in_card(): 마우스 위치 판단, 이미지 프레임 변경
+   - levelUp(): Card의 자식 클래스에 맞는 플레이어의 능력치 상승 기능을 수행
+- 상호작용:
+   1. LevelUpManager: Player의 능력치 상승
+### UI
+- Class: Aim
+- Is a: Sprite Class
+- 역할: 마우스의 위치 좌표를 저장
+- 핵심: X
+- 상호작용:
+   - PlayerController
+
 ## [게임 흐름]
 1. 사방에서 몰려오는 좀비로부터 생존한다.
 2. 플레이어는 직접 사격하여 좀비를 물리친다.
@@ -52,185 +204,49 @@
 4. 감염 디버프가 특정 횟수 이상이 되면 게임 오버가 된다.
 5. 남은 시간이 0이되면 게임을 승리한다.
     - 스테이지 레벨은 20레벨로 구성되었으며, 30초마다 레벨이 증가한다.
+
 ### 게임 화면
 ![메인 씬](https://github.com/user-attachments/assets/b731f682-0586-45d1-8182-2ace79fb81dd)
 ### 레벨업
 ![Zombogie레벨업](https://github.com/user-attachments/assets/d14f12c0-18a4-4833-a170-a6181321e693)
 
-## [씬 구성]
-### 로딩 씬
-- 구성: bg, guage
-- 전환 규칙: 게임을 시작하면 로딩 씬으로 전환.
-- GameObject:
-   1. bg
-      - 역할: 로딩 화면.
-      - 생김새: 한국공학대 아이콘.
-   2. guage
-      - 역할: 로딩 진행 상황을 시각적으로 표시.
-      - 생김새: 직사각형 형태의 프로그레스 바.
-### 메인 메뉴 씬
-- 구성: bg, button
-- 전환 규칙: 버튼에 알맞은 씬으로 전환.
-- GameObject:
-   1. bg
-      - 역할: 타이틀 화면.
-      - 생김새: 좀비들에게 둘러 쌓인 주인공 이미지.
-   1. button
-      - 역할: 게임 시작, 설정, 종료 기능을 수행, 입력에 따라 해당 씬으로 전환.
-      - 생김새: 직사각형 디자인에 텍스트가 적힌 형태.
-### 메인 게임 씬
-- 구성: bg, zombie, player, item, ui, controller
-- 전환 규칙: 플레이어의 승리 또는 패배에 따라 엔딩 씬으로 전환.
-- GameObject:
-   1. bg
-      - class: RandomTileBackground
-      - RandomTileBackground Is a: InfiniteScrollBackground class
-      - 역할: 플레이어의 이동에 따라 랜덤하게 타일을 생성 및 스크롤
-      - 생김새: 초록색 잔디밭
-      - 함수 단위 설명:
-         1. __init__(self, FilePath, size, scale, margin):
-            - tileInfo 설정
-            - super().__init__호출
-            - Generate_Visible_Tiles() 호출
-         2. draw(self): 
-            - 딕셔너리에 저장된 타일의 위치를 계산한다.
-            - 조건에 맞지 않으면 타일을 패스한다.
-            - Draw_Tile()을 호출한다.
-         3. update(): 
-            - Check_Update_BG 호출
-         4. Draw_Tile(self, coords, x, y):
-            - draw()함수에서 타일의 정보를 받는다.
-            - 받은 타일의 정보를 그린다.
-         4. Get_Random_Tile(self): 
-            - 저장된 타일에서 랜덤한 값을 뽑아내 리턴한다.
-         5. Generate_Visible_Tiles(self): 
-            - 화면 크기의 2배만큼 랜덤한 타일을 생성한다.
-            - 생성된 타일을 visible_tiles 딕셔너리에 저장한다.
-         6. Check_Update_BG(self):
-            - 화면의 스크롤된 양을 계산한다.
-            - 만약 타일의 크기 만큼 스크롤 되었다면
-               - 이동량을 0으로 초기화한다.
-               - 방향에 맞는 shift()함수를 호출한다.
-         7. ShiftLeft(self) .. ShiftDown(self)
-            - 방향에 맞게 딕셔너리의 정보를 당기거나 민다.
-            - 스크롤 방향에 맞게 새로운 타일 생성해 저장한다.
-         8. show(self, x, y):
-            - 플레이어의 위치 및 margin값에 맞게 백그라운드를 스크롤한다.
-            - 백그라운드의 이동량을 저장한다.
-   2. player 
-      - class: Actor
-         - Actor Is a: Sprite class
-         - Actor Has a:
-            1. Status
-               - 특징: 플레이어의 레벨 정보 및 능력치 저장
-               - 생김새: 없음
-            2. Gun
-               - 특징: Actor의 회전 및 좌표를 상속
-               - 생김새: 샷건
-      - 역할: 사용자가 조작하는 캐릭터, 이동 공격 아이템 수집 수행.
-      - 생김새: 인간형 생존자 
-      - 함수 단위 설명:
-
-   3. zombie
-      - class: Zombie
-      - Zombie Is a: Sprite class
-      - Zombie Inheritance: 
-            1. ZombieR class: 
-               특징: 원거리 공격을 하는 좀비 클래스
-               생김새: 악마화된 비석
-               Special_Ability: Ranged Attack
-               문제점: 사실 좀비가 아니지만, 좀비를 상속 받음.
-                  - 상위 클래스 이름을 Enermy로 수정할 예정.
-            2. ZombieT class:
-               특징: 다른 좀비보다 Hp, Speed가 높은 좀비 클래스
-               생김새: 인간형 좀비
-               Special_Ability: Dash
-            3. ZombieD class:
-               특징: 가장 기본적인 좀비
-               생김새: 인간형 좀비
-               Special_Ability: None
-      - 역할: 사용자와 전투할 캐릭터, 상태에 따라 움직이며 플레이어를 공격.
-      - 생김새: None
-
-   4. item
-      - class: Item
-      - Item Is a: Sprite class
-      - Item Inheritance:
-         1. Coin
-            - 역할: Player의 경험치 증가
-            - 생김새: 황금색 코인
-         2. Vaccine
-            - 역할: Player의 Hp 회복
-            - 생김새: 붉은색 통조림 모양
-      - 역할: Zombie class가 죽으면 생성, Player의 게임 진행을 도움
-      - 생김새: None
-
-   5. ui
-      - 역할: 게임 진행 정보를 화면에 표시.
-      - 생김새: 적절한 이미지와 텍스트로 표시.
-- Controller
-   - PlayeController: 키보드, 마우스 이벤트 처리 담당.
-   - Collision_Checker: 충돌 감지 및 처리 담당.
-   - Enermy_Zen: 좀비 생성을 담당.
-   - Behavior_Tree: 좀비의 행동을 담당.
-### 레벨업 씬
-- 구성: card, controller
-- 전환 규칙: 특정 카드를 누르면 메인 게임 씬으로 전환.
-- GameObject
-   1. card
-      - 역할: 플레이어가 선택하여 능력치를 업그레이드할 수 있는 카드.
-      - 생김새: 능력치를 상징하는 아이콘과 설명이 적힌 직사각형 카드 형태.
-- controller:
-   1. LevelUpController: 플레이어의 카드 선택 및 능력치를 적용.
-### 엔딩 씬
-- 구성: button
-- 전환 규칙: 버튼을 누르면 메인 메뉴 씬으로 전환.
-- GameObject:
-   1. 버튼
-      - 역할: 버튼과 알맞은 씬으로 전환 또는 설정 적용.
-      - 생김새: 직사각형 디자인에 텍스트가 적힌 형태.
-
 ## [개발 요소]
-### 스테이지 레벨
-- 스테이지: 20레벨
-   - '30'초 간격으로 스테이지 레벨 상승.
-   -  난이도를 조절하는 변수로 사용.
-   -  약 20분
 ### 레벨업
 - 경험치 요구량:
-   - 레벨에 비례해 30씩 선형적으로 증가한다.
+   - 레벨에 비례해 10씩 선형적으로 증가한다.
    - 예시)
-      - 레벨1: 필요 경험치 30
-      - 레벨2: 필요 경험치 60
+      - 레벨1: 필요 경험치 10
+      - 레벨2: 필요 경험치 20
+
 ### 능력
 - 능력: 레벨 제한 없음
-   1. 감염 디버프 제거: 현재 누적된 감염 디버프를 모두 제거한다.
-   2. 이동 속도 증가: 초당 이동 거리 증가.
-   3. 사격 속도 증가: 현재 사격 간격의 5% 만큼 감소.
-   4. 탄환 관통 횟수 증가: 좀비를 관통하는 횟수가 1회 증가.
-   5. 탄환 개수 증가: 사격시 부채꼴 모양으로 퍼지는 탄환 증가.
-   7. 사거리 증가: 탄환의 사거리가 5픽셀 증가.
-   8. 감염 디버프 최대 횟수 증가: 기존의 최대 감염 횟수에서 +1이 증가한다.
+   1. 신의 축복: 최대 Hp +1
+   2. 신의 은총: Hp 모두 회복
+   3. 스팀팩: 사격 속도 0.008 감소
+   4. 아드레날린: 이동속도 10 증가
+   5. 무기 개조: 점사 형식으로 발사되는 탄환 증가.
+   6. 총열 개조: 부채꼴 모양으로 퍼지는 탄환 증가.
+   7. 탄환 개조: 탄환의 관통 횟수 증가.
+   8. 조준경 개조: 총알의 사거리 증가.
+
 ### 맵
 - 크기: 제한 없음
    - 맵은 무한히 확장되며, 플레이어의 이동에 따라 새로운 타일이 생성된다.
    - 타일 제너레이터를 통해 랜덤한 맵이 동적으로 구성된다.
    - 타일 하나의 사이즈는 19x19 픽셀
+
 ### 아이템
-- 경험치 코인: 100%
+- 경험치 코인: 99%
    - 좀비를 처치하면 100% 확률로 경험치 구슬을 드랍한다.
    - 이를 획득하면 경험치가 증가한다.
-- 백신: 0.1%
-   - 좀비를 처치하면 0.1% 확률로 드랍한다.
+- 백신: 1%
+   - 좀비를 처치하면 1% 확률로 드랍한다.
    - 감염 디버프를 초기화하는 아이템이다.
+
 ### 적
 - 타입: 기본, 원거리, 탱커
-- 스테이지 레벨에 비례해 최대 좀비 수가 30마리씩 선형적으로 증가한다.
-- 예시)
-   - 스테이지1: 좀비 30마리
-   - 스테이지2: 좀비 60마리
-- 게임이 진행됨에 따라 좀비수가 증가하며 난이도 상승한다.
-- 행동 트리를 통해 좀비의 AI를 설정한다.
+- ZombieManager를 통해 좀비의 상태를 설정한다.
+- 원거리, 탱커 좀비는 Special_Function을 소유한다.
 
 ## [사용한/사용할 개발 기법]
 ### OOP
@@ -285,6 +301,7 @@
 1. 밸런스 조절 및 최종 점검
 2. 릴리즈
 
+
 ## [성과]
 ### 10/28일 이전
 - 게임 리소스 수집 완료
@@ -309,7 +326,7 @@
 4. 생각보다 좀비의 행동이 한정되어, 행동 트리는 사용하지 않는 방향으로 수정
 
 문제점:
-1. 함수명에 _를 붙이면 private처럼 접근하지 한다고 착각
+1. 클래스에서 함수명에 _를 붙이면 private처럼 접근하지 한다고 착각
    - _가 붙은 함수명을 __으로 변경해야함.
 2. Item Class의 구체적인 구현 누락. -> 해결
    - 생각보다 바쁜 일정으로 Item Class의 구현 누락.
@@ -320,12 +337,26 @@
 2. Item의 magnetic 효과 구현
 3. Zombie들의 Special Function 구현
 4. Coin, Vaccine의 Special Function 구현
-
+5. Player의 능력치 세분화 완료
 
 ### 4주차
+1. SkillCardHp 추가 완료
+2. SkillCardMaxHp 추가 완료
+3. SkillCardSpeed 추가 완료
+4. SkillCardBaseBullet2 추가 완료
+5. SkillCardBullet1 추가 완료
+6. SkillCardRange 추가 완료
+7. SkillCardAttackSpeed 추가 완료
+8. SKillCardGun 추가 완료
+9. LevelUpManager 추가 완료
+
+- ToDo
+   - UI 구현
+
 ### 5주차
 ### 6주차
 ### 7주차
+
 
 ## [Youtube]
 - 1차 발표: https://youtu.be/JN8lkWoDTZI
