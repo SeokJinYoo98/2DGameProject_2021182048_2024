@@ -170,10 +170,9 @@
 - 상호작용:
    - CollisionManager
 ### Bullet & ZBullet
+![Bullet](https://github.com/user-attachments/assets/d4989d81-325a-4dcd-96e8-f2d01a34f0e1)
 - class Bullet
 - Is a: Sprite Class
-   - gif
-   - gif
 - 역할: Player, ZombieR의 공격 수행
 - 핵심:
    - __init__(): 총알의 방향, 관통, 속도 등 초기 정보 설정
