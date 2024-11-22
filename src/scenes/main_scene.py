@@ -1,7 +1,7 @@
 from gfw import *
 from core import *
-
-world = World(['bg', 'zombie', 'zbullet', 'player', 'bullet', 'item', 'controller', 'UI', 'cards'])
+import scenes.ending_scene as ending_scene
+world = World(['bg', 'zombie', 'zbullet', 'player', 'bullet', 'item',  'UI', 'cards', 'controller'])
 
 shows_bounding_box = True
 shows_object_count = True
@@ -50,7 +50,10 @@ def handle_event(e):
             if e.button == 3:
                 zombieManager.zenZombies()
         playerController.handle_event(e)
-
+def ending():
+    SDL_ShowCursor(SDL_ENABLE)
+    gfw.change(ending_scene)
+    
 if __name__ == '__main__':
     gfw.start_main_module()
 

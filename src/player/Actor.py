@@ -71,8 +71,8 @@ class Actor(gfw.Sprite):
         x1, y1, x2, y2 = current_frame
         screen_pos = self.bg.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
-
-        self.gun.draw_(self.flip, *screen_pos)
+        if self.gun is not None:
+            self.gun.draw_(self.flip, *screen_pos)
         gfw.draw_circle(*screen_pos, self.special_Range, 0, 0, 255)
              
     ## ---------------------------------------------------------------------------
@@ -103,10 +103,12 @@ class Actor(gfw.Sprite):
             self.flip = ' '
         else:
             self.flip = 'h'
-        self.gun.rotate(tx, ty, self.flip)
+        if self.gun is not None:
+            self.gun.rotate(tx, ty, self.flip)
         
     # 총알 발사
     def fire(self):
+        if self.state == "DEAD": return
         offsetX = 15
         offsetY = 15
         if self.bullet_Time < self.bullet_Cooltime: return
@@ -188,6 +190,9 @@ class Actor(gfw.Sprite):
             return
         self._change_state("DEAD")
         self.frame_time = 1 / 3
+        del self.gun
+        self.gun = None
+        self.dx, self.dy = 0, 0
     
     # 충돌
     def get_bb(self):

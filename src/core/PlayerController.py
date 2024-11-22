@@ -17,13 +17,24 @@ class PlayerController_main(PlayerController):
         world = gfw.top().world
         world.append(self.player, world.layer.player)
         world.append(self.aim, world.layer.UI)
-        
+        self.hitTime = 0
     def update(self):
+        if self.player.state == 'DEAD':
+            self.hitTime += gfw.frame_time
+            if self.hitTime >= 3:
+                self.hitTime = 0
+                gfw.top().ending()
         self.player.rotate(self.aim.x, self.aim.y)
         self.player.checkState()
-    
+        if not self.player.collType:
+            self.hitTime += gfw.frame_time()
+            if self.hitTime >= 3:
+                self.hitTime = 0
+                self.palyer.collType = True
     def handle_event(self, e):
         # 에임 설정
+        if self.player.state == "DEAD": return
+
         if e.type == SDL_MOUSEMOTION:
             mouse_x,  mouse_y = e.x, get_canvas_height() - e.y
             self.aim.setLoaction(mouse_x, mouse_y)
@@ -60,3 +71,4 @@ class PlayerController_main(PlayerController):
                 self.player.adjust_delta(0, 1)
     def Hit(self):
         self.player.collide()
+        self.player.collType = False

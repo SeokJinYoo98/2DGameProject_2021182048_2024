@@ -1,7 +1,7 @@
 from src.gfw import *
-from src.scenes import main_scene
+from src.scenes import loading_scene
 
 def main():
-    gfw.start(main_scene)
+    gfw.start(loading_scene)
     
 main()
