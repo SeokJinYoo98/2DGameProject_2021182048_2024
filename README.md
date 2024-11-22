@@ -363,3 +363,4 @@
 
 ## [Youtube]
 - 1차 발표: https://youtu.be/JN8lkWoDTZI
+- 2차 발표: https://youtu.be/XQFYz2O36p8
