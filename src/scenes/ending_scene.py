@@ -1,6 +1,6 @@
 from gfw import *
 from pico2d import *
-import scenes.menu_scene as menu_secne
+import scenes.menu_scene as menu_scene
 import sys
 self = sys.modules[__name__]
 
@@ -28,7 +28,6 @@ class b(gfw.Sprite):
         if not self.is_mouse_on: frame = self.Frames['Non']
         self.image.clip_draw(*frame, self.x, self.y, self.width, self.height)
         gfw.font.draw_centered_text(font, self.string, self.x + 10, self.y + 60)
-        gfw.font.draw_centered_text(font, "[E N D I N G]", center_x, center_y + 400)
     def is_mouse_in_card(self, mx, my):
         l, b, r, t = self.get_bb()
         if l < mx and mx < r:
@@ -39,7 +38,7 @@ class b(gfw.Sprite):
 def enter():
     global stB, exitB
     stB = b(center_x, center_y - 100, "Menu")
-    exitB = b(center_x, center_y - 400, "Exit")
+    exitB = b(center_x, center_y - 400, "Quit")
     world.append(HorzFillBackground('tile/Title.jpg'), world.layer.bg)
     world.append(stB, world.layer.cards)
     world.append(exitB, world.layer.cards)

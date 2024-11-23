@@ -17,6 +17,14 @@
 - 성장 요소: 좀비를 처치해 자원을 얻고, 캐릭터를 점점 더 강하게 성장시킨다.
 - 특징: 빠르고 간단한 조작으로 누구나 쉽게 즐길 수 있는 캐주얼한 게임플레이.
 
+## [게임 흐름]
+1. 사방에서 몰려오는 좀비로부터 생존한다.
+2. 플레이어는 직접 사격하여 좀비를 물리친다.
+3. 플레이어는 좀비와 충돌시 감염 디버프가 증가한다. (Hp 개념)
+4. 감염 디버프가 특정 횟수 이상이 되면 게임 오버가 된다.
+5. 남은 시간이 0이되면 게임을 승리한다.
+    - 스테이지 레벨은 20레벨로 구성되었으며, 30초마다 레벨이 증가한다.
+
 ## [핵심 메카닉]
 ### 캐릭터 컨트롤 - 100%
 - wasd: 8방향 이동 지원.
@@ -200,18 +208,34 @@
 - 상호작용:
    - PlayerController
 
-## [게임 흐름]
-1. 사방에서 몰려오는 좀비로부터 생존한다.
-2. 플레이어는 직접 사격하여 좀비를 물리친다.
-3. 플레이어는 좀비와 충돌시 감염 디버프가 증가한다. (Hp 개념)
-4. 감염 디버프가 특정 횟수 이상이 되면 게임 오버가 된다.
-5. 남은 시간이 0이되면 게임을 승리한다.
-    - 스테이지 레벨은 20레벨로 구성되었으며, 30초마다 레벨이 증가한다.
+## [로딩 씬 - 게임 오브젝트]
+![LoadingScene](https://github.com/user-attachments/assets/ca71c2f1-e395-489c-8597-9f4dda8b4f08)
+### bg
+- sprite class
+- 한국공학대 로고
+### Gauge
+- Gauge class
+- 파일 로딩 정보
 
-### 게임 화면
-![메인 씬](https://github.com/user-attachments/assets/b731f682-0586-45d1-8182-2ace79fb81dd)
-### 레벨업
-![Zombogie레벨업](https://github.com/user-attachments/assets/d14f12c0-18a4-4833-a170-a6181321e693)
+## [메뉴 씬 - 게임 오브젝트]
+![MenuScene](https://github.com/user-attachments/assets/03d33656-6bed-4721-b5b7-1bc78b4a9754)
+### bg
+- HorzFillBackground
+- Zomboogie Title 이미지
+### cards
+- b class
+- 플레이어의 마우스 이벤트를 처리
+
+## [엔딩 씬 - 게임 오브젝트]
+![EndingScene](https://github.com/user-attachments/assets/3314e9f4-03e7-4413-ad44-c8a547222232)
+### bg
+- HorzFillBackground
+- Zomboogie Title 이미지
+### cards
+- b class
+- 플레이어의 마우스 이벤트를 처리
+- 
+
 
 ## [개발 요소]
 ### 레벨업
@@ -352,6 +376,8 @@
 7. SkillCardAttackSpeed 추가 완료
 8. SKillCardGun 추가 완료
 9. LevelUpManager 추가 완료
+
+10. Loading, Ending, Menu Scene 구현 완료
 
 - ToDo
    - UI 구현
