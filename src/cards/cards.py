@@ -10,7 +10,8 @@ class Card(gfw.Sprite):
         super().__init__(path, x,  y)
         if Card.Font is None:
             Card.Font = gfw.font.load('neodgm.TTF', 28)
-            
+        self.__sfx = gfw.sfx('Select.wav')
+        self.__sfx.set_volume(50)
         self.player = gfw.top().world.player
         self.is_mouse_on = False
         self.height *= 7
@@ -36,7 +37,9 @@ class Card(gfw.Sprite):
         l, b, r, t = self.get_bb()
         if l < mx and mx < r:
             if b <= my and my <= t:
-                self.is_mouse_on = True
+                if not self.is_mouse_on:
+                    self.__sfx.play()
+                    self.is_mouse_on = True
                 return
         self.is_mouse_on = False
 class HpCard(Card):

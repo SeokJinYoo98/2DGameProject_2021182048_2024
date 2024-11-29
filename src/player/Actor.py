@@ -57,6 +57,9 @@ class Actor(gfw.Sprite):
         self._do_IDLE()
         
         self.collidTime = 0
+        
+        self.hit_Sound = gfw.sound.sfx('Dead.wav')
+        self.hit_Sound.set_volume(80)
     def __del__(self):
         del self.gun
         
@@ -64,6 +67,7 @@ class Actor(gfw.Sprite):
     def update(self):
         if self.state == "DEAD":
             self.dx, self.dy = 0, 0
+            return
         if not self.collType:
             self.collidTime += gfw.frame_time
             if self.collidTime >= 1:
@@ -120,7 +124,7 @@ class Actor(gfw.Sprite):
         offsetX = 15
         offsetY = 15
         if self.bullet_Time < self.bullet_Cooltime: return
-        #print('fire!')
+        self.gun.playSound()
         world = gfw.top().world
         for i in range(self.bullet_ColCnt):
             x = self.x + offsetX * math.cos(self.gun.angle) * i
@@ -211,6 +215,7 @@ class Actor(gfw.Sprite):
         return l, b, r, t
     
     def collide(self):
+        self.hit_Sound.play()
         self.hp -= 1
         self.collType = False
     

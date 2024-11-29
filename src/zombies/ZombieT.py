@@ -1,4 +1,5 @@
 from zombies import Zombie
+import gfw
 class ZombieT(Zombie):
     Target = None
     BG = None
@@ -36,7 +37,8 @@ class ZombieT(Zombie):
         fileName = 'zombie/zombieT.png'
         super().__init__(fileName, x, y, ZombieT)
         self.special_Range = 200
-        
+        self.hit_Sound = gfw.sound.sfx('Hit1.wav')
+        self.hit_Sound.set_volume(80)
     def special_Function(self):
         if self.mag < 2:
             self.mag = 2

@@ -1,4 +1,5 @@
 from zombies import Zombie
+import gfw
 import random
 class ZombieD(Zombie):
     Hp = 1
@@ -32,3 +33,6 @@ class ZombieD(Zombie):
         zomT = random.choice(ZombieD.ZOMBIE_TYPE)
         fileName = (f'zombie/zombie{zomT}.png')
         super().__init__(fileName, x, y, ZombieD)
+        self.hit_Sound = gfw.sound.sfx('Hit1.wav')
+        self.hit_Sound.set_volume(80)
+        

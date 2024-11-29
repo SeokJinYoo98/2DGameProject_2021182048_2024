@@ -5,7 +5,7 @@ class TimeUI:
         self.__startSec = 0
         self.__elapsed = 0
         self.__font = gfw.font.load('neodgm.TTF', 36)
-
+        self.__sound = gfw.sound.sfx('Win.wav')
     def update(self):
         self.__elapsed += gfw.frame_time
 
@@ -18,6 +18,7 @@ class TimeUI:
                 self.__startSec = 59
 
             if self.__startMin < 0:
+                self.__sound.play()
                 gfw.top().ending()
 
     def draw(self):

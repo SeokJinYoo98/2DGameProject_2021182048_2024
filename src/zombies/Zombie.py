@@ -12,7 +12,7 @@ class Zombie(gfw.Sprite):
         super().__init__(fileName, x, y)
 
         self.special_Range = None
-        
+        self.hit_Sound = None
         # 애니메이션 관련
         self.state = None
         self.frame_index = 0
@@ -98,6 +98,7 @@ class Zombie(gfw.Sprite):
             self._change_Anim_Info('ATTACK') 
             
     def collide(self):
+        self.hit_Sound.play()
         self._do_HIT()
         self.hp -= 1
     

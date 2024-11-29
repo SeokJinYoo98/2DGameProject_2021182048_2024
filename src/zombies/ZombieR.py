@@ -38,7 +38,10 @@ class ZombieR(Zombie):
         super().__init__(fileName, x, y, ZombieR)
         self.special_Range = 400
         self.Attack_Time = 0
-        
+        self.hit_Sound = gfw.sound.sfx('Range.wav')
+        self.hit_Sound.set_volume(80)
+        self.attack_Sound = gfw.sound.sfx('card.wav')
+        self.attack_Sound.set_volume(80)
     def special_Function(self):
         if Zombie.Target is None: return
         px, py = Zombie.Target.x, Zombie.Target.y
@@ -61,6 +64,7 @@ class ZombieR(Zombie):
         if self.Attack_Time <= ZombieR.ATTACK_COLLTIME:
             self.Attack_Time += gfw.frame_time
             return
+        self.attack_Sound.play()
         b = zBullet(self.x + dir_x * 10, self.y + dir_y * 10, dir_x, dir_y)
         world = gfw.top().world
         world.append(b, world.layer.zbullet)

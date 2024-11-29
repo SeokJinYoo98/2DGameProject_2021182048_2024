@@ -10,7 +10,6 @@ def load(file):
         return _images[file]
         
     file_path = os.path.join(SPRITES_DIR, file)
-    print(f"{file_path=}")
     image = load_image(file_path)
     _images[file] = image
     return image

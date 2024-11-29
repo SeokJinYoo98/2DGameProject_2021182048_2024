@@ -10,6 +10,7 @@ class LevelUpManager:
         self.__player = gfw.top().world.player
         self.isLevelUp = False
         self.needXp = 10
+        self.lv_Sound = gfw.sound.sfx('LevelUp.wav')
     def handle_event(self, event):
         if not self.isLevelUp: return
         self.__player_input(event)
@@ -25,6 +26,7 @@ class LevelUpManager:
     def __check_level(self):
         if self.__isLevelUp():
             self.pause()
+            self.lv_Sound.play()
             self.__player.Xp -= self.needXp
             self.__creates_cards()
     def __isLevelUp(self):

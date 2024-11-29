@@ -23,6 +23,8 @@ class b(gfw.Sprite):
         self.height *= 3
         self.width *= 6
         self.string = text
+        self.__sfx = gfw.sound.sfx('Select.wav')
+        self.__sfx.set_volume(50)
     def draw(self):
         frame = self.Frames["Click"]
         if not self.is_mouse_on: frame = self.Frames['Non']
@@ -32,7 +34,9 @@ class b(gfw.Sprite):
         l, b, r, t = self.get_bb()
         if l < mx and mx < r:
             if b <= my and my <= t:
-                self.is_mouse_on = True
+                if not self.is_mouse_on:
+                    self.__sfx.play()
+                    self.is_mouse_on = True
                 return
         self.is_mouse_on = False    
 def enter():

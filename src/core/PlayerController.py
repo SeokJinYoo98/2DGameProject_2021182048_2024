@@ -18,14 +18,17 @@ class PlayerController_main(PlayerController):
         world.append(self.player, world.layer.player)
         world.append(self.aim, world.layer.UI)
         self.hitTime = 0
+        self.ending_Sound = gfw.sound.sfx('Lose.wav')
     def update(self):
         if self.player.state == 'DEAD':
             self.hitTime += gfw.frame_time
             if self.hitTime >= 3:
                 self.hitTime = 0
+                self.ending_Sound.play()
                 gfw.top().ending()
-        self.player.rotate(self.aim.x, self.aim.y)
-        self.player.checkState()
+        else:
+            self.player.rotate(self.aim.x, self.aim.y)
+            self.player.checkState()
     def handle_event(self, e):
         # 에임 설정
         if self.player.state == "DEAD": return

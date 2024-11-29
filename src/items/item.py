@@ -1,11 +1,12 @@
 import gfw
 
 class Item(gfw.Sprite):
-    Speed = 200
+    Speed = 300
     def __init__(self, fileName, x, y, Type):
         super().__init__(fileName, x, y)
         self.target = None
         self.Type = Type
+
     def update(self):
         if self.target is None: return
         self.toTarget()
@@ -46,20 +47,31 @@ class Item(gfw.Sprite):
         pass
 
 class Coin(Item):
+    SOUND = None
     def __init__(self, x, y):
+        if Coin.SOUND is None:
+            Coin.SOUND = gfw.sound.sfx('Coin.wav')
+            Coin.SOUND.set_volume(300)
         COIN_PATH = 'prop/Coin.png'
         super().__init__(COIN_PATH, x, y, Coin)
+
     def special_Function(self, target):
+        Coin.SOUND.play()
         target.Xp += 1
         print(f'{target.Xp=}')
         self.erase()
         
 class Vaccine(Item):
+    SOUND = None
     def __init__(self, x, y):
+        if Vaccine.SOUND is None:
+            Vaccine.SOUND = gfw.sound.sfx('Vaccine.wav')
+            Vaccine.SOUND.set_volume(300)
         VACCINE_PATH = 'prop/Vaccine.png'
         super().__init__(VACCINE_PATH, x, y, Vaccine)
     def special_Function(self, target):
-        if target.hp < target.maxHp:
+        Vaccine.SOUND.play()
+        if target.hp < target.maxHp and target.hp != 0:
             target.hp += 1
             print(f'{target.hp=}')
         self.erase()    

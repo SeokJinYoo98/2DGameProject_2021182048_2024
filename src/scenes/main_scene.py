@@ -4,11 +4,11 @@ from uis import *
 import scenes.ending_scene as ending_scene
 world = World(['bg', 'zombie', 'zbullet', 'player', 'bullet', 'item',  'UI', 'cards', 'controller'])
 
-shows_bounding_box = True
-shows_object_count = True
-
+# shows_bounding_box = True
+# shows_object_count = True
 canvas_width = 1024
 canvas_height = 1024
+
 def enter():
     SDL_ShowCursor(SDL_DISABLE)
     global playerController, zombieManager, LevelManager
@@ -32,12 +32,21 @@ def enter():
     world.append(XpUI(), world.layer.UI)
     
     key_states = SDL_GetKeyboardState(None)
-    if not key_states:
-        pass
-    else:
-        playerController.Init(key_states)   
+    playerController.Init(key_states)   
+    
+    global bgm
+    bgm = gfw.sound.music('BGM.wav')
+    bgm.repeat_play()
+    bgm.set_volume(30)
 def exit(): 
+    SDL_ShowCursor(SDL_ENABLE)
+    playerController = None
+    zombieManager = None
+    LevelManager = None
+    world.bg = None
+    world.player = None
     world.clear()
+    bgm.stop()
     print('[main.exit()]')
 
 def pause():
@@ -57,6 +66,13 @@ def handle_event(e):
         playerController.handle_event(e)
 def ending():
     SDL_ShowCursor(SDL_ENABLE)
+    playerController = None
+    zombieManager = None
+    LevelManager = None
+    world.bg = None
+    world.player = None
+    world.clear()
+    bgm.stop()
     gfw.change(ending_scene)
     
 if __name__ == '__main__':
