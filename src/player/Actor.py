@@ -62,6 +62,8 @@ class Actor(gfw.Sprite):
         
     # 업데이트            
     def update(self):
+        if self.state == "DEAD":
+            self.dx, self.dy = 0, 0
         if not self.collType:
             self.collidTime += gfw.frame_time
             if self.collidTime >= 1:

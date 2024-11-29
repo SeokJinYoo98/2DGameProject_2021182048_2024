@@ -4,8 +4,8 @@ import scenes.main_scene as main_scene
 import sys
 self = sys.modules[__name__]
 
-canvas_width = main_scene.canvas_width
-canvas_height = main_scene.canvas_height
+canvas_width = 1024
+canvas_height = 1024
 
 center_x = canvas_width / 2
 center_y = canvas_height / 2

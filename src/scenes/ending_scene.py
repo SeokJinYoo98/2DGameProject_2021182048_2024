@@ -1,6 +1,6 @@
 from gfw import *
 from pico2d import *
-import scenes.menu_scene as menu_scene
+import scenes.menu_scene
 import sys
 self = sys.modules[__name__]
 
@@ -63,7 +63,7 @@ def handle_event(e):
     if e.type == SDL_MOUSEBUTTONDOWN:
             if e.button == SDL_BUTTON_LEFT:
                 if stB.is_mouse_on:
-                    gfw.change(menu_scene)
+                    gfw.change(scenes.menu_scene)
                 elif exitB.is_mouse_on:
                     gfw.quit()   
         

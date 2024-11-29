@@ -9,7 +9,7 @@ class Card(gfw.Sprite):
     def __init__(self, path, x, y):
         super().__init__(path, x,  y)
         if Card.Font is None:
-            Card.Font = gfw.font.load('neodgm.TTF', 32)
+            Card.Font = gfw.font.load('neodgm.TTF', 28)
             
         self.player = gfw.top().world.player
         self.is_mouse_on = False
