@@ -1,4 +1,5 @@
 import gfw
+from zombies import ZombieR
 class CollisionManager:
     def __init__(self):
         self.world = gfw.top().world
@@ -22,6 +23,9 @@ class CollisionManager:
             self.__zombie_bullet(zombie)
             
     def __zombie_player(self, zombie, player):
+        if not player.collType:
+            zombie._do_WALK()
+            return
         self.__is_Collide(zombie, player)
         if gfw.collides_circle(zombie, player):
             zombie._do_ATTACK()
@@ -35,6 +39,7 @@ class CollisionManager:
         items = self.world.objects_at(self.world.layer.item)
         for item in items:
             self.__player_item(player, item)
+        if not player.collType: return
         self.__player_bullet(player)
        
     def __player_item(self, player, item):

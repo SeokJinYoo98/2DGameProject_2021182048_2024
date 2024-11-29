@@ -9,6 +9,7 @@ class LevelUpManager:
         self.cards = []
         self.__player = gfw.top().world.player
         self.isLevelUp = False
+        self.needXp = 10
     def handle_event(self, event):
         if not self.isLevelUp: return
         self.__player_input(event)
@@ -24,16 +25,14 @@ class LevelUpManager:
     def __check_level(self):
         if self.__isLevelUp():
             self.pause()
-            self.__player.Xp -=1
+            self.__player.Xp -= self.needXp
             self.__creates_cards()
     def __isLevelUp(self):
-        if self.__player.Xp >= 1:
-            print("LevelUp")
-        return self.__player.Xp >= 1
+        return self.__player.Xp >= self.needXp
     def __creates_cards(self):
-        offset = gfw.get_canvas_width() // 3
-        x = gfw.get_canvas_width() // 2 - offset
-        y = gfw.get_canvas_height() // 2
+        offset = gfw.get_canvas_width() / 3
+        x = gfw.get_canvas_width() / 2 - offset
+        y = gfw.get_canvas_height() / 2
         for i in range(3):
             self.__creates_card(x, y)
             x += offset

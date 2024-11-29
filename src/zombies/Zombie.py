@@ -9,8 +9,6 @@ class Zombie(gfw.Sprite):
             Zombie.Target = gfw.top().world.player
         if Zombie.BG is None:
             Zombie.BG = gfw.top().world.bg
-        # if Zombie.Target is None:
-        #     Zombie.Target = gfw.top().layer.player
         super().__init__(fileName, x, y)
 
         self.special_Range = None

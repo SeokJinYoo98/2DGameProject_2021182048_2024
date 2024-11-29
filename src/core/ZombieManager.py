@@ -3,18 +3,20 @@ import random
 from core import ItemManager
 from zombies import *
 class ZombieManager:
-    LEVEL_INCREASE = 30
-    ZOMBIE_TYPE = 'D', 'R', 'T'
     DEAD_TIME = 0.5
-    HIT_TIME = 0.2
+    HIT_TIME = 0.05
     
     def __init__(self):
         self.world = gfw.top().world
-        
+        self.__zenTime = 0
     def draw(self):
         pass     
     
     def update(self):
+        self.__zenTime += gfw.frame_time
+        if self.__zenTime >= 1:
+            self.zenZombies()
+            self.__zenTime = 0
         zombies = self.world.objects_at(self.world.layer.zombie)
         for z in zombies:
             self.__State_Check(z)
@@ -55,20 +57,31 @@ class ZombieManager:
    
                 
     def zenZombies(self):
-        type = random.choice(ZombieManager.ZOMBIE_TYPE)
-        
-        x = self.world.player.x + random.choice([-500, 500])
-        y = self.world.player.y + random.choice([-500, 500])
-
+        x, y = 0, 0
+        where = random.randint(0, 4)
+        player = self.world.player
+        if where <= 1:
+            x = player.x - random.uniform(-player.x, player.x)
+            if where == 1:
+                y = player.y - 800
+            else:
+                y = player.y + 800
+        else:
+            y = player.y - random.uniform(-player.y, player.y)
+            if where == 2:
+                x = player.x - 800
+            else:
+                x = player.x + 800
+                
+        print(x, y)
+        type = random.randint(0, 10)
         zombie = None
-        
-        if type == 'D':
-            zombie = ZombieD(x, y)
-        elif type == 'R':
-            zombie = ZombieR(x, y)
-        elif type == 'T':
-            zombie = ZombieT(x, y)
-        
-        self.world.append(zombie, self.world.layer.zombie)
 
-        
+        if type == 0:
+            zombie = ZombieT(x, y)
+        elif type == 1:
+            zombie = ZombieR(x, y)
+        else:
+            zombie = ZombieD(x, y)
+
+        self.world.append(zombie, self.world.layer.zombie)

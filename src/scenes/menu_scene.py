@@ -7,8 +7,8 @@ self = sys.modules[__name__]
 canvas_width = main_scene.canvas_width
 canvas_height = main_scene.canvas_height
 
-center_x = canvas_width // 2
-center_y = canvas_height // 2
+center_x = canvas_width / 2
+center_y = canvas_height / 2
 
 world = World(['bg', 'cards'])
 

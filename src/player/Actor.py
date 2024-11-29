@@ -56,11 +56,17 @@ class Actor(gfw.Sprite):
         self.bullet_Penetration = 1 # 관통
         self._do_IDLE()
         
+        self.collidTime = 0
     def __del__(self):
         del self.gun
         
     # 업데이트            
     def update(self):
+        if not self.collType:
+            self.collidTime += gfw.frame_time
+            if self.collidTime >= 1:
+                self.collidTime = 0
+                self.collType = True
         self.move()
         self.coolTime()
         self.anim()
@@ -196,13 +202,13 @@ class Actor(gfw.Sprite):
     
     # 충돌
     def get_bb(self):
-        l = self.x - self.width // 3
-        b = self.y - self.height // 3
-        r = self.x + self.width // 3
-        t = self.y + self.height // 3
+        l = self.x - self.width // 4
+        b = self.y - self.height // 4
+        r = self.x + self.width // 4
+        t = self.y + self.height // 4
         return l, b, r, t
     
     def collide(self):
         self.hp -= 1
-
+        self.collType = False
     

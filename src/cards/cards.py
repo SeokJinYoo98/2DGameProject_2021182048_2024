@@ -13,8 +13,8 @@ class Card(gfw.Sprite):
             
         self.player = gfw.top().world.player
         self.is_mouse_on = False
-        self.height *= 9
-        self.width *= 4
+        self.height *= 7
+        self.width *= 3.3
         self.name = None
         self.explanation = None
         self.font_offsetX = 20

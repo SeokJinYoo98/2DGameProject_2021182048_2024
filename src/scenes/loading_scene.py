@@ -5,11 +5,11 @@ import scenes.menu_scene as menu_scene
 import sys
 self = sys.modules[__name__]
 
-canvas_width = 1280
-canvas_height = 1280
+canvas_width = 1024
+canvas_height = 1024
 
-center_x = canvas_width // 2
-center_y = canvas_height // 2
+center_x = canvas_width / 2
+center_y = canvas_height / 2
 
 world = gfw.World(2)
 

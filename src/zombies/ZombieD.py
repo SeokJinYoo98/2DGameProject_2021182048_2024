@@ -2,7 +2,7 @@ from zombies import Zombie
 import random
 class ZombieD(Zombie):
     Hp = 1
-    Speed = 90
+    Speed = 150
     ATTACK_RANGE = None
     FRAMES = {
         'IDLE': [ 

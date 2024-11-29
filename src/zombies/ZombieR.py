@@ -5,7 +5,7 @@ class ZombieR(Zombie):
     Target = None
     BG = None
     Hp = 1
-    Speed = 80
+    Speed = 100
     ATTACK_COLLTIME = 1
     FRAMES = {
         'IDLE': [ 
