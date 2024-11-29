@@ -11,7 +11,10 @@ class ZombieManager:
         self.__zenTime = 0
     def draw(self):
         pass     
-    
+    def end(self):
+        Zombie.BG = None
+        Zombie.Target = None
+        
     def update(self):
         self.__zenTime += gfw.frame_time
         if self.__zenTime >= 1:
@@ -72,8 +75,7 @@ class ZombieManager:
                 x = player.x - 800
             else:
                 x = player.x + 800
-                
-        print(x, y)
+    
         type = random.randint(0, 10)
         zombie = None
 

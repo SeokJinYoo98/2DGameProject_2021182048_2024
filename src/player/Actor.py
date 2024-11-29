@@ -85,7 +85,7 @@ class Actor(gfw.Sprite):
         self.image.clip_composite_draw(*current_frame,  0, self.flip, *screen_pos, w=50, h=50)
         if self.gun is not None:
             self.gun.draw_(self.flip, *screen_pos)
-        gfw.draw_circle(*screen_pos, self.special_Range, 0, 0, 255)
+        #gfw.draw_circle(*screen_pos, self.special_Range, 0, 0, 255)
              
     ## ---------------------------------------------------------------------------
     def move(self):

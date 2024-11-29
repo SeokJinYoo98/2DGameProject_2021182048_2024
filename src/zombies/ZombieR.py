@@ -2,8 +2,6 @@ from zombies import Zombie
 import math
 import gfw
 class ZombieR(Zombie):
-    Target = None
-    BG = None
     Hp = 1
     Speed = 100
     ATTACK_COLLTIME = 1

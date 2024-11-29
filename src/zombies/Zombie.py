@@ -33,6 +33,10 @@ class Zombie(gfw.Sprite):
     def update(self):
         pass
 
+    def end(self):
+        Zombie.Target = None
+        Zombie.BG = None
+        
     def draw(self):
         self.anim()
         self.frame_index %= self.frame_count
@@ -40,8 +44,8 @@ class Zombie(gfw.Sprite):
         x1, y1, x2, y2 = self.current_frame
         screen_pos = Zombie.BG.to_screen(self.x, self.y)
         self.image.clip_composite_draw(*self.current_frame,  0, self.flip, *screen_pos, w=50, h=50)
-        if self.special_Range is not None:
-            gfw.draw_circle(*screen_pos, self.special_Range, 0, 255, 0) 
+        # if self.special_Range is not None:
+        #     gfw.draw_circle(*screen_pos, self.special_Range, 0, 255, 0) 
                
     def anim(self):
         self.elapsed_time += gfw.frame_time

@@ -23,7 +23,6 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
 
         # 초기 보이는 타일들 생성
         self._Generate_Visible_Tiles()
-        
     def show(self, x, y):
         prevX, prevY = self.x, self.y
         cw, ch = get_canvas_width(), get_canvas_height()

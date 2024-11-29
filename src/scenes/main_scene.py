@@ -40,11 +40,7 @@ def enter():
     bgm.set_volume(30)
 def exit(): 
     SDL_ShowCursor(SDL_ENABLE)
-    playerController = None
-    zombieManager = None
-    LevelManager = None
-    world.bg = None
-    world.player = None
+    zombieManager.end()
     world.clear()
     bgm.stop()
     print('[main.exit()]')
@@ -65,14 +61,7 @@ def handle_event(e):
     else:
         playerController.handle_event(e)
 def ending():
-    SDL_ShowCursor(SDL_ENABLE)
-    playerController = None
-    zombieManager = None
-    LevelManager = None
-    world.bg = None
-    world.player = None
-    world.clear()
-    bgm.stop()
+
     gfw.change(ending_scene)
     
 if __name__ == '__main__':

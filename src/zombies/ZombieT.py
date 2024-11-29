@@ -1,8 +1,6 @@
 from zombies import Zombie
 import gfw
 class ZombieT(Zombie):
-    Target = None
-    BG = None
     Hp = 3
     Speed = 110
     FRAMES = {
