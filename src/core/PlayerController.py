@@ -26,7 +26,6 @@ class PlayerController_main(PlayerController):
                 gfw.top().ending()
         self.player.rotate(self.aim.x, self.aim.y)
         self.player.checkState()
-        
     def handle_event(self, e):
         # 에임 설정
         if self.player.state == "DEAD": return
@@ -66,3 +65,15 @@ class PlayerController_main(PlayerController):
             elif e.key == SDLK_s:
                 self.player.adjust_delta(0, 1)
 
+    def Init(self, key_states):
+        if key_states[26]:
+            self.player.adjust_delta(0, 1)
+        if key_states[4]:
+            self.player.adjust_delta(-1, 0)
+        if key_states[22]:
+            self.player.adjust_delta(0, -1)
+        if key_states[7]:
+            self.player.adjust_delta(1, 0)
+    
+    
+    

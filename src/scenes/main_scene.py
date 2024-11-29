@@ -20,7 +20,7 @@ def enter():
     world.player = playerController.player
     
     LevelManager = LevelUpManager()
-    #sdl2_SDL_GetKeyboard
+
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
     world.append(zombieManager, world.layer.controller)
@@ -29,6 +29,12 @@ def enter():
     
     world.append(TimeUI(), world.layer.UI)
     world.append(HpUI(), world.layer.UI)
+    
+    key_states = SDL_GetKeyboardState(None)
+    if not key_states:
+        pass
+    else:
+        playerController.Init(key_states)   
 def exit(): 
     world.clear()
     print('[main.exit()]')
@@ -44,8 +50,6 @@ def resume():
     print('[main.resume()]')
 
 def handle_event(e):
-    if e.type == SDL_KEYDOWN and e.key == SDLK_1:
-        print(world.objects)
     if world.pause:
         LevelManager.handle_event(e)
     else:
