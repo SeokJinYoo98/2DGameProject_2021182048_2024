@@ -14,13 +14,13 @@ def enter():
     global playerController, zombieManager, LevelManager
     bg = RandomTileBackground('tile/Tiles.png', scale=6, margin=300)
     playerController = PlayerController_main(bg)
-    zombieManager = ZombieManager() 
-    collision = CollisionManager()
     world.bg = bg
     world.player = playerController.player
     
+    zombieManager = ZombieManager() 
+    collision = CollisionManager()
     LevelManager = LevelUpManager()
-
+    
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
     world.append(zombieManager, world.layer.controller)
@@ -29,6 +29,7 @@ def enter():
     
     world.append(TimeUI(), world.layer.UI)
     world.append(HpUI(), world.layer.UI)
+    world.append(XpUI(), world.layer.UI)
     
     key_states = SDL_GetKeyboardState(None)
     if not key_states:
