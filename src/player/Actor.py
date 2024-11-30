@@ -59,7 +59,7 @@ class Actor(gfw.Sprite):
         self.collidTime = 0
         
         self.hit_Sound = gfw.sound.sfx('Dead.wav')
-        self.hit_Sound.set_volume(80)
+        self.hit_Sound.set_volume(50)
     def __del__(self):
         del self.gun
         

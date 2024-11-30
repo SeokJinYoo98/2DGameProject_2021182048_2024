@@ -11,7 +11,7 @@ class Card(gfw.Sprite):
         if Card.Font is None:
             Card.Font = gfw.font.load('neodgm.TTF', 28)
         self.__sfx = gfw.sfx('Select.wav')
-        self.__sfx.set_volume(50)
+        self.__sfx.set_volume(30)
         self.player = gfw.top().world.player
         self.is_mouse_on = False
         self.height *= 7

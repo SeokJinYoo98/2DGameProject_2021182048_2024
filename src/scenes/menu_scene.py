@@ -24,7 +24,7 @@ class b(gfw.Sprite):
         self.width *= 6
         self.string = text
         self.__sfx = gfw.sfx('Select.wav')
-        self.__sfx.set_volume(50)
+        self.__sfx.set_volume(30)
     def draw(self):
         frame = self.Frames["Click"]
         if not self.is_mouse_on: frame = self.Frames['Non']
