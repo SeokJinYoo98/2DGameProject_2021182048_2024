@@ -58,7 +58,7 @@ class Coin(Item):
     def special_Function(self, target):
         Coin.SOUND.play()
         target.Xp += 1
-        print(f'{target.Xp=}')
+        #print(f'{target.Xp=}')
         self.erase()
         
 class Vaccine(Item):
@@ -73,5 +73,5 @@ class Vaccine(Item):
         Vaccine.SOUND.play()
         if target.hp < target.maxHp and target.hp != 0:
             target.hp += 1
-            print(f'{target.hp=}')
+           # print(f'{target.hp=}')
         self.erase()    

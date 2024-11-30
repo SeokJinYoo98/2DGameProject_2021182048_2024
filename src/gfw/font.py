@@ -10,7 +10,6 @@ def load(file, size=20):
 
     # print("Loading font:", file, size)
     file_path = os.path.join(FONT_DIR, file)
-    print(f'{file_path=}')
     font = load_font(file_path, size)
     _fonts[key] = font
     return font

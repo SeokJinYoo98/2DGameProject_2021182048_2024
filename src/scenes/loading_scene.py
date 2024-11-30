@@ -38,7 +38,7 @@ def update():
     if self.file is None:
         self.finish = True
         return
-    print(f'Loading {self.file=}')
+    #print(f'Loading {self.file=}')
     gfw.image.load(self.file)
     self.image_index += 1
 

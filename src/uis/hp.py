@@ -10,7 +10,7 @@ class HpUI:
         self.rate = 0
     def update(self):
         if self.__player.hp <= 0:
-            self.rate = 0.1
+            self.rate = 0.02
         else:
             self.rate = self.__player.hp / self.__player.maxHp
     def draw(self):

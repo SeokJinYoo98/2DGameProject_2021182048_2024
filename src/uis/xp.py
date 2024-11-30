@@ -10,7 +10,7 @@ class XpUI:
         self.rate = 0
     def update(self):
         if self.__player.Xp <= 0:
-            self.rate = 0.05
+            self.rate = 0.02
         else:
             self.rate = self.__player.Xp / 10
     def draw(self):

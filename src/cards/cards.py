@@ -50,7 +50,6 @@ class HpCard(Card):
         self.explanation = "Hp 회복"
     def levelUp(self):
         self.player.hp = self.player.maxHp
-        print(f"레벨업{self.player.hp=}")
 
 class MaxHpCard(Card):
     def __init__(self, x, y):
@@ -60,7 +59,7 @@ class MaxHpCard(Card):
         self.explanation = " 최대 Hp 증가"
     def levelUp(self):
         self.player.maxHp += 1
-        print(f"Max레벨업 - {self.player.maxHp=}")
+
 class SpeedCard(Card):
     def __init__(self, x, y):
         path = 'cards/SkillCardSpeed.png'
@@ -69,7 +68,7 @@ class SpeedCard(Card):
         self.explanation = "    이동속도 증가"
     def levelUp(self):
         self.player.speed += 5
-        print(f"Speed레벨업 - {self.player.speed=}")
+
 class AttackSpeedCard(Card):
     def __init__(self, x, y):     
         path = 'cards/SkillCardAttackSpeed.png'
@@ -78,7 +77,7 @@ class AttackSpeedCard(Card):
         self.explanation = "    공격속도 증가"
     def levelUp(self):
         self.player.bullet_Cooltime -= 0.008
-        print(f"AttackColltime 레벨업 - {self.player.bullet_Cooltime=}")  
+
 class RangeCard(Card):
     def __init__(self, x, y):     
         path = 'cards/SkillCardRange.png'
@@ -87,7 +86,7 @@ class RangeCard(Card):
         self.explanation = "    공격 사거리 증가"
     def levelUp(self):
         self.player.bullet_Range += 50
-        print(f"Range 레벨업 - {self.player.bullet_Range=}")   
+
 class Bullet1Card(Card):
     def __init__(self, x, y):     
         path = 'cards/SkillCardBullet1.png'
@@ -96,7 +95,7 @@ class Bullet1Card(Card):
         self.explanation = "   탄환 개수 증가"
     def levelUp(self):
         self.player.bullet_RowCnt += 1
-        print(f"bullet_RowCnt 레벨업 - {self.player.bullet_RowCnt=}")      
+ 
 class Bullet2Card(Card):
     def __init__(self, x, y):     
         path = 'cards/SkillCardBullet2.png'
@@ -105,7 +104,7 @@ class Bullet2Card(Card):
         self.explanation = "   탄환 관통 증가"
     def levelUp(self):
         self.player.bullet_Penetration += 1
-        print(f"bullet_Penetration 레벨업 - {self.player.bullet_Penetration=}")
+
 class GunCard(Card):
     def __init__(self, x, y):     
         path = 'cards/SkillCardGun.png'
@@ -114,4 +113,3 @@ class GunCard(Card):
         self.explanation = "    연속 발사 증가"
     def levelUp(self):
         self.player.bullet_ColCnt += 1
-        print(f"bullet_ColCnt 레벨업 - {self.player.bullet_ColCnt=}")          

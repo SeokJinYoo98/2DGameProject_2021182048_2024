@@ -84,13 +84,14 @@ class zBullet(gfw.Sprite):
         self.y += self.__dir_y * self.__speed * gfw.frame_time
         self.__dist_travelled += self.__speed * gfw.frame_time
         if self.__dist_travelled >= self.__range:
-           self.__erase()
+            self.__erase()
            
     def draw(self):
         pos = gfw.top().world.bg.to_screen(self.x, self.y)
         self.image.draw(pos[0], pos[1], self.width * 3, self.height * 3)
         
     def __erase(self):
+        self.__dist_travelled = 0
         world = gfw.top().world
         world.remove(self, world.layer.zbullet)
         

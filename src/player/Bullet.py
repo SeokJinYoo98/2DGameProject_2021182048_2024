@@ -33,8 +33,9 @@ class Bullet(gfw.Sprite):
         self.image.composite_draw(*bulletInfo)
     
     def _erase(self):
-            world = gfw.top().world
-            world.remove(self, world.layer.bullet)
+        self._dist_travelled = 0
+        world = gfw.top().world
+        world.remove(self, world.layer.bullet)
             
     def collide(self):
         self._penetration -= 1

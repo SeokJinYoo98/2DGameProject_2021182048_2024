@@ -68,7 +68,7 @@ def change(scene):
         _stack.pop().exit()
 
     _stack.append(scene)
-    print(f'current_scene={scene}')
+    #print(f'current_scene={scene}')
     scene.enter()
 
 def push(scene):
@@ -76,7 +76,7 @@ def push(scene):
         _stack[-1].pause()
 
     _stack.append(scene)
-    print(f'current_scene={scene}')
+    #print(f'current_scene={scene}')
     scene.enter()
 
 def pop():
@@ -87,7 +87,7 @@ def pop():
         return
 
     scene = _stack[-1]
-    print(f'current_scene={scene}')
+    #print(f'current_scene={scene}')
     scene.resume()
 
 def quit():
@@ -106,7 +106,7 @@ def _load_system_font():
     for path in paths:
         try:
             font = load_font(path, 20)
-            print(f'System Font Loaded: {path}')
+            #print(f'System Font Loaded: {path}')
             gfw._system_font = font
             # print(f'{gfw.shows_object_count=} and {gfw._system_font=}')
             break

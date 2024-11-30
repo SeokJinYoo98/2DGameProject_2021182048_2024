@@ -43,17 +43,17 @@ def exit():
     zombieManager.end()
     world.clear()
     bgm.stop()
-    print('[main.exit()]')
+    #print('[main.exit()]')
 
 def pause():
     world.pause = True
     SDL_ShowCursor(SDL_ENABLE)
-    print('[main.pause()]')
+    #print('[main.pause()]')
 
 def resume():
     world.pause = False
     SDL_ShowCursor(SDL_DISABLE)
-    print('[main.resume()]')
+   # print('[main.resume()]')
 
 def handle_event(e):
     if world.pause:
