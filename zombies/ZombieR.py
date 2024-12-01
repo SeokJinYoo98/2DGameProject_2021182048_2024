@@ -41,21 +41,16 @@ class ZombieR(Zombie):
         self.attack_Sound = gfw.sound.sfx('card.wav')
         self.attack_Sound.set_volume(80)
     def special_Function(self):
-        if self.__check_is_death():
-            self.__erase()
-            return
+        if Zombie.Target is None: return
+        px, py = Zombie.Target.x, Zombie.Target.y
+        angle = math.atan2(py - self.y, px - self.x)
+        dir_x = math.cos(angle)
+        dir_y = math.sin(angle)
+        dist = ((px - self.x) ** 2 + (py - self.y) ** 2) ** 0.5
+        if dist <= self.special_Range - 100:
+            self.__move_Back(dir_x, dir_y)
+        self.__Attack(px, py, dir_x, dir_y)
 
-        # 위치 갱신
-        speed_time = self.__speed * gfw.frame_time
-        self.x += self.__dir_x * speed_time
-        self.y += self.__dir_y * speed_time
-
-        # 범위 초과 시 제거
-        self.__dist_travelled += speed_time
-        if self.__dist_travelled >= self.__range:
-            self.__erase()
-
-    
     def __move_Back(self, dir_x, dir_y):
         self.x -= dir_x * gfw.frame_time * ZombieR.Speed
         self.y -= dir_y * gfw.frame_time * ZombieR.Speed
