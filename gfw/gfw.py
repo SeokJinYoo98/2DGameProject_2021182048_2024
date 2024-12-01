@@ -29,6 +29,10 @@ def start(scene):
         # inter-frame (delta) time
         now = time.time()
         gfw.frame_time = now - last_time
+        if gfw.frame_time > 0:
+            fps = 1.0 / gfw.frame_time
+            if fps < 60:
+                print(f"{fps=}")
         last_time = now
 
         # update() 를 수행한다 (Game Logic)
