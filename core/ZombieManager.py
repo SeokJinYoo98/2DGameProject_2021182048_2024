@@ -37,6 +37,7 @@ class ZombieManager:
             self.__State_Check(z)
             
     def __State_Check(self, zombie):
+        if zombie.state is None: return
         if zombie.state == "DEAD":
             self.__Death(zombie)
         elif zombie.state == "HIT":
@@ -103,7 +104,10 @@ class ZombieManager:
                 zombie = ZombieD(x, y)
             else:
                 zombie = ZombieR(x, y)
-        if self.level > 8:
-            self.world.append(ZombieD, self.world.layer.zombie)
+            self.world.append(ZombieD(x, y), self.world.layer.zombie)
             
+        if self.level <= 9:
+            zombie = ZombieD(x, y)
+            self.world.append(ZombieR(x, y), self.world.layer.zombie)
+            self.world.append(ZombieT(x, y), self.world.layer.zombie)
         self.world.append(zombie, self.world.layer.zombie)

@@ -43,7 +43,7 @@ class Actor(gfw.Sprite):
         # 총알 관련
         self.bullet_Time = 1
         # 레벨 관련
-        self.maxXp = 10
+        self.maxXp = 5
         self.Xp = 0 # 레벨
         self.speed = 150 # 레벨업 요소
         self.maxHp = 3
