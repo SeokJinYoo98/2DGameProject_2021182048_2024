@@ -17,10 +17,10 @@ def enter():
     world.bg = bg
     world.player = playerController.player
     
-    zombieManager = ZombieManager() 
+  
     collision = CollisionManager()
     LevelManager = LevelUpManager()
-    
+    zombieManager = ZombieManager() 
     world.append(bg, world.layer.bg)
     world.append(playerController, world.layer.controller)
     world.append(zombieManager, world.layer.controller)
@@ -30,7 +30,7 @@ def enter():
     world.append(TimeUI(), world.layer.UI)
     world.append(HpUI(), world.layer.UI)
     world.append(XpUI(), world.layer.UI)
-    
+    world.append(InfoUI(zombieManager), world.layer.UI)
     key_states = SDL_GetKeyboardState(None)
     playerController.Init(key_states)   
     

@@ -51,7 +51,7 @@ class Coin(Item):
     def __init__(self, x, y):
         if Coin.SOUND is None:
             Coin.SOUND = gfw.sound.sfx('Coin.wav')
-            Coin.SOUND.set_volume(300)
+            Coin.SOUND.set_volume(100)
         COIN_PATH = 'prop/Coin.png'
         super().__init__(COIN_PATH, x, y, Coin)
 

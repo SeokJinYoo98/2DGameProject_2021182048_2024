@@ -34,5 +34,5 @@ class ZombieD(Zombie):
         fileName = (f'zombie/zombie{zomT}.png')
         super().__init__(fileName, x, y, ZombieD)
         self.hit_Sound = gfw.sound.sfx('Hit1.wav')
-        self.hit_Sound.set_volume(80)
+        self.hit_Sound.set_volume(60)
         

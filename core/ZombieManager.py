@@ -5,10 +5,16 @@ from zombies import *
 class ZombieManager:
     DEAD_TIME = 0.5
     HIT_TIME = 0.05
+    GENTIME = [
+        1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1
+    ]
     
     def __init__(self):
         self.world = gfw.top().world
         self.__zenTime = 0
+        self.level = 0
+        self.__time = 60
+    
     def draw(self):
         pass     
     def end(self):
@@ -16,8 +22,14 @@ class ZombieManager:
         Zombie.Target = None
         
     def update(self):
+        self.__time -= gfw.frame_time
+        if self.__time <= 0:
+            self.level += 1
+            self.__time = 60
+            print("LevelUp")
+            
         self.__zenTime += gfw.frame_time
-        if self.__zenTime >= 1:
+        if self.__zenTime >= ZombieManager.GENTIME[self.level]:
             self.zenZombies()
             self.__zenTime = 0
         zombies = self.world.objects_at(self.world.layer.zombie)
@@ -79,11 +91,19 @@ class ZombieManager:
         type = random.randint(0, 10)
         zombie = None
 
-        if type == 0:
-            zombie = ZombieT(x, y)
-        elif type == 1:
-            zombie = ZombieR(x, y)
+        if self.level < 7:
+            if type == 9:
+                zombie = ZombieT(x, y)
+            elif type == 1:
+                zombie = ZombieR(x, y)
+            else:
+                zombie = ZombieD(x, y)
         else:
-            zombie = ZombieD(x, y)
-
+            if type % 2 == 0:
+                zombie = ZombieD(x, y)
+            else:
+                zombie = ZombieR(x, y)
+        if self.level > 8:
+            self.world.append(ZombieD, self.world.layer.zombie)
+            
         self.world.append(zombie, self.world.layer.zombie)

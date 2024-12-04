@@ -36,7 +36,7 @@ class ZombieT(Zombie):
         super().__init__(fileName, x, y, ZombieT)
         self.special_Range = 200
         self.hit_Sound = gfw.sound.sfx('Hit1.wav')
-        self.hit_Sound.set_volume(80)
+        self.hit_Sound.set_volume(60)
     def special_Function(self):
         if self.mag < 2:
             self.mag = 2

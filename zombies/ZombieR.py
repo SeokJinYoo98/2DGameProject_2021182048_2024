@@ -37,9 +37,9 @@ class ZombieR(Zombie):
         self.special_Range = 400
         self.Attack_Time = 0
         self.hit_Sound = gfw.sound.sfx('Range.wav')
-        self.hit_Sound.set_volume(80)
+        self.hit_Sound.set_volume(60)
         self.attack_Sound = gfw.sound.sfx('card.wav')
-        self.attack_Sound.set_volume(80)
+        self.attack_Sound.set_volume(60)
     def special_Function(self):
         if Zombie.Target is None: return
         px, py = Zombie.Target.x, Zombie.Target.y

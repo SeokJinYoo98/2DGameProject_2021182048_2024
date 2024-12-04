@@ -3,7 +3,7 @@ from zombies import ZombieR
 class CollisionManager:
     def __init__(self):
         self.world = gfw.top().world
- 
+        self.player = self.world.player
     def draw(self):
         pass
     
@@ -11,9 +11,8 @@ class CollisionManager:
         self.__collision_check()
 
     def __collision_check(self):
-        player = self.world.player
-        self.__check_Zombie(player)
-        self.__check_Player(player)
+        self.__check_Zombie(self.player)
+        self.__check_Player(self.player)
         
     def __check_Zombie(self, player):
         zombies = self.world.objects_at(self.world.layer.zombie)

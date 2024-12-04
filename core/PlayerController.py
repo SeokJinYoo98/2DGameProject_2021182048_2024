@@ -19,6 +19,7 @@ class PlayerController_main(PlayerController):
         world.append(self.aim, world.layer.UI)
         self.hitTime = 0
         self.ending_Sound = gfw.sound.sfx('Lose.wav')
+        self.ending_Sound.set_volume(60)
     def update(self):
         if self.player.state == 'DEAD':
             self.hitTime += gfw.frame_time
