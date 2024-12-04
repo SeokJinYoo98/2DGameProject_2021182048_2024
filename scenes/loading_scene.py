@@ -89,7 +89,7 @@ IMAGE_FILES = [
     'prop/Bullet2_purple.png',
     'prop/Coin.png',
     'prop/Vaccine.png',
-    
+    'prop/Magnetic.png',
     'tile/Tiles.png',
     'tile/Title.jpg',
     

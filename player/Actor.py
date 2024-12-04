@@ -3,6 +3,7 @@ import gfw
 import math
 from player.Gun import Gun
 from player.Bullet import Bullet
+from uis import MagGauge
 class Actor(gfw.Sprite):   
     PLAYER_FRAMES = {
         "IDLE": [
@@ -61,11 +62,28 @@ class Actor(gfw.Sprite):
         
         self.hit_Sound = gfw.sound.sfx('Dead.wav')
         self.hit_Sound.set_volume(50)
+        
+        self.magTime = 3
+        self.ismagTime = False
+        self.magGauge = None
+        
     def __del__(self):
         del self.gun
-        
+    def magneticTime(self):
+        if self.magGauge is None:
+            self.magGauge = MagGauge()
+            world = gfw.top().world
+            world.append(self.magGauge, world.layer.UI)
+        self.ismagTime = True
+        self.magTime = 3
+        self.special_Range = -1
     # 업데이트            
     def update(self):
+        if self.ismagTime:
+            self.magTime -= gfw.frame_time
+            if self.magTime <= 0:
+                self.ismagTime = False
+                self.special_Range = 100
         if self.state == "DEAD":
             self.dx, self.dy = 0, 0
             return
@@ -127,20 +145,24 @@ class Actor(gfw.Sprite):
         if self.bullet_Time < self.bullet_Cooltime: return
         self.gun.playSound()
         world = gfw.top().world
-        for i in range(self.bullet_ColCnt):
-            x = self.x + offsetX * math.cos(self.gun.angle) * i
-            y = self.y + offsetY * math.sin(self.gun.angle) * i
-        
-            bulletHalf = self.bullet_RowCnt / 2
-            for j in range(self.bullet_RowCnt):
-                if j <= bulletHalf: angle = self.gun.angle - 0.1 * j
-                else: angle = self.gun.angle + 0.1 * (bulletHalf - j)
-                bulletInfo = x, y, angle, self.bullet_Range, self.bullet_Speed, self.flip, self.bullet_Scale, self.bullet_Penetration
-                world.append(Bullet(*bulletInfo), world.layer.bullet)
-        
+        bulletHalf = self.bullet_RowCnt // 2 
+        bullets = [
+            Bullet(
+                self.x + offsetX * math.cos(self.gun.angle) * i,
+                self.y + offsetY * math.sin(self.gun.angle) * i,
+                self.gun.angle - 0.1 * (bulletHalf - j) if j < bulletHalf else self.gun.angle + 0.1 * (j - bulletHalf),
+                self.bullet_Range,
+                self.bullet_Speed,
+                self.flip,
+                self.bullet_Scale,
+                self.bullet_Penetration
+            )
+            for i in range(self.bullet_ColCnt) 
+            for j in range(self.bullet_RowCnt) 
+        ]
+        for bullet in bullets:
+            world.append(bullet, world.layer.bullet)
         self.bullet_Time = 0
-        
-    # 상태 변경
     def checkState(self):
         if self._isDead():
             self._do_DEAD()

@@ -19,6 +19,7 @@ class LevelUpManager:
         pass
     def update(self):
         if self.isLevelUp:
+            print("asd")
             pass
         else:
             self.__check_level()

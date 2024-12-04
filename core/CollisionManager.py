@@ -17,6 +17,7 @@ class CollisionManager:
     def __check_Zombie(self, player):
         zombies = self.world.objects_at(self.world.layer.zombie)
         for zombie in zombies:
+            if zombie.state == 'DEAD' or zombie.state == 'HIT': continue
             if not zombie.collType: continue
             self.__zombie_player(zombie, player)
             self.__zombie_bullet(zombie)
@@ -42,7 +43,9 @@ class CollisionManager:
         self.__player_bullet(player)
        
     def __player_item(self, player, item):
-        if gfw.collides_circle(player, item):
+        if player.special_Range < 0:
+            item.setTarget(player)
+        elif gfw.collides_circle(player, item):
             item.setTarget(player)
         else:
             item.deleteTarget()

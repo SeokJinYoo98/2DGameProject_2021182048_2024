@@ -91,23 +91,25 @@ class ZombieManager:
     
         type = random.randint(0, 10)
         zombie = None
-
-        if self.level < 7:
-            if type == 9:
+        if self.level == 0:
+            zombie = ZombieD(x, y)
+        elif self.level < 8:
+            if type == 10:
                 zombie = ZombieT(x, y)
-            elif type == 1:
+            elif type == 0:
                 zombie = ZombieR(x, y)
             else:
                 zombie = ZombieD(x, y)
-        else:
+        elif self.level < 9:
             if type % 2 == 0:
                 zombie = ZombieD(x, y)
             else:
                 zombie = ZombieR(x, y)
             self.world.append(ZombieD(x, y), self.world.layer.zombie)
             
-        if self.level <= 9:
+        elif self.level >= 9:
             zombie = ZombieD(x, y)
             self.world.append(ZombieR(x, y), self.world.layer.zombie)
             self.world.append(ZombieT(x, y), self.world.layer.zombie)
+            
         self.world.append(zombie, self.world.layer.zombie)

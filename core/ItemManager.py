@@ -3,13 +3,16 @@ import gfw
 import random
 
 def CreateItem(x, y):
-    randIndex = random.randint(0, 10)
+    randIndex = random.randint(1, 100)
     newItem = None
-    if randIndex == 0:
+    if 41 <= randIndex and randIndex <= 45:
         newItem = Vaccine(x, y)
-    else:
+    elif randIndex == 50:
+       newItem = Magnetic(x, y)
+    else: 
         newItem = Coin(x, y)
         
+
     world = gfw.top().world
     
     world.append(newItem, world.layer.item)

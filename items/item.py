@@ -1,7 +1,7 @@
 import gfw
 
 class Item(gfw.Sprite):
-    Speed = 300
+    Speed = 350
     def __init__(self, fileName, x, y, Type):
         super().__init__(fileName, x, y)
         self.target = None
@@ -75,3 +75,16 @@ class Vaccine(Item):
             target.hp += 1
            # print(f'{target.hp=}')
         self.erase()    
+class Magnetic(Item):
+    SOUND = None
+    def __init__(self, x, y):
+        if Magnetic.SOUND is None:
+            Magnetic.SOUND = gfw.sound.sfx('Magnetic.wav')
+            Magnetic.SOUND.set_volume(30)
+        MagneticPath = 'prop/Magnetic.png'
+        super().__init__(MagneticPath, x, y, Magnetic)
+    def special_Function(self, target):
+        Magnetic.SOUND.play()
+        target.magneticTime()
+        self.erase()
+        
