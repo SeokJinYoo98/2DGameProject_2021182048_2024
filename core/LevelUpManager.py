@@ -86,6 +86,7 @@ class LevelUpManager:
             if card.is_mouse_on:
                 card.clicked()
                 if card.clickedCount == 2:
+                    card.levelUp()
                     return True
                 for other in self.cards:
                     if card != other:
