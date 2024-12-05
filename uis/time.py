@@ -19,6 +19,7 @@ class TimeUI:
 
             if self.__startMin < 0:
                 self.__sound.play()
+                gfw.top().pause()
                 gfw.top().ending()
 
     def draw(self):

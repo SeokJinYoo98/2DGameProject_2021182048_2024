@@ -2,7 +2,7 @@ import gfw
 import random
 from pico2d import *
 from cards import *
-      
+           
 class LevelUpManager:
     def __init__(self):
         self.CARDS = ("H", "MH", "S", "AS", "R", "B1", "B2", "G")
@@ -84,8 +84,12 @@ class LevelUpManager:
     def __clicked_check(self):
         for card in self.cards:
             if card.is_mouse_on:
-                card.levelUp()
-                return True
+                card.clicked()
+                if card.clickedCount == 2:
+                    return True
+                for other in self.cards:
+                    if card != other:
+                        other.reset()
         return False                   
     def pause(self):
         self.isLevelUp = True

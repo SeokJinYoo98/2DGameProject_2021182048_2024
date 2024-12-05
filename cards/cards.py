@@ -20,11 +20,12 @@ class Card(gfw.Sprite):
         self.explanation = None
         self.font_offsetX = 20
         self.font_offsetY = 0
+        self.clickedCount = 0
     def update(self):
         pass      
     def draw(self):
         frame = Card.Frames["Click"]
-        if not self.is_mouse_on: frame = Card.Frames['Non']
+        if self.clickedCount == 1: frame = Card.Frames['Non']
         self.image.clip_draw(*frame, self.x, self.y, self.width, self.height)
         gfw.draw_centered_text(Card.Font, self.name, self.x + self.font_offsetX - 20, self.y + self.font_offsetY)
         gfw.draw_centered_text(Card.Font, self.explanation, self.x + self.font_offsetX, self.y + self.font_offsetY - 60)
@@ -38,10 +39,14 @@ class Card(gfw.Sprite):
         if l < mx and mx < r:
             if b <= my and my <= t:
                 if not self.is_mouse_on:
-                    self.__sfx.play()
                     self.is_mouse_on = True
                 return
         self.is_mouse_on = False
+    def clicked(self):
+        self.__sfx.play()
+        self.clickedCount +=1
+    def reset(self):
+        self.clickedCount = 0
 class HpCard(Card):
     def __init__(self, x, y):
         path = 'cards/SkillCardHp.png'
