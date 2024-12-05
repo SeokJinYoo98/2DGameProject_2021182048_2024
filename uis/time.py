@@ -10,6 +10,7 @@ class TimeUI:
         self.endTime = 2
     def update(self):
         if self.end:
+
             self.endTime -= gfw.frame_time
             if self.endTime <= 0:
                 self.__sound.play()
@@ -28,6 +29,8 @@ class TimeUI:
 
             if self.__startMin < 0:
                 gfw.top().Winner()
+                self.__startMin = 0
+                self.__startSec = 0
 
     def draw(self):
         time_text = f"{self.__startMin:02}:{self.__startSec:02}"
