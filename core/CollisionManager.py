@@ -4,10 +4,14 @@ class CollisionManager:
     def __init__(self):
         self.world = gfw.top().world
         self.player = self.world.player
+        self.end = False
     def draw(self):
         pass
     
     def update(self):
+        if self.end:
+            return
+        
         self.__collision_check()
 
     def __collision_check(self):

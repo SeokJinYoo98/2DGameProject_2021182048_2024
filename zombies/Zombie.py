@@ -14,7 +14,7 @@ class Zombie(gfw.Sprite):
         self.special_Range = None
         self.hit_Sound = None
         # 애니메이션 관련
-        self.state = None
+        self.state = 'HIT'
         self.frame_index = 0
         self.frame_time = 0
         self.elapsed_time = 0

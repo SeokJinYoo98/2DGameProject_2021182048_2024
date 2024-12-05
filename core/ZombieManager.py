@@ -4,7 +4,7 @@ from core import ItemManager
 from zombies import *
 class ZombieManager:
     DEAD_TIME = 0.5
-    HIT_TIME = 0.05
+    HIT_TIME = 0.1
     GENTIME = [
         1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1
     ]
@@ -14,17 +14,23 @@ class ZombieManager:
         self.__zenTime = 0
         self.level = 0
         self.__time = 60
-    
+        self.stop = False
+        self.end_ = False
     def draw(self):
         pass     
     def end(self):
+        self.stop = True
         Zombie.BG = None
         Zombie.Target = None
         
     def update(self):
+        if self.end_:
+            Zombie.Target = None
+            return
+        if self.stop: return
         self.__time -= gfw.frame_time
         if self.__time <= 0:
-            self.level += 1
+            self.level = (self.level + 1) % 10
             self.__time = 60
             print("LevelUp")
             

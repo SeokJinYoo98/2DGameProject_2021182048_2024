@@ -20,7 +20,16 @@ class PlayerController_main(PlayerController):
         self.hitTime = 0
         self.ending_Sound = gfw.sound.sfx('Lose.wav')
         self.ending_Sound.set_volume(60)
+        self.end = False
+        self.__font = gfw.font.load('neodgm.TTF', 256)
+    def draw(self):
+        if not self.end: return
+        time_text = "Win!"
+        centerX = gfw.get_canvas_width() / 2
+        y = gfw.get_canvas_height() / 2
+        self.__font.draw(centerX - centerX / 2, y, time_text, (0, 255, 255))
     def update(self):
+        if self.end: return
         if self.player.state == 'DEAD':
             self.hitTime += gfw.frame_time
             if self.hitTime >= 3:
@@ -32,6 +41,7 @@ class PlayerController_main(PlayerController):
             self.player.checkState()
     def handle_event(self, e):
         # 에임 설정
+        if self.end: return
         if self.player.state == "DEAD": return
 
         if e.type == SDL_MOUSEMOTION:
@@ -78,6 +88,12 @@ class PlayerController_main(PlayerController):
             self.player.adjust_delta(0, -1)
         if key_states[7]:
             self.player.adjust_delta(1, 0)
-    
-    
-    
+    def KeyCheck(self, key_states):
+        if key_states[26]:
+            self.player.adjust_delta(0, -1)
+        if key_states[4]:
+            self.player.adjust_delta(1, 0)
+        if key_states[22]:
+            self.player.adjust_delta(0, 1)
+        if key_states[7]:
+            self.player.adjust_delta(-1, 0)

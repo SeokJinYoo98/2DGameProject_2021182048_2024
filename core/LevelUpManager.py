@@ -2,7 +2,7 @@ import gfw
 import random
 from pico2d import *
 from cards import *
-           
+          
 class LevelUpManager:
     def __init__(self):
         self.CARDS = ("H", "MH", "S", "AS", "R", "B1", "B2", "G")
@@ -10,7 +10,9 @@ class LevelUpManager:
         self.__player = gfw.top().world.player
         self.isLevelUp = False
         self.lv_Sound = gfw.sound.sfx('LevelUp.wav')
+        self.end = False
     def handle_event(self, event):
+        if self.end: return
         if not self.isLevelUp: return
         self.__player_input(event)
         self.__is_mouse_on(event)
@@ -18,8 +20,8 @@ class LevelUpManager:
     def draw(self):
         pass
     def update(self):
+        if self.end: return
         if self.isLevelUp:
-            print("asd")
             pass
         else:
             self.__check_level()
@@ -110,7 +112,7 @@ class LevelUpManager:
             elif event.key == SDLK_s:
                 self.__player.adjust_delta(0, -1)
             elif event.key == SDLK_l:
-                self.__player.Xp +=1
+                self.__player.Xp += self.__player.maxXp
                 
         if event.type == SDL_KEYUP:
             if event.key == SDLK_a:

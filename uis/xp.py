@@ -18,3 +18,5 @@ class XpUI:
         self.__gauge.draw(self.__x, self.__y, self.__width, self.__rate)
         hp_text = f"{self.__player.Xp}/{self.__player.maxXp}"
         self.__font.draw(self.__x - 20, self.__y, hp_text, (255, 255, 255))
+        
+    
