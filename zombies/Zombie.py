@@ -14,7 +14,7 @@ class Zombie(gfw.Sprite):
         self.special_Range = None
         self.hit_Sound = None
         # 애니메이션 관련
-        self.state = 'HIT'
+        self.state = 'IDLE'
         self.frame_index = 0
         self.frame_time = 0
         self.elapsed_time = 0
@@ -51,22 +51,23 @@ class Zombie(gfw.Sprite):
             self.frame_index += 1
                     
     def toTarget(self):
-        if Zombie.Target is None: return
-        dx = int(Zombie.Target.x - self.x)
-        dy = int(Zombie.Target.y - self.y)
-        
-        if dx < 0 and self.flip == ' ':
-            self.flip = 'h'
-        if dx >= 0 and self.flip == 'h':
-            self.flip = ' '
-            
-        normal = (dx ** 2 + dy ** 2) ** 0.5
-        if normal != 0:
-            dx /= normal
-            dy /= normal
-             
-        self.x += dx * gfw.frame_time * self.TYPE.Speed * self.mag
-        self.y += dy * gfw.frame_time * self.TYPE.Speed * self.mag
+        dx = Zombie.Target.x - self.x
+        dy = Zombie.Target.y - self.y
+        distance_squared = dx ** 2 + dy ** 2 
+
+        if distance_squared == 0:
+            return
+
+        if (dx < 0 and self.flip == ' ') or (dx >= 0 and self.flip == 'h'):
+            self.flip = 'h' if dx < 0 else ' '
+
+        normal = distance_squared ** 0.5
+        dx /= normal
+        dy /= normal
+
+        move_speed = gfw.frame_time * self.TYPE.Speed * self.mag
+        self.x += dx * move_speed
+        self.y += dy * move_speed
         
     def _change_Anim_Info(self, state):
         self.state = state

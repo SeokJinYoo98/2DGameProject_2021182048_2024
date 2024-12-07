@@ -6,11 +6,11 @@ from zombies import *
 # Generator와 분리하고, 레벨당 스폰은 Genrator가 담당하게 변경하자.
 class ZombieManager:
     DEAD_TIME = 0.2
-    HIT_TIME = 0.05
+    HIT_TIME = 0.07
     GENTIME = [
         1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1
     ]
-    
+    SPAWN_POINT = ('Up', 'Down', 'Left', 'Right')
     def __init__(self):
         self.world = gfw.top().world
         self.__zenTime = 0
@@ -38,6 +38,7 @@ class ZombieManager:
         if self.__zenTime >= ZombieManager.GENTIME[self.level]:
             self.zenZombies()
             self.__zenTime = 0
+            
         zombies = self.world.objects_at(self.world.layer.zombie)
         for z in zombies:
             self.__State_Check(z)
@@ -79,49 +80,72 @@ class ZombieManager:
    
                 
     def zenZombies(self):
-        if self.world.count_at(self.world.layer.zombie) >= 300: 
-            print("NoZen")
+        if self.world.count_at(self.world.layer.zombie) >= 400: 
             return
         
-
+        x, y = self.__getSpawnPoint()
+        zombies = self.__addZombies(x, y)
+        
+        for zombie in zombies:
+            self.world.append(zombie, self.world.layer.zombie)
+        
+    def __getSpawnPoint(self):
         player = self.world.player
         x, y = player.x, player.y
-        where = random.randint(0, 4)
         
-        if where <= 1:
-            x -= random.uniform(-player.x, player.x)
-            if where == 1:
-                y -= 800
-            else:
-                y += 800
+        where = random.choice(ZombieManager.SPAWN_POINT)
+        
+        if where == 'Up':
+            x += random.randint(-612, 612)
+            y += 800
+        elif where == 'Down':
+            x += random.randint(-612, 612)
+            y -= 800
+        elif where == 'Left':
+            x -= 800
+            y += random.randint(-612, 612)
         else:
-            y -= random.uniform(-player.y, player.y)
-            if where == 2:
-                x -= 800
-            else:
-                x += 800
+            x += 800
+            y += random.randint(-612, 612)
+        
+        return x, y
     
-        type = random.randint(0, 10)
-        zombie = None
+    def __addZombies(self, x, y):
+        zombies = []
         if self.level == 0:
-            zombie = ZombieD(x, y)
-        elif self.level < 8:
-            if type == 10:
-                zombie = ZombieT(x, y)
-            elif type == 0:
-                zombie = ZombieR(x, y)
-            else:
-                zombie = ZombieD(x, y)
-        elif self.level < 9:
-            if type % 2 == 0:
-                zombie = ZombieD(x, y)
-            else:
-                zombie = ZombieR(x, y)
-            self.world.append(ZombieD(x, y), self.world.layer.zombie)
+            zombies.append(ZombieD(x, y))
             
-        elif self.level >= 9:
-            zombie = ZombieD(x, y)
-            self.world.append(ZombieR(x, y), self.world.layer.zombie)
-            self.world.append(ZombieT(x, y), self.world.layer.zombie)
+        elif self.level < 5:
+            index = random.randint(0, 5)
+            if index == 0:
+                zombies.append(ZombieR(x, y))
+            elif index == 1:
+                zombies.append(ZombieT(x, y))
+            else:
+                zombies.append(ZombieD(x, y))
+                
+        elif self.level <= 7:
+            index = random.randint(0, 1)
+            if index == 0:
+                zombies.append(ZombieR(x, y))
+            else:
+                zombies.append(ZombieT(x, y))
+            zombies.append(ZombieD(x, y))
             
-        self.world.append(zombie, self.world.layer.zombie)
+        elif self.level <= 8:
+            index = random.randint(0, 1)
+            if index == 0:
+                zombies.append(ZombieR(x, y))
+            else:
+                zombies.append(ZombieT(x, y))
+            zombies.append(ZombieD(x, y))
+            zombies.append(ZombieD(x, y))
+            
+        else:
+            zombies.append(ZombieD(x, y))
+            zombies.append(ZombieD(x, y))
+            zombies.append(ZombieT(x, y))
+            zombies.append(ZombieR(x, y))
+
+        return zombies
+    

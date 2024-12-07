@@ -26,9 +26,7 @@ class ZombieD(Zombie):
         'HIT': (1, 1/ 2),
         'DEAD': (1, 1 / 2)
     }
-    ZOMBIE_TYPE = [
-        1, 2, 3, 4
-    ]
+    ZOMBIE_TYPE = [ 1, 2, 3, 4 ]
     def __init__(self, x, y):
         zomT = random.choice(ZombieD.ZOMBIE_TYPE)
         fileName = (f'zombie/zombie{zomT}.png')
