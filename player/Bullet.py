@@ -2,7 +2,6 @@ import math
 import gfw
 class Bullet(gfw.Sprite):
     def __init__(self, x, y, angle, range, speed, flip, scale, pene):
-        self._speed = speed # pixels per second
         self._dist_travelled = 0
         self._range = range
         self._speed = speed

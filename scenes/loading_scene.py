@@ -5,6 +5,9 @@ import scenes.menu_scene as menu_scene
 import sys
 self = sys.modules[__name__]
 
+#shows_bounding_box = True
+#shows_object_count = True
+
 canvas_width = 1024
 canvas_height = 1024
 

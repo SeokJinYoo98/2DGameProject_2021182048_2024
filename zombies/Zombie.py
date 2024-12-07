@@ -52,15 +52,12 @@ class Zombie(gfw.Sprite):
                     
     def toTarget(self):
         if Zombie.Target is None: return
-        tx, ty = int(Zombie.Target.x), int(Zombie.Target.y)
-        zx, zy = int(self.x), int(self.y)
+        dx = int(Zombie.Target.x - self.x)
+        dy = int(Zombie.Target.y - self.y)
         
-        dx = tx - zx
-        dy = ty - zy
-        
-        if dx < 0:
+        if dx < 0 and self.flip == ' ':
             self.flip = 'h'
-        else:
+        if dx >= 0 and self.flip == 'h':
             self.flip = ' '
             
         normal = (dx ** 2 + dy ** 2) ** 0.5

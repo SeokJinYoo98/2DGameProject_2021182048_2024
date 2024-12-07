@@ -12,16 +12,14 @@ class Item(gfw.Sprite):
         self.toTarget()
         
     def toTarget(self):
-        tx, ty = int(self.target.x), int(self.target.y)
-        zx, zy = int(self.x), int(self.y)
-        
-        dx = tx - zx
-        dy = ty - zy
+        dx = int(self.target.x - self.x)
+        dy = int(self.target.y - self.y)
             
-        normal = (dx ** 2 + dy ** 2) ** 0.5
-        if normal != 0:
-            dx /= normal
-            dy /= normal
+        dist = (dx ** 2 + dy ** 2)
+        if dist != 0:
+            inv_dist = 1 / (dist ** 0.5)
+            dx *= inv_dist
+            dy *= inv_dist
              
         self.x += dx * gfw.frame_time * Item.Speed
         self.y += dy * gfw.frame_time * Item.Speed

@@ -2,6 +2,7 @@ from pico2d import *
 from gfw import gobj
 import random as r
 
+# Generator와 분리하면 좋을듯.
 class RandomTileBackground(gobj.InfiniteScrollBackground):
     def __init__(self, path, tileSize=18, scale=2, margin=0):
         super().__init__(path, margin)
@@ -43,10 +44,12 @@ class RandomTileBackground(gobj.InfiniteScrollBackground):
         self.y = y - ch // 2
         
     def draw(self):
+        width_ = get_canvas_width() // 2
+        height_ = get_canvas_height() // 2
         for key, (coords, x, y) in self._visible_tiles.items():
             # 타일 위치 계산
-            adjusted_x = x - self.x + get_canvas_width() // 2
-            adjusted_y = y - self.y + get_canvas_height() // 2
+            adjusted_x = x - self.x + width_
+            adjusted_y = y - self.y + height_
             
             if -self._size > adjusted_x: continue
             if -self._size > adjusted_y: continue

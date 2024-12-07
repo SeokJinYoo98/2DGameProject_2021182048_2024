@@ -1,5 +1,5 @@
 from gfw import *
-from core import *
+from manager import *
 from uis import *
 import scenes.ending_scene as ending_scene
 
@@ -7,8 +7,9 @@ self = sys.modules[__name__]
 
 world = World(['bg', 'zombie', 'zbullet', 'player', 'bullet', 'item',  'UI', 'cards', 'controller'])
 
-# shows_bounding_box = True
-# shows_object_count = True
+#shows_bounding_box = True
+#shows_object_count = True
+
 canvas_width = 1024
 canvas_height = 1024
 

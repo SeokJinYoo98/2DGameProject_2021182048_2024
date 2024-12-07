@@ -4,6 +4,8 @@ import math
 from player.Gun import Gun
 from player.Bullet import Bullet
 from uis import MagGauge
+
+# 분리할 것 많음.
 class Actor(gfw.Sprite):   
     PLAYER_FRAMES = {
         "IDLE": [

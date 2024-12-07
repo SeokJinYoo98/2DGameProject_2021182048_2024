@@ -1,10 +1,12 @@
 import gfw
 import random
-from core import ItemManager
+from manager import ItemManager
 from zombies import *
+
+# Generator와 분리하고, 레벨당 스폰은 Genrator가 담당하게 변경하자.
 class ZombieManager:
-    DEAD_TIME = 0.5
-    HIT_TIME = 0.1
+    DEAD_TIME = 0.2
+    HIT_TIME = 0.05
     GENTIME = [
         1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1
     ]
@@ -14,12 +16,11 @@ class ZombieManager:
         self.__zenTime = 0
         self.level = 0
         self.__time = 60
-        self.stop = False
         self.end_ = False
+        
     def draw(self):
         pass     
     def end(self):
-        self.stop = True
         Zombie.BG = None
         Zombie.Target = None
         
@@ -27,7 +28,6 @@ class ZombieManager:
         if self.end_:
             Zombie.Target = None
             return
-        if self.stop: return
         self.__time -= gfw.frame_time
         if self.__time <= 0:
             self.level = (self.level + 1) % 10
@@ -41,7 +41,7 @@ class ZombieManager:
         zombies = self.world.objects_at(self.world.layer.zombie)
         for z in zombies:
             self.__State_Check(z)
-            
+  
     def __State_Check(self, zombie):
         if zombie.state is None: return
         if zombie.state == "DEAD":
@@ -79,21 +79,27 @@ class ZombieManager:
    
                 
     def zenZombies(self):
-        x, y = 0, 0
-        where = random.randint(0, 4)
+        if self.world.count_at(self.world.layer.zombie) >= 300: 
+            print("NoZen")
+            return
+        
+
         player = self.world.player
+        x, y = player.x, player.y
+        where = random.randint(0, 4)
+        
         if where <= 1:
-            x = player.x - random.uniform(-player.x, player.x)
+            x -= random.uniform(-player.x, player.x)
             if where == 1:
-                y = player.y - 800
+                y -= 800
             else:
-                y = player.y + 800
+                y += 800
         else:
-            y = player.y - random.uniform(-player.y, player.y)
+            y -= random.uniform(-player.y, player.y)
             if where == 2:
-                x = player.x - 800
+                x -= 800
             else:
-                x = player.x + 800
+                x += 800
     
         type = random.randint(0, 10)
         zombie = None

@@ -2,7 +2,8 @@ import gfw
 import random
 from pico2d import *
 from cards import *
-          
+
+# 분리해야될 것이 많음.
 class LevelUpManager:
     def __init__(self):
         self.CARDS = ("H", "MH", "S", "AS", "R", "B1", "B2", "G")

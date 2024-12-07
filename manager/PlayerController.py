@@ -3,6 +3,7 @@ import gfw
 from player import Actor
 from player import Aim
  
+ # 분리해야될 기능 많음.
 class PlayerController:
     def __init__(self): pass
     def update(self): pass
@@ -32,7 +33,7 @@ class PlayerController_main(PlayerController):
         if self.end: return
         if self.player.state == 'DEAD':
             self.hitTime += gfw.frame_time
-            if self.hitTime >= 3:
+            if self.hitTime >= 1:
                 self.hitTime = 0
                 self.ending_Sound.play()
                 gfw.top().ending()

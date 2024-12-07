@@ -92,10 +92,17 @@ def collides_box(a, b): # a or b is a Sprite
 
 def collides_circle(a, b):
     if a.special_Range is None: return
-    aX, aY = a.x, a.y
-    bX, bY = b.x, b.y
+    # aX, aY = a.x, a.y
+    # bX, bY = b.x, b.y
+    
+    dx = abs(b.x - a.x)
+    if dx > a.special_Range:
+        return False
+    dy = abs(b.y - a.y)
+    if dy > a.special_Range:
+        return False
 
-    dist = (bX - aX) ** 2 + (bY - aY) ** 2
+    dist = (dx) ** 2 + (dy) ** 2
     
     return dist <= a.special_Range ** 2
    

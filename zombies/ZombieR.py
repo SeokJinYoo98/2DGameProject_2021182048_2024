@@ -41,14 +41,22 @@ class ZombieR(Zombie):
         self.attack_Sound = gfw.sound.sfx('card.wav')
         self.attack_Sound.set_volume(60)
     def special_Function(self):
-        if Zombie.Target is None: return
-        px, py = Zombie.Target.x, Zombie.Target.y
-        angle = math.atan2(py - self.y, px - self.x)
-        dir_x = math.cos(angle)
-        dir_y = math.sin(angle)
-        dist = ((px - self.x) ** 2 + (py - self.y) ** 2) ** 0.5
-        if dist <= self.special_Range - 100:
+        target = Zombie.Target
+        if target is None:
+            return
+
+        px, py = target.x, target.y
+        dx, dy = target.x - self.x, target.y - self.y
+        dist_squared = dx ** 2 + dy ** 2
+
+        if dist_squared <= (self.special_Range - 100) ** 2:
+            normal = dist_squared ** 0.5
+            dir_x, dir_y = dx / normal, dy / normal
             self.__move_Back(dir_x, dir_y)
+        else:
+            angle = math.atan2(dy, dx)
+            dir_x, dir_y = math.cos(angle), math.sin(angle)
+            
         self.__Attack(px, py, dir_x, dir_y)
 
     def __move_Back(self, dir_x, dir_y):
