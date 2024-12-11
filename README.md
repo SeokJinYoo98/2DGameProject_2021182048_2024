@@ -139,7 +139,7 @@
 - 게임 오브젝트끼리의 직접적인 소통을 피하고 Mediator(중재자-Manager)를 통해 소통하는 기법.
 
 ### [참고]
-1. SDL_GetKeyboardState를 교수님에게 힌트를 얻고 StackOverflow 참고.
+1. SDL_GetKeyboardState를 교수님에게 힌트를 얻고 SDL_Wiki, StackOverflow를 참고.
 
 ### [수업내용에서 차용한 것]
 1. UI 및 버튼.
