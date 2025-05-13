@@ -2,7 +2,7 @@
 - 2021182048 게임공학과 유석진
 - 2024.10.04 - 2024.12.
 - 언어: Python
-- 엔진/라이브러리: Pygame
+- 엔진/라이브러리: Pico2D
 - IDE: VSCode
 - 운영체제: Windows
 - 버전 관리: Git / Source Tree
